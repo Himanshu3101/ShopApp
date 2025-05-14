@@ -84,7 +84,7 @@ fun IntroScreen(navController: NavHostController) {
                     text = "Let's Get Started",
                     fraction = 0.6f
                 ) {
-                    navController.navigate(Routes.)
+                    navController.navigate(Routes.Dashboard.route)
                 }
             }
         }

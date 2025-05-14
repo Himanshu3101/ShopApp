@@ -18,7 +18,7 @@ object Dimens {
     val TopHeaderSize = 70.dp
 
     // Spacing
-    val SmallPadding = 15.dp
+    val SmallPadding = 7.dp
     val MediumPadding = 16.dp
     val LargePadding = 24.dp
     val ExtraLargePadding = 40.dp

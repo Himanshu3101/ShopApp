@@ -4,7 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.shopapp.features.Dashboard.presentation.Dashboard
 import com.example.shopapp.features.IntroScreen.presentation.IntroScreen
+import okhttp3.Route
 
 @Composable
 fun SetNavGraph() {
@@ -15,7 +17,13 @@ fun SetNavGraph() {
         composable(route = Routes.IntoScreen.route) {
             IntroScreen(navController)
         }
+
+        composable(route = Routes.Dashboard.route) {
+            Dashboard(navController)
+        }
     }
+
+
 
 }
 
