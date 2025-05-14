@@ -6,7 +6,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.shopapp.features.Dashboard.presentation.Dashboard
 import com.example.shopapp.features.IntroScreen.presentation.IntroScreen
-import okhttp3.Route
 
 @Composable
 fun SetNavGraph() {
