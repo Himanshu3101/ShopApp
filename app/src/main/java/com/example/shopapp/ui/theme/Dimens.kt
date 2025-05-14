@@ -6,6 +6,7 @@ import androidx.compose.ui.unit.sp
 object Dimens {
 
     val SmallBorderWidth = 3.dp
+    val VerySmallBorderWidth = 1.dp
 
     // Font sizes
     val SmallText = 16.sp
@@ -25,17 +26,24 @@ object Dimens {
 
     // Icon size
     val IconSizeSmall = 16.dp
-    val IconSizeMedium = 24.dp
+    val IconSizeMedium = 20.dp
     val IconSizeLarge = 32.dp
 
     // Button height
-    val MediumBoxHeight = 60.dp
     val SmallSpacerHeight = 8.dp
     val MediumSpacerHeight = 18.dp
     val LargeSpacerHeight = 30.dp
     val ExtraLargeSpacerHeight = 100.dp
 
+    //Box Height
+    val LargeBoxHeight = 60.dp
+    val SmallBoxHeight = 20.dp
+    val MediumBoxHeight = 40.dp
+
     val MediumCornerRadius = 30.dp
     val LargeCornerRadius = 50.dp
     val ExtraLargeCornerRadius = 50.dp
+
+    val SmallCircleShape = 90.dp
+    val SmallSpacerWidth = 8.dp
 }
