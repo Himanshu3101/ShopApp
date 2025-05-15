@@ -99,5 +99,6 @@ dependencies {
     //Coil
     implementation(libs.coil.compose)
 
-    implementation(libs.dotsindicator)
+//   Accompanist-Pager
+    implementation(libs.accompanist.pager.indicators)
 }

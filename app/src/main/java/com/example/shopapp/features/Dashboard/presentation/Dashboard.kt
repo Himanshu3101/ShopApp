@@ -3,19 +3,21 @@ package com.example.shopapp.features.Dashboard.presentation
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,16 +32,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.min
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.shopapp.R
+import com.example.shopapp.features.Dashboard.component.GridWith_Images_Details
+import com.example.shopapp.features.Dashboard.component.Scroller_ProductSlider
+import com.example.shopapp.features.common.ImagePager
 import com.example.shopapp.ui.theme.Dimens
 
 
@@ -52,33 +56,107 @@ fun PrevDash() {
 @Composable
 fun Dashboard(navHostController: NavHostController) {
 
-    Column(
+    LazyColumn (
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(Dimens.SmallPadding)
+            .padding(Dimens.SmallPadding),
+        verticalArrangement = Arrangement.spacedBy(Dimens.SmallSpacerHeight)
     ) {
 
-        Dashboard_1()
+        item{
+            Header_UserScrn()
+        }
+//        Spacer(modifier = Modifier.height(Dimens.MediumSpacerHeight))
+        item{
+            Search_UserScrn()
+        }
+//        Spacer(modifier = Modifier.height(Dimens.SmallSpacerHeight))
 
-        Spacer(modifier = Modifier.height(Dimens.MediumSpacerHeight))
+        val imageList = listOf(
+            "https://via.placeholder.com/150",
+            "https://picsum.photos/id/237/200/300",
+            "https://picsum.photos/id/238/200/300"
+        )
+        item{
+            ImagePager(imageList)
+        }
 
-        Dashboard_2()
+        item{
+            Row (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimens.SmallPadding),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ){
 
-        Spacer(modifier = Modifier.height(Dimens.MediumSpacerHeight))
+                Text(
+                    text = stringResource(R.string.product),
+                    style = MaterialTheme.typography.titleMedium
+                )
 
+                Text(
+                    text = stringResource(R.string.see_all),
+                    onTextLayout = {}, // required parameter
+                    modifier = Modifier.clickable { },
+                    style = TextStyle(color = colorResource(id = R.color.blue)),
+//                onClick = {}
+                )
 
+            }
+        }
 
+        val productList = listOf(
+            "Shampoo",
+            "Skin",
+            "Facial",
+            "Beared",
+            "Bearedo"
+        )
+        item {
+            Scroller_ProductSlider(productList)
+        }
+
+        item{
+            Row (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimens.SmallPadding),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ){
+
+                Text(
+                    text = stringResource(R.string.popular_product),
+                    style = MaterialTheme.typography.titleMedium
+                )
+
+                Text(
+                    text = stringResource(R.string.see_all),
+                    onTextLayout = {}, // required parameter
+                    modifier = Modifier.clickable { },
+                    style = TextStyle(color = colorResource(id = R.color.blue)),
+//                onClick = {}
+                )
+
+            }
+        }
+
+        val dummyImageUrls  = List(20){"https://via.placeholder.com/150"}
+        item{
+            GridWith_Images_Details(dummyImageUrls )
+        }
     }
 
 }
 
-
 @Composable
-fun Dashboard_1() {
+fun Header_UserScrn() {
     Row(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(Dimens.SmallPadding),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -110,7 +188,7 @@ fun Dashboard_1() {
 }
 
 @Composable
-fun Dashboard_2() {
+fun Search_UserScrn() {
 
     var searchText by remember { mutableStateOf("") } // State to hold the search text
 

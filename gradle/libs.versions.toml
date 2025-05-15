@@ -1,7 +1,6 @@
 [versions]
 agp = "8.10.0"
 coreKtx = "1.16.0"
-dotsindicator = "5.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -23,8 +22,10 @@ roomCompiler = "2.7.1"
 coil = "2.5.0"
 googleGmsGoogleServices = "4.4.2"
 firebaseDatabase = "21.0.0"
+accompanistPager = "0.34.0"
 
 [libraries]
+
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -57,8 +58,7 @@ androidx-navigation-compose = { module = "androidx.navigation:navigation-compose
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitVersion" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
 
-#ComposeFoundation
-androidx-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "foundation" }
+
 
 #//Accompanist
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
@@ -74,12 +74,15 @@ roomKtx = { group = "androidx.room", name = "room-ktx", version.ref = "roomCompi
 #Coil - For Image Library
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 
-#Dots Indicator
-dotsindicator = { module = "com.tbuonomo:dotsindicator", version.ref = "dotsindicator" }
+#Firebase
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 
-
-
+#Accompanist-Pager - Library of composables -> provide a way to implement a paging layout, similar to a ViewPager in older development
+accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPager" }
+accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPager" }
+#-----------------------------------Instead of this we're using Compose foundatio for pager and all.
+#ComposeFoundation
+androidx-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "foundation" }
 
 
 [plugins]

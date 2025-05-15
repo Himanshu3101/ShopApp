@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
 import com.example.shopapp.R
 import com.example.shopapp.ui.theme.Dimens
 
@@ -35,9 +36,10 @@ fun ButtonBoxPrev(){
 fun ButtonBox(
     modifier : Modifier = Modifier,
     text:String,
+    boxHeight: Dp = Dimens.SM_BoxHeight,
     padding: Dp = Dimens.SmallPadding,
     borderColor : Color =  colorResource(id = R.color.blue),
-    containerColor : Color =  colorResource(id = R.color.blue2),
+    containerColor : Color =  colorResource(id = R.color.blue),
     textColor: Color = colorResource(id = R.color.white),
     fontSize : TextUnit = Dimens.MediumText,
     fraction: Float = 1f,
@@ -46,19 +48,21 @@ fun ButtonBox(
     Box(
         modifier = Modifier
             .padding(padding)
+            .height(boxHeight)
             .border(Dimens.SmallBorderWidth, borderColor, RoundedCornerShape(Dimens.LargeCornerRadius))
             .clickable {onClick()}
             .fillMaxWidth(fraction)
-            .height(Dimens.LargeBoxHeight)
+            .height(Dimens.MediumBoxHeight)
             .clip(RoundedCornerShape(Dimens.LargeCornerRadius))
             .background(containerColor),
         contentAlignment = Alignment.Center
     ){
         Text(
             text = text,
-            fontSize = Dimens.MediumText,
+            fontSize = Dimens.SmallText,
             style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
-            color = textColor
+            color = textColor,
+            modifier = Modifier.padding(horizontal = Dimens.MediumPadding),
         )
     }
 }

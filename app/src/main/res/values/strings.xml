@@ -3,4 +3,7 @@
     <string name="splash_title">Skincare made\nSimple,\nbeautiful,\nAnd Effective</string>
     <string name="welcomeBack">Welcome Back</string>
     <string name="userName">Himanshu Shrivastwa</string>
+    <string name="product">Product</string>
+    <string name="see_all">See all</string>
+    <string name="popular_product">Popular Products</string>
 </resources>
