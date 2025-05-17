@@ -1,4 +1,4 @@
-package com.example.shopapp.features.Dashboard.component
+package com.example.shopapp.features.Dashboard.presentation.screen.component
 
 
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.shopapp.R
-import com.example.shopapp.ui.components.common.ButtonBox
+import com.example.shopapp.ui.components.ButtonBox
 
 @Preview
 @Composable

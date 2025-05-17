@@ -1,4 +1,4 @@
-package com.example.shopapp.features.common
+package com.example.shopapp.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box

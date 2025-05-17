@@ -1,4 +1,4 @@
-package com.example.shopapp.ui.components.common
+package com.example.shopapp.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

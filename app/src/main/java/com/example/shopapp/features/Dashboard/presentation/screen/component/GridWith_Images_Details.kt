@@ -1,4 +1,4 @@
-package com.example.shopapp.features.Dashboard.component
+package com.example.shopapp.features.Dashboard.presentation.screen.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.shopapp.R
-import com.example.shopapp.features.util.Constants
 import com.example.shopapp.features.util.Constants.deviceSize
 import com.example.shopapp.ui.theme.Dimens
 
