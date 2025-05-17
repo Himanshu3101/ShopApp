@@ -24,6 +24,8 @@ android {
 
     buildTypes {
         release {
+            buildConfigField("String", "APP_ID", "\"\"")
+            buildConfigField("String", "API_KEY", "\"\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -32,6 +34,8 @@ android {
         }
         getByName("debug") {
             isDebuggable = true
+            buildConfigField("String", "APP_ID", "\"\"")
+            buildConfigField("String", "API_KEY", "\"\"")
         }
     }
     compileOptions {
@@ -43,6 +47,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -84,8 +89,8 @@ dependencies {
     implementation (libs.androidx.hilt.navigation.compose)
 
     //Retrofit
-   /* implementation (libs.retrofit)
-    implementation (libs.converter.gson)*/
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
 
     //Compose Foundation
     implementation (libs.androidx.foundation)

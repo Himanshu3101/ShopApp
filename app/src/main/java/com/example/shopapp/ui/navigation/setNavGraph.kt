@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.shopapp.features.Dashboard.presentation.screen.Dashboard
-import com.example.shopapp.features.IntroScreen.presentation.IntroScreen
+import com.example.shopapp.features.dashboard.presentation.screen.Dashboard
+import com.example.shopapp.features.introScreen.presentation.IntroScreen
 
 @Composable
 fun SetNavGraph() {
