@@ -24,10 +24,6 @@ android {
 
     buildTypes {
 
-
-        val appId = project.findProperty("APP_ID") ?: throw GradleException("APP_ID is missing")
-        val apiKey = project.findProperty("API_KEY") ?: throw GradleException("API_KEY is missing")
-
         release {
             buildConfigField("String", "APP_ID", "\"\"")
             buildConfigField("String", "API_KEY", "\"\"")
