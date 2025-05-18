@@ -11,11 +11,9 @@ class AuthInterceptor @Inject constructor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
         val requestWithHeaders = originalRequest.newBuilder()
-            .addHeader("X-Parse-Application-Id", keysProvider.apiKey)
+            .addHeader("X-Parse-REST-API-Key", keysProvider.apiKey)
             .addHeader("X-Parse-Application-Id", keysProvider.appId)
             .build()
         return chain.proceed(requestWithHeaders)
     }
-
-
 }

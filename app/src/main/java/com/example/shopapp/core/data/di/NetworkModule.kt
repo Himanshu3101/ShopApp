@@ -1,4 +1,4 @@
-package com.example.shopapp.core.di
+package com.example.shopapp.core.data.di
 
 import com.example.shopapp.core.network.secrets.AuthInterceptor
 import com.example.shopapp.core.network.ShopApi

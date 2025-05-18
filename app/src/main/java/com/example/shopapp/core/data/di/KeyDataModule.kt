@@ -1,4 +1,4 @@
-package com.example.shopapp.core.di
+package com.example.shopapp.core.data.di
 
 import com.example.shopapp.core.network.secrets.AuthInterceptor
 import com.example.shopapp.core.network.secrets.KeysProvider.AppKeysProviderImpl
@@ -11,7 +11,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DataModule {
+object KeyDataModule {
 
     @Provides
     @Singleton
