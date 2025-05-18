@@ -1,7 +1,6 @@
 package com.example.shopapp.core.network.secrets.KeysProvider
 
 import com.example.shopapp.BuildConfig
-import jakarta.inject.Inject
 
 class AppKeysProviderImpl : KeysProvider {
     override val apiKey: String
