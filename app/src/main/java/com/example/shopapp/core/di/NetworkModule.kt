@@ -1,9 +1,9 @@
 package com.example.shopapp.core.di
 
-import com.example.shopapp.app.AppKeysProviderImpl
+import com.example.shopapp.core.network.secrets.KeysProvider.AppKeysProviderImpl
 import com.example.shopapp.core.network.secrets.AuthInterceptor
 import com.example.shopapp.core.network.ShopApi
-import com.example.shopapp.core.network.secrets.KeysProvider
+import com.example.shopapp.core.network.secrets.KeysProvider.KeysProvider
 import com.example.shopapp.features.dashboard.data.repository.BannerRepositoryImpl
 import com.example.shopapp.features.dashboard.domain.remote.repositoy.BannerRepository
 import dagger.Module
@@ -20,7 +20,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    //For the header of APIs.
     @Provides
     @Singleton
     fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
@@ -38,20 +37,5 @@ object NetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ShopApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideKeysProvider(): KeysProvider = AppKeysProviderImpl()
-
-    @Provides
-    @Singleton
-    fun provideAuthInterceptor(keysProvider: KeysProvider): AuthInterceptor =
-        AuthInterceptor(keysProvider)
-
-    @Provides
-    @Singleton
-    fun provideBannerRepository(api: ShopApi): BannerRepository {
-        return BannerRepositoryImpl(api)
     }
 }

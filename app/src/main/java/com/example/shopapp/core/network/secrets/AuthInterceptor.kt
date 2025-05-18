@@ -1,5 +1,6 @@
 package com.example.shopapp.core.network.secrets
 
+import com.example.shopapp.core.network.secrets.KeysProvider.KeysProvider
 import jakarta.inject.Inject
 import okhttp3.Interceptor
 import okhttp3.Response

@@ -1,7 +1,6 @@
-package com.example.shopapp.app
+package com.example.shopapp.core.network.secrets.KeysProvider
 
 import com.example.shopapp.BuildConfig
-import com.example.shopapp.core.network.secrets.KeysProvider
 import jakarta.inject.Inject
 
 class AppKeysProviderImpl @Inject constructor() : KeysProvider {
