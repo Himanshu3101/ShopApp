@@ -3,7 +3,7 @@ package com.example.shopapp.features.dashboard.presentation.screen
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.shopapp.core.util.Resources
+import com.example.shopapp.core.network.Resources
 import com.example.shopapp.features.dashboard.domain.useCases.GetBanner_UC
 import com.example.shopapp.features.dashboard.domain.useCases.GetCategory_UC
 import com.example.shopapp.features.dashboard.presentation.screen.event.ev_dashboard

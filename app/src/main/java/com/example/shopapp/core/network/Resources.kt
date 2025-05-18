@@ -1,4 +1,4 @@
-package com.example.shopapp.core.util
+package com.example.shopapp.core.network
 
 sealed class Resources<T>(
     message: String? = null,

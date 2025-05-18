@@ -1,6 +1,6 @@
 package com.example.shopapp.features.dashboard.domain.useCases
 
-import com.example.shopapp.core.util.Resources
+import com.example.shopapp.core.network.Resources
 import com.example.shopapp.features.dashboard.domain.remote.model.Banner
 import com.example.shopapp.features.dashboard.domain.remote.repositoy.BannerRepository
 import kotlinx.coroutines.Dispatchers
