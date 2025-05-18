@@ -1,5 +1,6 @@
 package com.example.shopapp.features.dashboard.presentation.screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,13 +12,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.shopapp.R
@@ -25,6 +26,8 @@ import com.example.shopapp.features.dashboard.presentation.screen.component.Grid
 import com.example.shopapp.features.dashboard.presentation.screen.component.Header_UserScrn
 import com.example.shopapp.features.dashboard.presentation.screen.component.Scroller_ProductSlider
 import com.example.shopapp.features.dashboard.presentation.screen.component.Search_UserScrn
+import com.example.shopapp.features.dashboard.presentation.screen.event.ev_dashboard
+import com.example.shopapp.features.dashboard.presentation.screen.state.st_Dashboard
 import com.example.shopapp.ui.components.ImagePager
 import com.example.shopapp.ui.theme.Dimens
 
@@ -32,19 +35,26 @@ import com.example.shopapp.ui.theme.Dimens
 @Preview(/*showBackground = true*/)
 @Composable
 fun PrevDash() {
-    Dashboard(navHostController = rememberNavController())
+    Dashboard(
+        navHostController = rememberNavController(),
+        event = {},
+        state = st_Dashboard()
+    )
 }
 
 @Composable
-fun Dashboard(navHostController: NavHostController) {
+fun Dashboard(
+    navHostController: NavHostController,
+    event: (ev_dashboard) -> Unit,
+    state: st_Dashboard
+) {
 
-    val viewModel = hiltViewModel<dashboardViewModel>()
+    LaunchedEffect(key1 = Unit) {
+        event(ev_dashboard.getBanners)
+        event(ev_dashboard.getCategory)
+    }
 
-    /*LaunchedEffect(key1 = Unit) {
-        viewModel.getBanner()
-    }*/
-
-    LazyColumn (
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
@@ -52,33 +62,31 @@ fun Dashboard(navHostController: NavHostController) {
         verticalArrangement = Arrangement.spacedBy(Dimens.SmallSpacerHeight)
     ) {
 
-        item{
+        item {
             Header_UserScrn()
         }
 
-        item{
+        item {
             Search_UserScrn()
         }
 
-        val imageList = listOf(
-            "https://via.placeholder.com/150",
-            "https://picsum.photos/id/237/200/300",
-            "https://picsum.photos/id/238/200/300"
-        )
-        item{
-            ImagePager(imageList)
+
+        item {
+            if (state.bannerUrls.isNotEmpty()) {
+                ImagePager(imageUrls = state.bannerUrls)
+            }
         }
 
 
 //        Product
-        item{
-            Row (
+        item {
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(Dimens.SmallPadding),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
-            ){
+            ) {
 
                 Text(
                     text = stringResource(R.string.product),
@@ -96,26 +104,22 @@ fun Dashboard(navHostController: NavHostController) {
             }
         }
 
-        val productList = listOf(
-            "Shampoo",
-            "Skin",
-            "Facial",
-            "Beared",
-            "Bearedo"
-        )
         item {
-            Scroller_ProductSlider(productList)
+            if(state.categoryList.isNotEmpty()){
+                Scroller_ProductSlider(productList = state.categoryList)
+            }
+
         }
 
 //        Popular Products
-        item{
-            Row (
+        item {
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(Dimens.SmallPadding),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
-            ){
+            ) {
 
                 Text(
                     text = stringResource(R.string.popular_product),
@@ -133,9 +137,9 @@ fun Dashboard(navHostController: NavHostController) {
             }
         }
 
-        val dummyImageUrls  = List(20){"https://via.placeholder.com/150"}
-        item{
-            GridWith_Images_Details(dummyImageUrls )
+        val dummyImageUrls = List(20) { "https://via.placeholder.com/150" }
+        item {
+            GridWith_Images_Details(dummyImageUrls)
         }
     }
 

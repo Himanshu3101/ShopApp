@@ -6,5 +6,5 @@ sealed class Resources<T>(
 ) {
     class Loading<T> : Resources<T>()
     class Success <T> (val data : T?): Resources<T>(data = data)
-    class Erro<T> (val message: String?) : Resources<T>(message = message)
+    class Error<T> (val message: String?) : Resources<T>(message = message)
 }

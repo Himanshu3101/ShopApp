@@ -1,4 +1,4 @@
-package com.example.shopapp.features.dashboard.di
+package com.example.shopapp.features.dashboard.domain.di
 
 import com.example.shopapp.features.dashboard.domain.remote.repositoy.BannerRepository
 import com.example.shopapp.features.dashboard.domain.useCases.GetBanner_UC

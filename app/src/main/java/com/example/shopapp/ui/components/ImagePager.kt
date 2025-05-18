@@ -36,9 +36,9 @@ fun Prev_ImagePager() {
 }
 
 @Composable
-fun ImagePager(images: List<String>) {
+fun ImagePager(imageUrls: List<String>) {
 
-    val pagerState = rememberPagerState(pageCount = { images.size })
+    val pagerState = rememberPagerState(pageCount = { imageUrls.size })
 
     Column(
         modifier = Modifier
@@ -60,7 +60,7 @@ fun ImagePager(images: List<String>) {
             ) {
 
                 SubcomposeAsyncImage(
-                    model = images[page],
+                    model = imageUrls[page],
                     contentDescription = "Image $page",
                     contentScale = ContentScale.Crop,
                     loading = {
@@ -89,7 +89,7 @@ fun ImagePager(images: List<String>) {
         }
 
         AnimatedDotsIndicator(
-            totalDots = images.size,
+            totalDots = imageUrls.size,
             selectedIndex = pagerState.currentPage
         )
     }
