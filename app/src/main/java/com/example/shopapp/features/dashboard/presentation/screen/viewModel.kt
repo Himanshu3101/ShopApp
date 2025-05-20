@@ -11,7 +11,6 @@ import com.example.shopapp.features.dashboard.presentation.screen.event.ev_dashb
 import com.example.shopapp.features.dashboard.presentation.screen.state.ItemData
 import com.example.shopapp.features.dashboard.presentation.screen.state.st_Dashboard
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

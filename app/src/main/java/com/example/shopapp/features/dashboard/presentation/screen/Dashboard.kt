@@ -137,13 +137,6 @@ fun Dashboard(
             }
         }
 
-        val dummyImageUrls = listOf(
-            "https://picsum.photos/id/1015/600/400",
-            "https://picsum.photos/id/1020/600/400",
-            "https://picsum.photos/id/1024/600/400",
-            "https://picsum.photos/id/1035/600/400",
-            "https://picsum.photos/id/1043/600/400"
-        )
         item {
             if(state.itemsState.isNotEmpty()){
                 GridWith_Images_Details(state)
