@@ -40,6 +40,8 @@ class dashboardViewModel @Inject constructor(
             ev_dashboard.getItens -> {
                 getItems()
             }
+
+           /* is ev_dashboard.NavigateToProductDetails -> TODO()*/
         }
     }
 

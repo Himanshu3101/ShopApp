@@ -58,7 +58,7 @@ fun Dashboard(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(Dimens.SmallPadding),
+            .padding(top = Dimens.ExtraLargePadding, start = Dimens.SmallPadding, end = Dimens.SmallPadding),
         verticalArrangement = Arrangement.spacedBy(Dimens.SmallSpacerHeight)
     ) {
 
