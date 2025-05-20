@@ -9,6 +9,7 @@ object Dimens {
     val VerySmallBorderWidth = 1.dp
 
     // Font sizes
+    val verySmallText = 14.sp
     val SmallText = 16.sp
     val MediumText = 20.sp
     val LargeText = 24.sp
@@ -58,7 +59,7 @@ object Dimens {
     val SmallCircleShape = 90.dp
     val SmallSpacerWidth = 8.dp
 
-    val BannerImageSize = 190.dp
+    val BannerImageSize = 210.dp
 
     val sizeProductItem = 100.dp
 

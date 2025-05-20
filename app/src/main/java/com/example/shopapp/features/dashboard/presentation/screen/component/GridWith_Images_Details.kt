@@ -25,11 +25,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.shopapp.R
 import com.example.shopapp.core.util.Constants.deviceSize
+import com.example.shopapp.features.dashboard.presentation.screen.state.ItemData
+import com.example.shopapp.features.dashboard.presentation.screen.state.st_Dashboard
 import com.example.shopapp.ui.theme.Dimens
 
 @Preview
@@ -46,11 +49,11 @@ fun Prev_GridWith_Images_Details() {
         "https://picsum.photos/id/1043/600/400"
     )
 
-    GridWith_Images_Details(dummyImageUrls)
+    GridWith_Images_Details(itemDetils = st_Dashboard())
 }
 
 @Composable
-fun GridWith_Images_Details(dummyImageUrls: List<String>) {
+fun GridWith_Images_Details(itemDetils: st_Dashboard) {
 
 
     LazyVerticalGrid(
@@ -62,14 +65,14 @@ fun GridWith_Images_Details(dummyImageUrls: List<String>) {
         verticalArrangement = Arrangement.spacedBy(Dimens.SmallSpacerHeight),
         horizontalArrangement = Arrangement.spacedBy(Dimens.SmallSpacerHeight),
     ) {
-        items(dummyImageUrls.size) { index ->
-            ImageWithDetails(imageUrls = dummyImageUrls[index])
+        items(itemDetils.itemsState.size) { index ->
+            ImageWithDetails(itemDetails =  itemDetils.itemsState[index])
         }
     }
 }
 
 @Composable
-fun ImageWithDetails(imageUrls: String) {
+fun ImageWithDetails(itemDetails: ItemData) {
     Column(
         modifier = Modifier
             .fillMaxWidth(),
@@ -100,20 +103,23 @@ fun ImageWithDetails(imageUrls: String) {
                         RoundedCornerShape(Dimens.SmallCornerRadius)
                     )
             ){
-                Downbar(modifier = Modifier.align(Alignment.BottomCenter))
+                Downbar(
+                    modifier = Modifier.align(Alignment.BottomCenter),
+                    itemDetails = itemDetails
+                )
             }
 
 
             Image_Title(
                 modifier = Modifier.align(Alignment.TopCenter),
-                imageUrls = imageUrls
+                itemData = itemDetails
             )
         }
     }
 }
 
 @Composable
-fun Image_Title(imageUrls: String, modifier: Modifier) {
+fun Image_Title(modifier: Modifier, itemData: ItemData) {
     Column(
         modifier = modifier
             .padding(Dimens.SmallPadding),
@@ -121,7 +127,7 @@ fun Image_Title(imageUrls: String, modifier: Modifier) {
     ){
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(imageUrls)
+                .data(itemData.imageUrl.get(0))
                 .crossfade(true)
                 .build(),
             contentDescription = "Item Image",
@@ -130,28 +136,31 @@ fun Image_Title(imageUrls: String, modifier: Modifier) {
                 .clip(RoundedCornerShape(Dimens.SmallPadding))
         )
         Spacer(modifier = Modifier.height(Dimens.SmallPadding))
+
         Text(
-            text = "Sample Item Title",
-            fontWeight = FontWeight.Bold,
+            text = itemData.title,
+            textAlign = TextAlign.Center,
+            maxLines = 2,
+            fontSize = Dimens.verySmallText ,
             color = Color.Black
         )
     }
 }
 
 @Composable
-fun Downbar(modifier: Modifier) {
+fun Downbar(modifier: Modifier, itemDetails: ItemData) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(all = Dimens.SmallPadding),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = "$ 95.0", color = Color.Black, fontWeight = FontWeight.Bold)
+        Text(text = "$${itemDetails.price}", color = Color.Black, fontWeight = FontWeight.Bold)
 
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "4.6", color = Color.Black)
+            Text(text = "${itemDetails.rating}", color = Color.Black)
 
             Spacer(modifier = Modifier.height(Dimens.SmallPadding))
 

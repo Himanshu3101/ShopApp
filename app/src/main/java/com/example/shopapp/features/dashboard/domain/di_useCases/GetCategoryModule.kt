@@ -1,4 +1,4 @@
-package com.example.shopapp.features.dashboard.domain.di
+package com.example.shopapp.features.dashboard.domain.di_useCases
 
 import com.example.shopapp.features.dashboard.domain.remote.repositoy.CategoryRepository
 import com.example.shopapp.features.dashboard.domain.useCases.GetCategory_UC

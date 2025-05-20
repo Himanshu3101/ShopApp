@@ -51,6 +51,7 @@ fun Dashboard(
     LaunchedEffect(key1 = Unit) {
         event(ev_dashboard.getBanners)
         event(ev_dashboard.getCategory)
+        event(ev_dashboard.getItens)
     }
 
     LazyColumn(
@@ -144,7 +145,10 @@ fun Dashboard(
             "https://picsum.photos/id/1043/600/400"
         )
         item {
-            GridWith_Images_Details(dummyImageUrls)
+            if(state.itemsState.isNotEmpty()){
+                GridWith_Images_Details(state)
+            }
+
         }
     }
 
