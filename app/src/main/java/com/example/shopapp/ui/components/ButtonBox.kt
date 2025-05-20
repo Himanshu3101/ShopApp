@@ -51,7 +51,7 @@ fun ButtonBox(
             .border(Dimens.SmallBorderWidth, borderColor, RoundedCornerShape(Dimens.LargeCornerRadius))
             .clickable {onClick()}
             .fillMaxWidth(fraction)
-            .height(Dimens.MediumBoxHeight)
+//            .height(Dimens.MediumBoxHeight)
             .clip(RoundedCornerShape(Dimens.LargeCornerRadius))
             .background(containerColor),
         contentAlignment = Alignment.Center

@@ -136,7 +136,13 @@ fun Dashboard(
             }
         }
 
-        val dummyImageUrls = List(20) { "https://via.placeholder.com/150" }
+        val dummyImageUrls = listOf(
+            "https://picsum.photos/id/1015/600/400",
+            "https://picsum.photos/id/1020/600/400",
+            "https://picsum.photos/id/1024/600/400",
+            "https://picsum.photos/id/1035/600/400",
+            "https://picsum.photos/id/1043/600/400"
+        )
         item {
             GridWith_Images_Details(dummyImageUrls)
         }

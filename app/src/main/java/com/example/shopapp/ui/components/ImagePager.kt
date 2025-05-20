@@ -47,7 +47,7 @@ fun ImagePager(imageUrls: List<String>) {
     ) {
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.height(Dimens.ExtraLargeBoxHeight),
+//            modifier = Modifier.height(Dimens.ExtraLargeBoxHeight),
             userScrollEnabled = true,
             ) { page ->
 
@@ -62,7 +62,7 @@ fun ImagePager(imageUrls: List<String>) {
                 SubcomposeAsyncImage(
                     model = imageUrls[page],
                     contentDescription = "Image $page",
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.Fit,
                     loading = {
                         Box(
                             modifier = Modifier
@@ -83,7 +83,7 @@ fun ImagePager(imageUrls: List<String>) {
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(Dimens.LargeBoxHeight),
+                        .height(Dimens. LargeBoxHeight),
                 )
             }
         }

@@ -35,17 +35,20 @@ object Dimens {
     val IconSizeLarge = 32.dp
 
     // Button height
+
+
+
     val SmallSpacerHeight = 8.dp
     val MediumSpacerHeight = 18.dp
     val LargeSpacerHeight = 30.dp
     val ExtraLargeSpacerHeight = 100.dp
 
     //Box Height
-    val MediumBoxHeight = 60.dp
+    val MediumBoxHeight = 80.dp
     val ExtraLargeBoxHeight = 250.dp
     val SM_BoxHeight = 40.dp
     val SmallBoxHeight = 20.dp
-    val LargeBoxHeight = 200.dp
+    val LargeBoxHeight = 150.dp
 
     val MediumCornerRadius = 30.dp
     val SmallCornerRadius = 12.dp
@@ -55,5 +58,9 @@ object Dimens {
     val SmallCircleShape = 90.dp
     val SmallSpacerWidth = 8.dp
 
-    val BannerImageSize = 120.dp
+    val BannerImageSize = 190.dp
+
+    val sizeProductItem = 100.dp
+
+
 }
