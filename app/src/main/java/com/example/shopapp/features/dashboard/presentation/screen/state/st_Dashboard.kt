@@ -18,7 +18,7 @@ data class ItemData(
     val price: Int,
     val rating: Double,
     val title: String,
-    val categoryId : Int
+    val showRecommended : Boolean
 )
 
 /*data class particularItems(

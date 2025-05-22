@@ -39,7 +39,7 @@ fun Scroller_ProductSlider(productList: List<CategoryDetails>, event: (ev_dashbo
                 textColor = colorResource(id = R.color.black),
                 borderColor = colorResource(id = R.color.white),
             ) {
-                event(ev_dashboard.setProductId(list.Pid.toString()))
+//                event(ev_dashboard.setProductId(list.Pid.toString()))
             }
         }
 

@@ -1,5 +1,6 @@
 package com.example.shopapp.features.dashboard.presentation.screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -151,13 +152,11 @@ fun Dashboard(
         item {
 
             if (!isInitOnce.value) {
-                if (state.setProductId.toString() == "0") {
-//                    GridWith_Images_Details(state.itemsState.get())
-                } else {
-                    val id = state.categoryList[0].Pid
-                    GridWith_Images_Details(state.itemsState[id])
-                }
-                /* Log.e("Dashboard", "Showing products $isInitOnce")
+                Log.e("Dashboard", "Showing products ${state.itemsState}")
+              GridWith_Images_Details(state.itemsState)
+
+
+                /*
                  GridWith_Images_Details(state)*/
             }
 

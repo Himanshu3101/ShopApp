@@ -50,13 +50,21 @@ hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltAndroid" }
 #HiltNavigationCompose
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
-
 #//Compose Navigation
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-
-#Retrogit
+#Retrofit
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitVersion" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
+#ROOM
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCompiler" }
+roomRuntime = { group = "androidx.room", name = "room-runtime", version.ref = "roomCompiler" }
+roomKtx = { group = "androidx.room", name = "room-ktx", version.ref = "roomCompiler" }
+#Accompanist-Pager - Library of composables -> provide a way to implement a paging layout, similar to a ViewPager in older development
+accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPager" }
+accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPager" }
+#-----------------------------------Instead of this we're using Compose foundatio for pager and all.
+#ComposeFoundation
+androidx-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "foundation" }
 
 
 
@@ -66,10 +74,7 @@ accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-
 #// lottie - for Animation
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
 
-#ROOM
-androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCompiler" }
-roomRuntime = { group = "androidx.room", name = "room-runtime", version.ref = "roomCompiler" }
-roomKtx = { group = "androidx.room", name = "room-ktx", version.ref = "roomCompiler" }
+
 
 #Coil - For Image Library
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
@@ -77,12 +82,7 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 #Firebase
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 
-#Accompanist-Pager - Library of composables -> provide a way to implement a paging layout, similar to a ViewPager in older development
-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPager" }
-accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPager" }
-#-----------------------------------Instead of this we're using Compose foundatio for pager and all.
-#ComposeFoundation
-androidx-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "foundation" }
+
 
 
 [plugins]

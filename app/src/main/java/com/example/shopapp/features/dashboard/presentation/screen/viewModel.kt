@@ -28,7 +28,7 @@ class DashboardViewModel @Inject constructor(
     private val _dashboardState = MutableStateFlow(st_Dashboard())
     val dashboardState = _dashboardState.asStateFlow()
 
-    fun initDashboard() {
+    private fun initDashboard() {
         if (_dashboardState.value.isInitialized) return
 
         viewModelScope.launch {
@@ -147,7 +147,8 @@ class DashboardViewModel @Inject constructor(
                             price = mapped.price,
                             rating = mapped.rating,
                             title = mapped.title,
-                            categoryId = mapped.categoryId
+                            showRecommended = mapped.showRecommended
+//                            categoryId = mapped.categoryId
                         )
                     } ?: emptyList()
 

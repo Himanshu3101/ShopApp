@@ -26,7 +26,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.shopapp.R
@@ -34,7 +33,7 @@ import com.example.shopapp.core.util.Constants.deviceSize
 import com.example.shopapp.features.dashboard.presentation.screen.state.ItemData
 import com.example.shopapp.ui.theme.Dimens
 
-@Preview
+/*@Preview
 @Composable
 fun Prev_GridWith_Images_Details() {
     val data = listOf(
@@ -59,10 +58,10 @@ fun Prev_GridWith_Images_Details() {
         )
     )
     GridWith_Images_Details(itemData = data)
-}
+}*/
 
 @Composable
-fun GridWith_Images_Details(itemData: List<ItemData>) {
+fun GridWith_Images_Details(itemsState: List<ItemData>) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier
@@ -72,17 +71,20 @@ fun GridWith_Images_Details(itemData: List<ItemData>) {
         verticalArrangement = Arrangement.spacedBy(Dimens.SmallSpacerHeight),
         horizontalArrangement = Arrangement.spacedBy(Dimens.SmallSpacerHeight),
     ) {
+        items(itemsState.size) { index ->
 
-        val size = itemData
 
-        items(itemData.size) { index ->
-            ImageWithDetails(itemDetails = itemData)
+            if(itemsState[index].showRecommended){
+                ImageWithDetails(itemDetails = itemsState[index])
+            }
+
+
         }
     }
 }
 
 @Composable
-fun ImageWithDetails(itemDetails: List<ItemData>) {
+fun ImageWithDetails(itemDetails: ItemData) {
 
     Column(
         modifier = Modifier
@@ -138,7 +140,7 @@ fun Image_Title(modifier: Modifier, itemData: ItemData) {
     ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(itemData.imageUrl.get(0))
+                .data(itemData.imageUrl[0])
                 .crossfade(true)
                 .build(),
             contentDescription = "Item Image",
