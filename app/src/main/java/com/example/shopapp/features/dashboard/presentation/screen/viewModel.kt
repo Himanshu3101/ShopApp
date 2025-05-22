@@ -8,6 +8,7 @@ import com.example.shopapp.features.dashboard.domain.useCases.GetBanner_UC
 import com.example.shopapp.features.dashboard.domain.useCases.GetCategory_UC
 import com.example.shopapp.features.dashboard.domain.useCases.GetItems_UC
 import com.example.shopapp.features.dashboard.presentation.screen.event.ev_dashboard
+import com.example.shopapp.features.dashboard.presentation.screen.state.CategoryDetails
 import com.example.shopapp.features.dashboard.presentation.screen.state.ItemData
 import com.example.shopapp.features.dashboard.presentation.screen.state.st_Dashboard
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class dashboardViewModel @Inject constructor(
+class DashboardViewModel @Inject constructor(
     private val getBanner_UC: GetBanner_UC,
     private val getCategory_UC: GetCategory_UC,
     private val getItems_UC: GetItems_UC
@@ -27,129 +28,138 @@ class dashboardViewModel @Inject constructor(
     private val _dashboardState = MutableStateFlow(st_Dashboard())
     val dashboardState = _dashboardState.asStateFlow()
 
+    fun initDashboard() {
+        if (_dashboardState.value.isInitialized) return
+
+        viewModelScope.launch {
+            getBanner()
+            getCategory()
+            getItems()
+
+            _dashboardState.update { it.copy(isInitialized = true) }
+        }
+    }
+
+
     fun onEvent(event: ev_dashboard) {
         when (event) {
-            is ev_dashboard.getBanners -> {
-                getBanner()
-            }
+            is ev_dashboard.setProductId -> _dashboardState.value =
+                dashboardState.value.copy(setProductId = event.categoryId)
 
-            ev_dashboard.getCategory -> {
-                getCategory()
-            }
-
-            ev_dashboard.getItens -> {
-                getItems()
-            }
-
-           /* is ev_dashboard.NavigateToProductDetails -> TODO()*/
+            ev_dashboard.InitDashboard -> initDashboard()
         }
     }
 
-    private fun getItems() {
-        viewModelScope.launch {
-            getItems_UC().collect { resources ->
-                when(resources) {
-                    is Resources.Error -> {
+    private suspend fun getBanner() {
+        getBanner_UC().collect { resources ->
 
-                        _dashboardState.update {
-                            it.copy(
-                                isLoading = false
-                            )
-                        }
-                        Log.d("Items", resources.message.toString())
+            when (resources) {
+                is Resources.Loading -> {
+                    _dashboardState.update { it.copy(isLoading = true) }
+                }
 
-                    }
-                    is Resources.Loading -> {
-                        _dashboardState.update { it.copy(isLoading = true) }
-                    }
-                    is Resources.Success -> {
-                        val itemList = resources.data ?: emptyList()
-
-                        val mappedData = itemList.map{
-                            ItemData(
-                                imageUrl = it.picUrl,
-                                price = it.price,
-                                rating = it.rating,
-                                title = it.title
-                            )
-                        }
-
-                        Log.e("viewModelGetItems", mappedData.toString())
-
-                        _dashboardState.update {
-                            it.copy(
-                                itemsState = mappedData,
-                                isLoading = false
-                            )
-                        }
+                is Resources.Success -> {
+                    val urls = resources.data?.map { it.url } ?: emptyList()
+                    _dashboardState.update {
+                        it.copy(
+                            isLoading = false,
+                            bannerUrls = urls
+                        )
                     }
                 }
+
+                is Resources.Error -> {
+                    _dashboardState.update {
+                        it.copy(
+                            isLoading = false
+                        )
+                    }
+                    Log.d("Banner", resources.message.toString())
+                }
             }
+
+        }
+
+    }
+
+    private suspend fun getCategory() {
+
+        getCategory_UC().collect { resources ->
+
+            when (resources) {
+                is Resources.Loading -> {
+                    _dashboardState.update { it.copy(isLoading = true) }
+                }
+
+                is Resources.Success -> {
+
+                    val categoryMapped = resources.data?.map { categories ->
+                        CategoryDetails(
+                            Pid = categories.Pid,
+                            title = categories.title
+                        )
+                    } ?: emptyList()
+
+                    _dashboardState.update {
+                        it.copy(
+                            categoryList = categoryMapped,
+                            isLoading = false
+                        )
+                    }
+                }
+
+                is Resources.Error -> {
+                    _dashboardState.update {
+                        it.copy(
+                            isLoading = false
+                        )
+                    }
+                    Log.d("Banner", resources.message.toString())
+                }
+            }
+
         }
     }
 
-    private fun getCategory() {
-        viewModelScope.launch {
-            getCategory_UC().collect { resources ->
+    private suspend fun getItems() {
+        getItems_UC().collect { resources ->
+            when (resources) {
+                is Resources.Error -> {
 
-                when (resources) {
-                    is Resources.Loading -> {
-                        _dashboardState.update { it.copy(isLoading = true) }
+                    _dashboardState.update {
+                        it.copy(
+                            isLoading = false
+                        )
                     }
+                    Log.d("Items", resources.message.toString())
 
-                    is Resources.Success -> {
-                        val categories = resources.data?.map { it.title } ?: emptyList()
-                        _dashboardState.update {
-                            it.copy(
-                                isLoading = false,
-                                categoryList = categories
-                            )
-                        }
-                    }
-
-                    is Resources.Error -> {
-                        _dashboardState.update {
-                            it.copy(
-                                isLoading = false
-                            )
-                        }
-                        Log.d("Banner", resources.message.toString())
-                    }
                 }
 
-            }
-        }
-    }
-
-    private fun getBanner() {
-        viewModelScope.launch {
-            getBanner_UC().collect { resources ->
-
-                when (resources) {
-                    is Resources.Loading -> {
-                        _dashboardState.update { it.copy(isLoading = true) }
-                    }
-
-                    is Resources.Success -> {
-                        val urls = resources.data?.map { it.url } ?: emptyList()
-                        _dashboardState.update {
-                            it.copy(
-                                isLoading = false,
-                                bannerUrls = urls
-                            )
-                        }
-                    }
-
-                    is Resources.Error -> {
-                        _dashboardState.update {
-                            it.copy(
-                               isLoading = false
-                            )
-                        }
-                        Log.d("Banner", resources.message.toString())
-                    }
+                is Resources.Loading -> {
+                    _dashboardState.update { it.copy(isLoading = true) }
                 }
 
+                is Resources.Success -> {
+
+                    val mappeditems = resources.data?.map { mapped ->
+                        ItemData(
+                            imageUrl = mapped.picUrl,
+                            price = mapped.price,
+                            rating = mapped.rating,
+                            title = mapped.title,
+                            categoryId = mapped.categoryId
+                        )
+                    } ?: emptyList()
+
+                    Log.e("viewModelGetItems", mappeditems.toString())
+
+                    _dashboardState.update {
+                        it.copy(
+                            itemsState = mappeditems,
+                            isLoading = false
+                        )
+                    }
+                }
             }
         }
     }

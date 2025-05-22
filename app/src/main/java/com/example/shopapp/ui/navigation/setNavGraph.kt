@@ -8,7 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.shopapp.features.dashboard.presentation.screen.Dashboard
-import com.example.shopapp.features.dashboard.presentation.screen.dashboardViewModel
+import com.example.shopapp.features.dashboard.presentation.screen.DashboardViewModel
 import com.example.shopapp.features.introScreen.presentation.IntroScreen
 
 @Composable
@@ -23,7 +23,7 @@ fun SetNavGraph() {
 
         composable(route = Routes.Dashboard.route) {
 
-            val viewModel = hiltViewModel<dashboardViewModel>()
+            val viewModel = hiltViewModel<DashboardViewModel>()
             val state by viewModel.dashboardState.collectAsState()
             Dashboard(navController,event = viewModel::onEvent, state = state)
         }

@@ -32,22 +32,39 @@ import coil.request.ImageRequest
 import com.example.shopapp.R
 import com.example.shopapp.core.util.Constants.deviceSize
 import com.example.shopapp.features.dashboard.presentation.screen.state.ItemData
-import com.example.shopapp.features.dashboard.presentation.screen.state.st_Dashboard
 import com.example.shopapp.ui.theme.Dimens
 
 @Preview
 @Composable
 fun Prev_GridWith_Images_Details() {
-
-    GridWith_Images_Details(itemDetils = st_Dashboard())
+    val data = listOf(
+        ItemData(
+            imageUrl = listOf(
+                "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098536/1_1_db56nv.png",
+                "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098532/1_4_vdstgc.jpg"
+            ),
+            price = 89,
+            rating = 4.5,
+            title = "Product 1",
+            categoryId = 1
+        ),
+        ItemData(
+            imageUrl = listOf(
+                "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098532/1_4_vdstgc.jpg"
+            ),
+            price = 120,
+            rating = 4.8,
+            title = "Product 2",
+            categoryId = 2
+        )
+    )
+    GridWith_Images_Details(itemData = data)
 }
 
 @Composable
-fun GridWith_Images_Details(itemDetils: st_Dashboard) {
-
-
+fun GridWith_Images_Details(itemData: List<ItemData>) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2), // Define the number of columns
+        columns = GridCells.Fixed(2),
         modifier = Modifier
             .fillMaxWidth()
             .height(deviceSize() * 0.85f)
@@ -55,14 +72,18 @@ fun GridWith_Images_Details(itemDetils: st_Dashboard) {
         verticalArrangement = Arrangement.spacedBy(Dimens.SmallSpacerHeight),
         horizontalArrangement = Arrangement.spacedBy(Dimens.SmallSpacerHeight),
     ) {
-        items(itemDetils.itemsState.size) { index ->
-            ImageWithDetails(itemDetails =  itemDetils.itemsState[index])
+
+        val size = itemData
+
+        items(itemData.size) { index ->
+            ImageWithDetails(itemDetails = itemData)
         }
     }
 }
 
 @Composable
-fun ImageWithDetails(itemDetails: ItemData) {
+fun ImageWithDetails(itemDetails: List<ItemData>) {
+
     Column(
         modifier = Modifier
             .fillMaxWidth(),
@@ -92,7 +113,7 @@ fun ImageWithDetails(itemDetails: ItemData) {
                         colorResource(R.color.blue_light),
                         RoundedCornerShape(Dimens.SmallCornerRadius)
                     )
-            ){
+            ) {
                 Downbar(
                     modifier = Modifier.align(Alignment.BottomCenter),
                     itemDetails = itemDetails
@@ -114,7 +135,7 @@ fun Image_Title(modifier: Modifier, itemData: ItemData) {
         modifier = modifier
             .padding(Dimens.SmallPadding),
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(itemData.imageUrl.get(0))
@@ -131,7 +152,7 @@ fun Image_Title(modifier: Modifier, itemData: ItemData) {
             text = itemData.title,
             textAlign = TextAlign.Center,
             maxLines = 2,
-            fontSize = Dimens.verySmallText ,
+            fontSize = Dimens.verySmallText,
             color = Color.Black
         )
     }

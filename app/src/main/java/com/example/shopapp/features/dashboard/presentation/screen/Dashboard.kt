@@ -12,6 +12,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -48,17 +50,26 @@ fun Dashboard(
     state: st_Dashboard
 ) {
 
-    LaunchedEffect(key1 = Unit) {
-        event(ev_dashboard.getBanners)
-        event(ev_dashboard.getCategory)
-        event(ev_dashboard.getItens)
+    val isInitOnce = rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = true) {
+        if (!isInitOnce.value) {
+            isInitOnce.value = true
+            event(ev_dashboard.InitDashboard)
+        }
+
     }
+
 
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(top = Dimens.ExtraLargePadding, start = Dimens.SmallPadding, end = Dimens.SmallPadding),
+            .padding(
+                top = Dimens.ExtraLargePadding,
+                start = Dimens.SmallPadding,
+                end = Dimens.SmallPadding
+            ),
         verticalArrangement = Arrangement.spacedBy(Dimens.SmallSpacerHeight)
     ) {
 
@@ -105,8 +116,8 @@ fun Dashboard(
         }
 
         item {
-            if(state.categoryList.isNotEmpty()){
-                Scroller_ProductSlider(productList = state.categoryList)
+            if (state.categoryList.isNotEmpty()) {
+                Scroller_ProductSlider(productList = state.categoryList, event)
             }
 
         }
@@ -138,8 +149,16 @@ fun Dashboard(
         }
 
         item {
-            if(state.itemsState.isNotEmpty()){
-                GridWith_Images_Details(state)
+
+            if (!isInitOnce.value) {
+                if (state.setProductId.toString() == "0") {
+//                    GridWith_Images_Details(state.itemsState.get())
+                } else {
+                    val id = state.categoryList[0].Pid
+                    GridWith_Images_Details(state.itemsState[id])
+                }
+                /* Log.e("Dashboard", "Showing products $isInitOnce")
+                 GridWith_Images_Details(state)*/
             }
 
         }
