@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -65,20 +66,27 @@ fun Prev_GridWith_Images_Details() {
 @Composable
 fun GridWith_Images_Details(itemData: List<ItemData>) {
 
-
     FlowRow(
         modifier = Modifier
-//            .fillMaxWidth()
             .padding(Dimens.SmallPadding),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         maxItemsInEachRow = 2 // Optional
     ) {
-        itemData.chunked(2).forEach {
+        itemData.chunked(2).forEach { rowItems ->
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                rowItems.forEach { item ->
+                    Box(modifier = Modifier.weight(1f)) {
+                        if(item.showRecommended){
+                            ImageWithDetails(itemDetails = item)
+                        }
+                    }
+                }
+            }
 
-            /*if (it.showRecommended) {
-                ImageWithDetails(itemDetails = it)
-            }*/
+            if (rowItems.size < 2) {
+                Spacer(modifier = Modifier.weight(1f))
+            }
         }
     }
 }
@@ -109,7 +117,6 @@ fun ImageWithDetails(itemDetails: ItemData) {
                     .height(Dimens.LargeBoxHeight)
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
-//                .padding(top = Dimens.MediumBoxHeight)
                     .background(
                         colorResource(R.color.blue_light),
                         RoundedCornerShape(Dimens.SmallCornerRadius)
@@ -139,7 +146,7 @@ fun Image_Title(modifier: Modifier, itemData: ItemData) {
     ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(itemData.imageUrl.get(0))
+                .data(itemData.imageUrl[0])
                 .crossfade(true)
                 .build(),
             contentDescription = "Item Image",
