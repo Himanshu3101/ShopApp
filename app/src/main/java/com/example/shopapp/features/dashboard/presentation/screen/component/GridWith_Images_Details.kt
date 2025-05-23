@@ -34,7 +34,7 @@ import com.example.shopapp.core.util.Constants.deviceSize
 import com.example.shopapp.features.dashboard.presentation.screen.state.ItemData
 import com.example.shopapp.ui.theme.Dimens
 
-@Preview
+/*@Preview
 @Composable
 fun Prev_GridWith_Images_Details() {
     val data = listOf(
@@ -59,7 +59,7 @@ fun Prev_GridWith_Images_Details() {
         )
     )
     GridWith_Images_Details(itemData = data)
-}
+}*/
 
 @Composable
 fun GridWith_Images_Details(itemData: List<ItemData>) {
