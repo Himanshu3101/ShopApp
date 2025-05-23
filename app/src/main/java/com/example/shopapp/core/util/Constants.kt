@@ -15,4 +15,6 @@ object Constants {
 
         return with(density) { heightPx.toDp() } // convert pixels to Dp safely
     }
+
+    const val log:String = "Shop_log"
 }

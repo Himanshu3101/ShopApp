@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.shopapp.R
-import com.example.shopapp.features.dashboard.presentation.screen.event.ev_dashboard
+import com.example.shopapp.features.dashboard.presentation.screen.event.Ev_dashboard
 import com.example.shopapp.features.dashboard.presentation.screen.state.CategoryDetails
 import com.example.shopapp.ui.components.ButtonBox
 
@@ -25,7 +25,7 @@ fun Prev_Scroller_ProductSlider() {
 }
 
 @Composable
-fun Scroller_ProductSlider(productList: List<CategoryDetails>, event: (ev_dashboard) -> Unit) {
+fun Scroller_ProductSlider(productList: List<CategoryDetails>, event: (Ev_dashboard) -> Unit) {
     LazyRow(
         modifier = Modifier
             .fillMaxWidth(),
@@ -39,7 +39,7 @@ fun Scroller_ProductSlider(productList: List<CategoryDetails>, event: (ev_dashbo
                 textColor = colorResource(id = R.color.black),
                 borderColor = colorResource(id = R.color.white),
             ) {
-                event(ev_dashboard.setProductId(list.Pid.toString()))
+                event(Ev_dashboard.SetProductId(list.Pid.toString()))
             }
         }
 
