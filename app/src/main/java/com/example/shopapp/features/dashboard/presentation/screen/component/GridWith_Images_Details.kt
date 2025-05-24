@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,8 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,66 +25,73 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.shopapp.R
-import com.example.shopapp.core.util.Constants.deviceSize
 import com.example.shopapp.features.dashboard.presentation.screen.state.ItemData
 import com.example.shopapp.ui.theme.Dimens
 
-/*@Preview
+@Preview
 @Composable
 fun Prev_GridWith_Images_Details() {
     val data = listOf(
         ItemData(
             imageUrl = listOf(
-                "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098536/1_1_db56nv.png",
-                "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098532/1_4_vdstgc.jpg"
+                "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+                "https://images.unsplash.com/photo-1544005313-94ddf0286df2"
             ),
             price = 89,
             rating = 4.5,
             title = "Product 1",
-            categoryId = 1
+            categoryId = 1,
+            showRecommended = true
         ),
         ItemData(
             imageUrl = listOf(
-                "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098532/1_4_vdstgc.jpg"
+                "https://images.unsplash.com/photo-1544005313-94ddf0286df2"
             ),
             price = 120,
             rating = 4.8,
             title = "Product 2",
-            categoryId = 2
+            categoryId = 2,
+            showRecommended = true
         )
     )
     GridWith_Images_Details(itemData = data)
-}*/
+}
 
 @Composable
-fun GridWith_Images_Details(itemsState: List<ItemData>) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+fun GridWith_Images_Details(itemData: List<ItemData>) {
+
+    FlowRow(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(deviceSize() * 0.85f)
             .padding(Dimens.SmallPadding),
-        verticalArrangement = Arrangement.spacedBy(Dimens.SmallSpacerHeight),
-        horizontalArrangement = Arrangement.spacedBy(Dimens.SmallSpacerHeight),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        maxItemsInEachRow = 2 // Optional
     ) {
-        items(itemsState.size) { index ->
-
-
-            if(itemsState[index].showRecommended){
-                ImageWithDetails(itemDetails = itemsState[index])
+        itemData.chunked(2).forEach { rowItems ->
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                rowItems.forEach { item ->
+                    Box(modifier = Modifier.weight(1f)) {
+                        if(item.showRecommended){
+                            ImageWithDetails(itemDetails = item)
+                        }
+                    }
+                }
             }
 
-
+            if (rowItems.size < 2) {
+                Spacer(modifier = Modifier.weight(1f))
+            }
         }
     }
 }
 
 @Composable
 fun ImageWithDetails(itemDetails: ItemData) {
-
     Column(
         modifier = Modifier
             .fillMaxWidth(),
@@ -110,7 +116,6 @@ fun ImageWithDetails(itemDetails: ItemData) {
                     .height(Dimens.LargeBoxHeight)
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
-//                .padding(top = Dimens.MediumBoxHeight)
                     .background(
                         colorResource(R.color.blue_light),
                         RoundedCornerShape(Dimens.SmallCornerRadius)

@@ -8,7 +8,6 @@ data class st_Dashboard(
     val categoryList: List<CategoryDetails> = emptyList(),
     val setProductId : String ?= "0",
     val itemsState : List<ItemData> = emptyList(),
-
     //For initalizing the dashboard
     val isInitialized : Boolean = false
 )
@@ -18,16 +17,9 @@ data class ItemData(
     val price: Int,
     val rating: Double,
     val title: String,
+    val categoryId : Int,
     val showRecommended : Boolean
 )
-
-/*data class particularItems(
-    val imageUrl: String,
-    val price: Int,
-    val rating: Double,
-    val title: String,
-    val categoryId : Int
-)*/
 
 data class CategoryDetails(
     val Pid: Int,

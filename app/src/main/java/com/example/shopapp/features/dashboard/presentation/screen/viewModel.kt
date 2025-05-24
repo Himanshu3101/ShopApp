@@ -1,13 +1,12 @@
 package com.example.shopapp.features.dashboard.presentation.screen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shopapp.core.network.Resources
 import com.example.shopapp.features.dashboard.domain.useCases.GetBanner_UC
 import com.example.shopapp.features.dashboard.domain.useCases.GetCategory_UC
 import com.example.shopapp.features.dashboard.domain.useCases.GetItems_UC
-import com.example.shopapp.features.dashboard.presentation.screen.event.ev_dashboard
+import com.example.shopapp.features.dashboard.presentation.screen.event.Ev_dashboard
 import com.example.shopapp.features.dashboard.presentation.screen.state.CategoryDetails
 import com.example.shopapp.features.dashboard.presentation.screen.state.ItemData
 import com.example.shopapp.features.dashboard.presentation.screen.state.st_Dashboard
@@ -28,7 +27,7 @@ class DashboardViewModel @Inject constructor(
     private val _dashboardState = MutableStateFlow(st_Dashboard())
     val dashboardState = _dashboardState.asStateFlow()
 
-    private fun initDashboard() {
+    fun initDashboard() {
         if (_dashboardState.value.isInitialized) return
 
         viewModelScope.launch {
@@ -41,12 +40,12 @@ class DashboardViewModel @Inject constructor(
     }
 
 
-    fun onEvent(event: ev_dashboard) {
+    fun onEvent(event: Ev_dashboard) {
         when (event) {
-            is ev_dashboard.setProductId -> _dashboardState.value =
+            is Ev_dashboard.SetProductId -> _dashboardState.value =
                 dashboardState.value.copy(setProductId = event.categoryId)
 
-            ev_dashboard.InitDashboard -> initDashboard()
+            Ev_dashboard.InitDashboard -> initDashboard()
         }
     }
 
@@ -74,7 +73,6 @@ class DashboardViewModel @Inject constructor(
                             isLoading = false
                         )
                     }
-                    Log.d("Banner", resources.message.toString())
                 }
             }
 
@@ -114,7 +112,6 @@ class DashboardViewModel @Inject constructor(
                             isLoading = false
                         )
                     }
-                    Log.d("Banner", resources.message.toString())
                 }
             }
 
@@ -131,8 +128,6 @@ class DashboardViewModel @Inject constructor(
                             isLoading = false
                         )
                     }
-                    Log.d("Items", resources.message.toString())
-
                 }
 
                 is Resources.Loading -> {
@@ -147,12 +142,10 @@ class DashboardViewModel @Inject constructor(
                             price = mapped.price,
                             rating = mapped.rating,
                             title = mapped.title,
+                            categoryId = mapped.categoryId,
                             showRecommended = mapped.showRecommended
-//                            categoryId = mapped.categoryId
                         )
                     } ?: emptyList()
-
-                    Log.e("viewModelGetItems", mappeditems.toString())
 
                     _dashboardState.update {
                         it.copy(

@@ -1,6 +1,5 @@
 package com.example.shopapp.features.dashboard.presentation.screen
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,7 +27,7 @@ import com.example.shopapp.features.dashboard.presentation.screen.component.Grid
 import com.example.shopapp.features.dashboard.presentation.screen.component.Header_UserScrn
 import com.example.shopapp.features.dashboard.presentation.screen.component.Scroller_ProductSlider
 import com.example.shopapp.features.dashboard.presentation.screen.component.Search_UserScrn
-import com.example.shopapp.features.dashboard.presentation.screen.event.ev_dashboard
+import com.example.shopapp.features.dashboard.presentation.screen.event.Ev_dashboard
 import com.example.shopapp.features.dashboard.presentation.screen.state.st_Dashboard
 import com.example.shopapp.ui.components.ImagePager
 import com.example.shopapp.ui.theme.Dimens
@@ -47,7 +46,7 @@ fun PrevDash() {
 @Composable
 fun Dashboard(
     navHostController: NavHostController,
-    event: (ev_dashboard) -> Unit,
+    event: (Ev_dashboard) -> Unit,
     state: st_Dashboard
 ) {
 
@@ -55,8 +54,8 @@ fun Dashboard(
 
     LaunchedEffect(key1 = true) {
         if (!isInitOnce.value) {
+            event(Ev_dashboard.InitDashboard)
             isInitOnce.value = true
-            event(ev_dashboard.InitDashboard)
         }
 
     }
@@ -151,13 +150,8 @@ fun Dashboard(
 
         item {
 
-            if (!isInitOnce.value) {
-                Log.e("Dashboard", "Showing products ${state.itemsState}")
-              GridWith_Images_Details(state.itemsState)
-
-
-                /*
-                 GridWith_Images_Details(state)*/
+            if (isInitOnce.value == true) {
+                    GridWith_Images_Details(state.itemsState)
             }
 
         }
