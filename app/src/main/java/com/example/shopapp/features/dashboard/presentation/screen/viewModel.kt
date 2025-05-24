@@ -3,6 +3,7 @@ package com.example.shopapp.features.dashboard.presentation.screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shopapp.core.network.Resources
+import com.example.shopapp.core.network.retryWithExponentialBackoff
 import com.example.shopapp.features.dashboard.domain.useCases.GetBanner_UC
 import com.example.shopapp.features.dashboard.domain.useCases.GetCategory_UC
 import com.example.shopapp.features.dashboard.domain.useCases.GetItems_UC
@@ -15,27 +16,51 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 import javax.inject.Inject
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    private val getBanner_UC: GetBanner_UC,
-    private val getCategory_UC: GetCategory_UC,
-    private val getItems_UC: GetItems_UC
+    private val getBannerUC: GetBanner_UC,
+    private val getCategoryUC: GetCategory_UC,
+    private val getItemsUC: GetItems_UC
 ) : ViewModel() {
+
+    private val _bannerState = MutableStateFlow<Resources<List<String>>>(Resources.Loading())
+    private val _categoryState = MutableStateFlow<Resources<List<CategoryDetails>>>(Resources.Loading())
+    private val _itemState = MutableStateFlow<Resources<List<ItemData>>>(Resources.Loading())
+
 
     private val _dashboardState = MutableStateFlow(st_Dashboard())
     val dashboardState = _dashboardState.asStateFlow()
 
-    fun initDashboard() {
+    private fun initDashboard() {
         if (_dashboardState.value.isInitialized) return
 
         viewModelScope.launch {
-            getBanner()
-            getCategory()
-            getItems()
+            supervisorScope {
+                launch { getBanner() }
+                launch { getCategory() }
+                launch { getItems() }
+            }
+        }
 
-            _dashboardState.update { it.copy(isInitialized = true) }
+        viewModelScope.launch {
+            combine(_bannerState, _categoryState, _itemState) { banners, categories, items ->
+                val isLoading = listOf(banners, categories, items).any { it is Resources.Loading }
+
+                st_Dashboard(
+                    isInitialized = true,
+                    isLoading = isLoading,
+                    bannerUrls = (banners as? Resources.Success)?.data.orEmpty(),
+                    categoryList = (categories as? Resources.Success)?.data.orEmpty(),
+                    itemsState = (items as? Resources.Success)?.data.orEmpty()
+                )
+            }.distinctUntilChanged().collect {
+                _dashboardState.value = it
+            }
         }
     }
 
@@ -50,111 +75,94 @@ class DashboardViewModel @Inject constructor(
     }
 
     private suspend fun getBanner() {
-        getBanner_UC().collect { resources ->
+        try {
+            getBannerUC()
+                .retryWithExponentialBackoff()
+                .collect { resources ->
+                when (resources) {
 
-            when (resources) {
-                is Resources.Loading -> {
-                    _dashboardState.update { it.copy(isLoading = true) }
-                }
-
-                is Resources.Success -> {
-                    val urls = resources.data?.map { it.url } ?: emptyList()
-                    _dashboardState.update {
-                        it.copy(
-                            isLoading = false,
-                            bannerUrls = urls
-                        )
+                    is Resources.Success -> {
+                        _bannerState.value = Resources.Success(resources.data?.map { it.url })
                     }
-                }
 
-                is Resources.Error -> {
-                    _dashboardState.update {
-                        it.copy(
-                            isLoading = false
-                        )
+                    is Resources.Loading -> {
+                        _bannerState.value = Resources.Loading()
+                    }
+
+                    is Resources.Error -> {
+                        _bannerState.value = Resources.Error(resources.message)
                     }
                 }
             }
-
+        } catch (e: Exception) {
+            _bannerState.value = Resources.Error("Exception : ${e.localizedMessage}")
         }
+
 
     }
 
     private suspend fun getCategory() {
+        try {
+            getCategoryUC()
+                .retryWithExponentialBackoff()
+                .collect { resources ->
 
-        getCategory_UC().collect { resources ->
+                when (resources) {
+                    is Resources.Loading -> {
+                        _categoryState.value = Resources.Loading()
+                    }
 
-            when (resources) {
-                is Resources.Loading -> {
-                    _dashboardState.update { it.copy(isLoading = true) }
-                }
+                    is Resources.Success -> {
+                        _categoryState.value = Resources.Success(resources.data?.map { category ->
+                            CategoryDetails(
+                                Pid = category.Pid,
+                                title = category.title
+                            )
+                        })
+                    }
 
-                is Resources.Success -> {
-
-                    val categoryMapped = resources.data?.map { categories ->
-                        CategoryDetails(
-                            Pid = categories.Pid,
-                            title = categories.title
-                        )
-                    } ?: emptyList()
-
-                    _dashboardState.update {
-                        it.copy(
-                            categoryList = categoryMapped,
-                            isLoading = false
-                        )
+                    is Resources.Error -> {
+                        _categoryState.value = Resources.Error(resources.message)
                     }
                 }
 
-                is Resources.Error -> {
-                    _dashboardState.update {
-                        it.copy(
-                            isLoading = false
-                        )
-                    }
-                }
             }
-
+        } catch (e: Exception) {
+            _categoryState.value = Resources.Error("Exception : ${e.localizedMessage}")
         }
     }
 
     private suspend fun getItems() {
-        getItems_UC().collect { resources ->
-            when (resources) {
-                is Resources.Error -> {
-
-                    _dashboardState.update {
-                        it.copy(
-                            isLoading = false
-                        )
+        try {
+            getItemsUC()
+                .retryWithExponentialBackoff()
+                .collect { resources ->
+                when (resources) {
+                    is Resources.Error -> {
+                        _itemState.value = Resources.Error(resources.message)
                     }
-                }
 
-                is Resources.Loading -> {
-                    _dashboardState.update { it.copy(isLoading = true) }
-                }
+                    is Resources.Loading -> {
+                        _itemState.value = Resources.Loading()
+                    }
 
-                is Resources.Success -> {
+                    is Resources.Success -> {
 
-                    val mappeditems = resources.data?.map { mapped ->
-                        ItemData(
-                            imageUrl = mapped.picUrl,
-                            price = mapped.price,
-                            rating = mapped.rating,
-                            title = mapped.title,
-                            categoryId = mapped.categoryId,
-                            showRecommended = mapped.showRecommended
-                        )
-                    } ?: emptyList()
-
-                    _dashboardState.update {
-                        it.copy(
-                            itemsState = mappeditems,
-                            isLoading = false
-                        )
+                        _itemState.value = Resources.Success(resources.data?.map { mapped ->
+                            ItemData(
+                                imageUrl = mapped.picUrl,
+                                price = mapped.price,
+                                rating = mapped.rating,
+                                title = mapped.title,
+                                categoryId = mapped.categoryId,
+                                showRecommended = mapped.showRecommended
+                            )
+                        })
                     }
                 }
             }
+        } catch (e: Exception) {
+            _itemState.value = Resources.Error("Exception : ${e.localizedMessage}")
         }
     }
 }
