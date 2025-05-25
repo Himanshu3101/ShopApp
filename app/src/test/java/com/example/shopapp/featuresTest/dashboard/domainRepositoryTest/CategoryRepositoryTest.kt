@@ -1,4 +1,4 @@
-package com.example.shopapp.domainRepository
+package com.example.shopapp.featuresTest.dashboard.domainRepositoryTest
 
 import com.example.shopapp.core.network.ShopApi
 import com.example.shopapp.features.dashboard.data.remote.dto.CategoryResponse

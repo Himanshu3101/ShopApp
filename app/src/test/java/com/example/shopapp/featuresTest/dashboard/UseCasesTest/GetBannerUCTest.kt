@@ -1,4 +1,4 @@
-package com.example.shopapp.UseCasesTest
+package com.example.shopapp.featuresTest.dashboard.UseCasesTest
 
 import com.example.shopapp.core.network.Resources
 import com.example.shopapp.features.dashboard.domain.remote.model.Banner
