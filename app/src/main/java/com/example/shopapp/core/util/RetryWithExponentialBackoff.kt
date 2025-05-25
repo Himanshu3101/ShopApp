@@ -1,4 +1,4 @@
-package com.example.shopapp.core.network
+package com.example.shopapp.core.util
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow

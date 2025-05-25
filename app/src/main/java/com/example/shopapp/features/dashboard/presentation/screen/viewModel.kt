@@ -3,7 +3,7 @@ package com.example.shopapp.features.dashboard.presentation.screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shopapp.core.network.Resources
-import com.example.shopapp.core.network.retryWithExponentialBackoff
+import com.example.shopapp.core.util.retryWithExponentialBackoff
 import com.example.shopapp.features.dashboard.domain.useCases.GetBanner_UC
 import com.example.shopapp.features.dashboard.domain.useCases.GetCategory_UC
 import com.example.shopapp.features.dashboard.domain.useCases.GetItems_UC
