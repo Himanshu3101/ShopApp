@@ -6,12 +6,10 @@ import com.example.shopapp.features.dashboard.data.repository.BannerRepositoryIm
 import com.example.shopapp.features.dashboard.domain.remote.model.Banner
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.whenever
 import kotlin.test.Test
-import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
