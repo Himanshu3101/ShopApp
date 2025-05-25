@@ -13,7 +13,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class Test_BannerRepository {
+class BannerRepositoryTest {
 
     // 1. Declare a mock for ShopApi
     private lateinit var mockShopApi: ShopApi

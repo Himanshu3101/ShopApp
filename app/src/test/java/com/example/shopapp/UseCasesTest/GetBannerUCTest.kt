@@ -22,7 +22,7 @@ import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi  // Needed for runTest and TestDispatcher
-class Test_GetBannerUC{
+class GetBannerUCTest{
 
     @Mock
     private lateinit var mockBannerRepository: BannerRepository
