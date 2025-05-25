@@ -27,6 +27,9 @@ accompanistPager = "0.34.0"
 mockito = "5.11.0"
 mockito-kotlin = "5.1.0"
 kotlinx-coroutines-test = "1.8.0"
+kotlin-test-junit = "2.1.20"
+core-testing = "2.2.0"
+
 
 [libraries]
 
@@ -86,6 +89,8 @@ firebase-database = { group = "com.google.firebase", name = "firebase-database",
 mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
 mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito-kotlin" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines-test" }
+kotlin-test-junit = { group = "org.jetbrains.kotlinx", name = "kotlin-test-junit", version.ref = "kotlin-test-junit" }
+core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "core-testing" }
 
 
 [plugins]
@@ -103,5 +108,7 @@ google-gms-google-services = { id = "com.google.gms.google-services", version.re
 test-local-unit = [
     "mockito-core",
     "mockito-kotlin",
-    "kotlinx-coroutines-test"
+    "kotlinx-coroutines-test",
+    "kotlin-test-junit",
+    "core-testing"
 ]
