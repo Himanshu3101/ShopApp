@@ -107,4 +107,8 @@ dependencies {
 
 //   Accompanist-Pager
     implementation(libs.accompanist.pager.indicators)
+
+    //Testing Dependencies
+    testImplementation(libs.bundles.test.local.unit)
+    testImplementation(kotlin("test"))
 }

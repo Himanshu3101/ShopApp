@@ -23,6 +23,10 @@ coil = "2.5.0"
 googleGmsGoogleServices = "4.4.2"
 firebaseDatabase = "21.0.0"
 accompanistPager = "0.34.0"
+#Testing dependencies
+mockito = "5.11.0"
+mockito-kotlin = "5.1.0"
+kotlinx-coroutines-test = "1.8.0"
 
 [libraries]
 
@@ -66,15 +70,11 @@ accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pa
 #ComposeFoundation
 androidx-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "foundation" }
 
-
-
 #//Accompanist
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 
 #// lottie - for Animation
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
-
-
 
 #Coil - For Image Library
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
@@ -82,7 +82,10 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 #Firebase
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 
-
+#Testing Dependencies
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito-kotlin" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines-test" }
 
 
 [plugins]
@@ -95,3 +98,10 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+
+[bundles]
+test-local-unit = [
+    "mockito-core",
+    "mockito-kotlin",
+    "kotlinx-coroutines-test"
+]
