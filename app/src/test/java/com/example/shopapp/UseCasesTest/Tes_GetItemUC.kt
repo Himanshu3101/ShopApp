@@ -22,7 +22,7 @@ import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
-class Tes_GetItemUCt {
+class Tes_GetItemUC {
     
     @Mock
     private lateinit var mockItemRepository: ItemRepository
