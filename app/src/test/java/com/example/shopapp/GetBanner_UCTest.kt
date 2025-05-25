@@ -19,7 +19,6 @@ import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.whenever
-import kotlin.test.assertEquals
 
 @ExperimentalCoroutinesApi  // Needed for runTest and TestDispatcher
 class GetBanner_UCTest{
