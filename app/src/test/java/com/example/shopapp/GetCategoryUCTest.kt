@@ -1,7 +1,6 @@
 package com.example.shopapp
 
 import com.example.shopapp.core.network.Resources
-import com.example.shopapp.features.dashboard.domain.remote.model.Banner
 import com.example.shopapp.features.dashboard.domain.remote.model.Category
 import com.example.shopapp.features.dashboard.domain.remote.repositoy.CategoryRepository
 import com.example.shopapp.features.dashboard.domain.useCases.GetCategory_UC

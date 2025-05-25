@@ -1,7 +1,6 @@
 package com.example.shopapp
 
 import com.example.shopapp.core.network.Resources
-import com.example.shopapp.features.dashboard.domain.remote.model.Category
 import com.example.shopapp.features.dashboard.domain.remote.model.Items
 import com.example.shopapp.features.dashboard.domain.remote.repositoy.ItemRepository
 import com.example.shopapp.features.dashboard.domain.useCases.GetItems_UC
