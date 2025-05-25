@@ -1,4 +1,4 @@
-package com.example.shopapp
+package com.example.shopapp.UseCasesTest
 
 import com.example.shopapp.core.network.Resources
 import com.example.shopapp.features.dashboard.domain.remote.model.Category
@@ -22,7 +22,7 @@ import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
-class GetCategoryUCTest {
+class Test_GetCategoryUC {
 
     @Mock
     private lateinit var mockCategoryRepository: CategoryRepository
