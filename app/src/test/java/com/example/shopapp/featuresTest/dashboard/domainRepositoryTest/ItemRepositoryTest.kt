@@ -3,7 +3,7 @@ package com.example.shopapp.featuresTest.dashboard.domainRepositoryTest
 import com.example.shopapp.core.network.ShopApi
 import com.example.shopapp.features.dashboard.data.remote.dto.ItemsResponse
 import com.example.shopapp.features.dashboard.data.repository.ItemRepositoryImpl
-import com.example.shopapp.features.dashboard.domain.remote.model.Items
+import com.example.shopapp.features.dashboard.domain.remote.model.ItemDomain
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -28,14 +28,14 @@ class ItemRepositoryTest {
     fun `getItems return a list of items on successfull API response`() = runTest {
 
         val expectedItems = listOf(
-            Items(categoryId = 0, createdAt = "Today", description = "ABC", objectId = "banner_id_1", updatedAt = "TodY",
+            ItemDomain(categoryId = 0, createdAt = "Today", description = "ABC", objectId = "banner_id_1", updatedAt = "TodY",
                 price = 1, rating = 2.0, showRecommended = true, title = "url_1",
                 picUrl = listOf(
                     "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098536/1_1_db56nv.png",
                     "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098532/1_4_vdstgc.jpg"
                 )
             ),
-            Items(categoryId = 1, createdAt = "yESTERday", description = "DEF", objectId = "banner_id_2", updatedAt = "yESTerday",
+            ItemDomain(categoryId = 1, createdAt = "yESTERday", description = "DEF", objectId = "banner_id_2", updatedAt = "yESTerday",
                 title = "url_2", price = 1, rating = 2.0, showRecommended = true,
                 picUrl = listOf(
                     "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098536/1_1_db56nv.png",

@@ -1,7 +1,7 @@
 package com.example.shopapp.featuresTest.dashboard.UseCasesTest
 
 import com.example.shopapp.core.network.Resources
-import com.example.shopapp.features.dashboard.domain.remote.model.Banner
+import com.example.shopapp.features.dashboard.domain.remote.model.BannerDomain
 import com.example.shopapp.features.dashboard.domain.remote.repositoy.BannerRepository
 import com.example.shopapp.features.dashboard.domain.useCases.GetBanner_UC
 import junit.framework.TestCase.assertEquals
@@ -22,7 +22,7 @@ import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi  // Needed for runTest and TestDispatcher
-class GetBannerUCTest{
+class GetBannerDomainUCTest{
 
     @Mock
     private lateinit var mockBannerRepository: BannerRepository
@@ -48,8 +48,8 @@ class GetBannerUCTest{
     fun `invoke emits loading then success with banners when repository call is successful`() = runTest{
         //Arrange
         val expecetedBanners = listOf(
-            Banner(objectId = "banner_id_1", createdAt = "Today", updatedAt = "TodY", url = "url_1"),
-            Banner(objectId = "banner_id_2", createdAt = "yESTERday", updatedAt = "yESTerday", url = "url_2"),
+            BannerDomain(objectId = "banner_id_1", createdAt = "Today", updatedAt = "TodY", url = "url_1"),
+            BannerDomain(objectId = "banner_id_2", createdAt = "yESTERday", updatedAt = "yESTerday", url = "url_2"),
         )
         whenever(mockBannerRepository.getBanners()).doReturn(expecetedBanners)
 

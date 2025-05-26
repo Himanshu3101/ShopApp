@@ -27,8 +27,8 @@ import com.example.shopapp.features.dashboard.presentation.screen.component.Grid
 import com.example.shopapp.features.dashboard.presentation.screen.component.Header_UserScrn
 import com.example.shopapp.features.dashboard.presentation.screen.component.Scroller_ProductSlider
 import com.example.shopapp.features.dashboard.presentation.screen.component.Search_UserScrn
-import com.example.shopapp.features.dashboard.presentation.screen.event.Ev_dashboard
-import com.example.shopapp.features.dashboard.presentation.screen.state.st_Dashboard
+import com.example.shopapp.features.dashboard.presentation.screen.event.DashboardUiEvent
+import com.example.shopapp.features.dashboard.presentation.screen.state.DashboardUiState
 import com.example.shopapp.ui.components.ImagePager
 import com.example.shopapp.ui.theme.Dimens
 
@@ -39,22 +39,22 @@ fun PrevDash() {
     Dashboard(
         navHostController = rememberNavController(),
         event = {},
-        state = st_Dashboard()
+        state = DashboardUiState()
     )
 }
 
 @Composable
 fun Dashboard(
     navHostController: NavHostController,
-    event: (Ev_dashboard) -> Unit,
-    state: st_Dashboard
+    event: (DashboardUiEvent) -> Unit,
+    state: DashboardUiState
 ) {
 
     val isInitOnce = rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(key1 = true) {
         if (!isInitOnce.value) {
-            event(Ev_dashboard.InitDashboard)
+            event(DashboardUiEvent.InitDashboard)
             isInitOnce.value = true
         }
 

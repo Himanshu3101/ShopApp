@@ -7,10 +7,10 @@ import com.example.shopapp.core.util.retryWithExponentialBackoff
 import com.example.shopapp.features.dashboard.domain.useCases.GetBanner_UC
 import com.example.shopapp.features.dashboard.domain.useCases.GetCategory_UC
 import com.example.shopapp.features.dashboard.domain.useCases.GetItems_UC
-import com.example.shopapp.features.dashboard.presentation.screen.event.Ev_dashboard
+import com.example.shopapp.features.dashboard.presentation.screen.event.DashboardUiEvent
 import com.example.shopapp.features.dashboard.presentation.screen.state.CategoryDetails
 import com.example.shopapp.features.dashboard.presentation.screen.state.ItemData
-import com.example.shopapp.features.dashboard.presentation.screen.state.st_Dashboard
+import com.example.shopapp.features.dashboard.presentation.screen.state.DashboardUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,12 +27,13 @@ class DashboardViewModel @Inject constructor(
     private val getItemsUC: GetItems_UC
 ) : ViewModel() {
 
+    // Internal flows to hold raw Resources from Use Cases (private because all are combined)
     private val _bannerState = MutableStateFlow<Resources<List<String>>>(Resources.Loading())
     private val _categoryState = MutableStateFlow<Resources<List<CategoryDetails>>>(Resources.Loading())
     private val _itemState = MutableStateFlow<Resources<List<ItemData>>>(Resources.Loading())
 
-
-    private val _dashboardState = MutableStateFlow(st_Dashboard())
+    // Single source of truth for the UI state
+    private val _dashboardState = MutableStateFlow(DashboardUiState())
     val dashboardState = _dashboardState.asStateFlow()
 
     private fun initDashboard() {
@@ -50,7 +51,7 @@ class DashboardViewModel @Inject constructor(
             combine(_bannerState, _categoryState, _itemState) { banners, categories, items ->
                 val isLoading = listOf(banners, categories, items).any { it is Resources.Loading }
 
-                st_Dashboard(
+                DashboardUiState(
                     isInitialized = true,
                     isLoading = isLoading,
                     bannerUrls = (banners as? Resources.Success)?.data.orEmpty(),
@@ -64,12 +65,12 @@ class DashboardViewModel @Inject constructor(
     }
 
 
-    fun onEvent(event: Ev_dashboard) {
+    fun onEvent(event: DashboardUiEvent) {
         when (event) {
-            is Ev_dashboard.SetProductId -> _dashboardState.value =
-                dashboardState.value.copy(setProductId = event.categoryId)
+            is DashboardUiEvent.SetProductId -> _dashboardState.value =
+                dashboardState.value.copy(selectedProductId = event.categoryId)
 
-            Ev_dashboard.InitDashboard -> initDashboard()
+            DashboardUiEvent.InitDashboard -> initDashboard()
         }
     }
 
@@ -114,7 +115,7 @@ class DashboardViewModel @Inject constructor(
                     is Resources.Success -> {
                         _categoryState.value = Resources.Success(resources.data?.map { category ->
                             CategoryDetails(
-                                Pid = category.Pid,
+                                id = category.id,
                                 title = category.title
                             )
                         })

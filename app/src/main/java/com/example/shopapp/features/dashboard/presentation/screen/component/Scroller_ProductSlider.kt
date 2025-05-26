@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.shopapp.R
-import com.example.shopapp.features.dashboard.presentation.screen.event.Ev_dashboard
+import com.example.shopapp.features.dashboard.presentation.screen.event.DashboardUiEvent
 import com.example.shopapp.features.dashboard.presentation.screen.state.CategoryDetails
 import com.example.shopapp.ui.components.ButtonBox
 
@@ -18,14 +18,14 @@ import com.example.shopapp.ui.components.ButtonBox
 @Composable
 fun Prev_Scroller_ProductSlider() {
     val productList = listOf(
-        CategoryDetails(Pid = 1,"Shampoo"),
-        CategoryDetails(Pid = 2,"Skin")
+        CategoryDetails(id = 1,"Shampoo"),
+        CategoryDetails(id = 2,"Skin")
     )
     Scroller_ProductSlider(productList, event ={})
 }
 
 @Composable
-fun Scroller_ProductSlider(productList: List<CategoryDetails>, event: (Ev_dashboard) -> Unit) {
+fun Scroller_ProductSlider(productList: List<CategoryDetails>, event: (DashboardUiEvent) -> Unit) {
     LazyRow(
         modifier = Modifier
             .fillMaxWidth(),
@@ -39,7 +39,7 @@ fun Scroller_ProductSlider(productList: List<CategoryDetails>, event: (Ev_dashbo
                 textColor = colorResource(id = R.color.black),
                 borderColor = colorResource(id = R.color.white),
             ) {
-                event(Ev_dashboard.SetProductId(list.Pid.toString()))
+                event(DashboardUiEvent.SetProductId(list.id.toString()))
             }
         }
 

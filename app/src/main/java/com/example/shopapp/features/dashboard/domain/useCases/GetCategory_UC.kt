@@ -1,7 +1,7 @@
 package com.example.shopapp.features.dashboard.domain.useCases
 
 import com.example.shopapp.core.network.Resources
-import com.example.shopapp.features.dashboard.domain.remote.model.Category
+import com.example.shopapp.features.dashboard.domain.remote.model.CategoryDomain
 import com.example.shopapp.features.dashboard.domain.remote.repositoy.CategoryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +12,7 @@ class GetCategory_UC(
     val categoryRepository: CategoryRepository
 ) {
 
-    operator fun invoke() : Flow<Resources<List<Category>>> = flow {
+    operator fun invoke() : Flow<Resources<List<CategoryDomain>>> = flow {
         emit(Resources.Loading())
 
         try {

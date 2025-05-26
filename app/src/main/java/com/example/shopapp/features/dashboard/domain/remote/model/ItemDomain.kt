@@ -1,6 +1,6 @@
 package com.example.shopapp.features.dashboard.domain.remote.model
 
-data class Items(
+data class ItemDomain(
     val categoryId: Int,
     val createdAt: String,
     val description: String,

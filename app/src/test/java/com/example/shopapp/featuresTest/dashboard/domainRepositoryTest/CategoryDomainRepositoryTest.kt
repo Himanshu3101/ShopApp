@@ -3,7 +3,7 @@ package com.example.shopapp.featuresTest.dashboard.domainRepositoryTest
 import com.example.shopapp.core.network.ShopApi
 import com.example.shopapp.features.dashboard.data.remote.dto.CategoryResponse
 import com.example.shopapp.features.dashboard.data.repository.CategoryRepositoryImpl
-import com.example.shopapp.features.dashboard.domain.remote.model.Category
+import com.example.shopapp.features.dashboard.domain.remote.model.CategoryDomain
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -13,7 +13,7 @@ import org.mockito.kotlin.whenever
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class CategoryRepositoryTest {
+class CategoryDomainRepositoryTest {
 
     private lateinit var mockShopApi: ShopApi
 
@@ -29,8 +29,8 @@ class CategoryRepositoryTest {
     fun `getCategory return a list of category on successfull API response`() = runTest{
 
         val expectedCategories = listOf(
-            Category(objectId = "banner_id_1", createdAt = "Today", updatedAt = "TodY", title = "url_1", Pid = 1),
-            Category(objectId = "banner_id_2", createdAt = "yESTERday", updatedAt = "yESTerday", title = "url_2", Pid = 2)
+            CategoryDomain(objectId = "banner_id_1", createdAt = "Today", updatedAt = "TodY", title = "url_1", id = 1),
+            CategoryDomain(objectId = "banner_id_2", createdAt = "yESTERday", updatedAt = "yESTerday", title = "url_2", id = 2)
         )
 
         val apiResponse = CategoryResponse(expectedCategories)

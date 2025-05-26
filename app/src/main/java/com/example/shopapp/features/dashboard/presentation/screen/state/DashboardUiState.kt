@@ -2,14 +2,17 @@ package com.example.shopapp.features.dashboard.presentation.screen.state
 
 
 //State
-data class st_Dashboard(
+data class DashboardUiState(
     val bannerUrls: List<String> = emptyList(),
     val isLoading: Boolean = false,
     val categoryList: List<CategoryDetails> = emptyList(),
-    val setProductId : String ?= "0",
+    val selectedProductId : String ?= "0",
     val itemsState : List<ItemData> = emptyList(),
     //For initalizing the dashboard
-    val isInitialized : Boolean = false
+    val isInitialized : Boolean = false,
+
+    // NEW: To hold combined error message
+    val errorMessage: String? = null
 )
 
 data class ItemData(
@@ -22,7 +25,7 @@ data class ItemData(
 )
 
 data class CategoryDetails(
-    val Pid: Int,
+    val id: Int,
     val title: String,
 )
 

@@ -3,7 +3,7 @@ package com.example.shopapp.featuresTest.dashboard.domainRepositoryTest
 import com.example.shopapp.core.network.ShopApi
 import com.example.shopapp.features.dashboard.data.remote.dto.BannerResponse
 import com.example.shopapp.features.dashboard.data.repository.BannerRepositoryImpl
-import com.example.shopapp.features.dashboard.domain.remote.model.Banner
+import com.example.shopapp.features.dashboard.domain.remote.model.BannerDomain
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -13,7 +13,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class BannerRepositoryTest {
+class BannerDomainRepositoryTest {
 
     // 1. Declare a mock for ShopApi
     private lateinit var mockShopApi: ShopApi
@@ -35,8 +35,8 @@ class BannerRepositoryTest {
     fun `getBanners return a list of banners on successfull API response`() = runTest{
         // Given: Prepare the expected list of banners
         val expecetedBanners = listOf(
-            Banner(objectId = "banner_id_1", createdAt = "Today", updatedAt = "TodY", url = "url_1"),
-            Banner(objectId = "banner_id_2", createdAt = "yESTERday", updatedAt = "yESTerday", url = "url_2"),
+            BannerDomain(objectId = "banner_id_1", createdAt = "Today", updatedAt = "TodY", url = "url_1"),
+            BannerDomain(objectId = "banner_id_2", createdAt = "yESTERday", updatedAt = "yESTerday", url = "url_2"),
         )
 
         val apiRespose = BannerResponse(results = expecetedBanners)

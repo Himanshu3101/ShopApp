@@ -1,7 +1,7 @@
 package com.example.shopapp.features.dashboard.data.remote.dto
 
-import com.example.shopapp.features.dashboard.domain.remote.model.Items
+import com.example.shopapp.features.dashboard.domain.remote.model.ItemDomain
 
 data class ItemsResponse(
-    val results: List<Items>
+    val results: List<ItemDomain>
 )

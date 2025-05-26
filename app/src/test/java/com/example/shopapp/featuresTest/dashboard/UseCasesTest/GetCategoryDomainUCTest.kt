@@ -1,7 +1,7 @@
 package com.example.shopapp.featuresTest.dashboard.UseCasesTest
 
 import com.example.shopapp.core.network.Resources
-import com.example.shopapp.features.dashboard.domain.remote.model.Category
+import com.example.shopapp.features.dashboard.domain.remote.model.CategoryDomain
 import com.example.shopapp.features.dashboard.domain.remote.repositoy.CategoryRepository
 import com.example.shopapp.features.dashboard.domain.useCases.GetCategory_UC
 import junit.framework.TestCase.assertEquals
@@ -22,7 +22,7 @@ import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
-class GetCategoryUCTest {
+class GetCategoryDomainUCTest {
 
     @Mock
     private lateinit var mockCategoryRepository: CategoryRepository
@@ -46,8 +46,8 @@ class GetCategoryUCTest {
     fun `invoke emits loading then success with category when repository call is successful`() = runTest{
         //Arrange
         val expectedCategories = listOf(
-            Category(objectId = "banner_id_1", createdAt = "Today", updatedAt = "TodY", title = "url_1", Pid = 1),
-            Category(objectId = "banner_id_2", createdAt = "yESTERday", updatedAt = "yESTerday", title = "url_2", Pid = 2)
+            CategoryDomain(objectId = "banner_id_1", createdAt = "Today", updatedAt = "TodY", title = "url_1", id = 1),
+            CategoryDomain(objectId = "banner_id_2", createdAt = "yESTERday", updatedAt = "yESTerday", title = "url_2", id = 2)
         )
         whenever(mockCategoryRepository.getCategory()).doReturn(expectedCategories)
 
