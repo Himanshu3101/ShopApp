@@ -46,8 +46,8 @@ class DashboardViewModel @Inject constructor(
 
     fun onEvent(event: DashboardUiEvent) {
         when (event) {
-            is DashboardUiEvent.SetProductId -> _dashboardState.value =
-                dashboardState.value.copy(selectedProductId = event.categoryId)
+            /*is DashboardUiEvent.SetProductId -> _dashboardState.value =
+                dashboardState.value.copy(selectedProductId = event.categoryId)*/
 
             DashboardUiEvent.InitDashboard -> initDashboard()
         }

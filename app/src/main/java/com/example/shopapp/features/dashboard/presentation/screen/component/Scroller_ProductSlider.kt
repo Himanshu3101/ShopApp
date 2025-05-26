@@ -39,7 +39,7 @@ fun Scroller_ProductSlider(productList: List<CategoryDetails>, event: (Dashboard
                 textColor = colorResource(id = R.color.black),
                 borderColor = colorResource(id = R.color.white),
             ) {
-                event(DashboardUiEvent.SetProductId(list.id.toString()))
+//                event(DashboardUiEvent.SetProductId(list.id.toString()))
             }
         }
 
