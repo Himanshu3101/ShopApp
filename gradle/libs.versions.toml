@@ -29,6 +29,8 @@ mockito-kotlin = "5.1.0"
 kotlinx-coroutines-test = "1.8.0"
 kotlin-test-junit = "2.1.20"
 core-testing = "2.2.0"
+mockk = "1.13.11"
+turbine = "1.1.0"
 
 
 [libraries]
@@ -90,7 +92,13 @@ mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mo
 mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito-kotlin" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines-test" }
 kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin-test-junit" }
+#For InstantTaskExecutorRule
 core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "core-testing" }
+#For testing Flows easily
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+#// For mocking dependencies (or use Mockito)
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+
 
 
 [plugins]
@@ -110,5 +118,7 @@ test-local-unit = [
     "mockito-kotlin",
     "kotlinx-coroutines-test",
     "kotlin-test-junit",
-    "core-testing"
+    "core-testing",
+    "turbine",
+    "mockk"
 ]
