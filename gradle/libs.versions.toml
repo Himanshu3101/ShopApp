@@ -89,7 +89,7 @@ firebase-database = { group = "com.google.firebase", name = "firebase-database",
 mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
 mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito-kotlin" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines-test" }
-kotlin-test-junit = { group = "org.jetbrains.kotlinx", name = "kotlin-test-junit", version.ref = "kotlin-test-junit" }
+kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin-test-junit" }
 core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "core-testing" }
 
 

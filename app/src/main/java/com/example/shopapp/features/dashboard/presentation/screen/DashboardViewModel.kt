@@ -4,6 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shopapp.core.network.Resources
 import com.example.shopapp.core.util.retryWithExponentialBackoff
+import com.example.shopapp.features.dashboard.domain.remote.model.BannerDomain
+import com.example.shopapp.features.dashboard.domain.remote.model.CategoryDomain
+import com.example.shopapp.features.dashboard.domain.remote.model.ItemDomain
 import com.example.shopapp.features.dashboard.domain.useCases.GetBanner_UC
 import com.example.shopapp.features.dashboard.domain.useCases.GetCategory_UC
 import com.example.shopapp.features.dashboard.domain.useCases.GetItems_UC
@@ -14,11 +17,14 @@ import com.example.shopapp.features.dashboard.presentation.screen.state.Dashboar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import javax.inject.Inject
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
@@ -28,42 +34,15 @@ class DashboardViewModel @Inject constructor(
 ) : ViewModel() {
 
     // Internal flows to hold raw Resources from Use Cases (private because all are combined)
-    private val _bannerState = MutableStateFlow<Resources<List<String>>>(Resources.Loading())
-    private val _categoryState = MutableStateFlow<Resources<List<CategoryDetails>>>(Resources.Loading())
-    private val _itemState = MutableStateFlow<Resources<List<ItemData>>>(Resources.Loading())
+    private val _bannerResources = MutableStateFlow<Resources<List<BannerDomain>>>(Resources.Loading())
+    private val _categoryResources = MutableStateFlow<Resources<List<CategoryDomain>>>(Resources.Loading())
+    private val _itemResources = MutableStateFlow<Resources<List<ItemDomain>>>(Resources.Loading())
+
+
 
     // Single source of truth for the UI state
     private val _dashboardState = MutableStateFlow(DashboardUiState())
     val dashboardState = _dashboardState.asStateFlow()
-
-    private fun initDashboard() {
-        if (_dashboardState.value.isInitialized) return
-
-        viewModelScope.launch {
-            supervisorScope {
-                launch { getBanner() }
-                launch { getCategory() }
-                launch { getItems() }
-            }
-        }
-
-        viewModelScope.launch {
-            combine(_bannerState, _categoryState, _itemState) { banners, categories, items ->
-                val isLoading = listOf(banners, categories, items).any { it is Resources.Loading }
-
-                DashboardUiState(
-                    isInitialized = true,
-                    isLoading = isLoading,
-                    bannerUrls = (banners as? Resources.Success)?.data.orEmpty(),
-                    categoryList = (categories as? Resources.Success)?.data.orEmpty(),
-                    itemsState = (items as? Resources.Success)?.data.orEmpty()
-                )
-            }.distinctUntilChanged().collect {
-                _dashboardState.value = it
-            }
-        }
-    }
-
 
     fun onEvent(event: DashboardUiEvent) {
         when (event) {
@@ -74,95 +53,99 @@ class DashboardViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getBanner() {
-        try {
-            getBannerUC()
-                .retryWithExponentialBackoff()
-                .collect { resources ->
-                when (resources) {
+    init {
+        // Collect combined resources into the main UI state
+        // This makes sure _dashboardUiState always reflects the latest combination
+        combine(
+            _bannerResources,
+            _categoryResources,
+            _itemResources
+        ){ banners, categories, items ->
 
-                    is Resources.Success -> {
-                        _bannerState.value = Resources.Success(resources.data?.map { it.url })
-                    }
+            // Determine overall loading state
+            val isLoading = listOf(banners, categories, items).any { it is Resources.Loading }
 
-                    is Resources.Loading -> {
-                        _bannerState.value = Resources.Loading()
-                    }
+            val errorMessage = (banners as? Resources.Error)?.message
+                ?: (categories as? Resources.Error)?.message
+                ?: (items as? Resources.Error)?.message
 
-                    is Resources.Error -> {
-                        _bannerState.value = Resources.Error(resources.message)
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            _bannerState.value = Resources.Error("Exception : ${e.localizedMessage}")
+            // Map domain models to UI models
+           val bannerUrls = (banners as? Resources.Success)?.data?.map { it.url }.orEmpty()
+            val categoryList = (categories as? Resources.Success)?.data?.map { domainCategory ->
+                CategoryDetails(
+                    id = domainCategory.id,
+                    title = domainCategory.title
+                )
+            }.orEmpty()
+            val itemsState = (items as? Resources.Success)?.data?.map { domainItem ->
+                ItemData(
+                    imageUrl = domainItem.picUrl,
+                    price = domainItem.price,
+                    rating = domainItem.rating,
+                    title = domainItem.title,
+                    categoryId = domainItem.categoryId,
+                    showRecommended = domainItem.showRecommended
+                )
+            }.orEmpty()
+
+
+            DashboardUiState(
+                isInitialized = !isLoading || errorMessage != null, // Once combine starts emitting, it's initialized
+                isLoading = isLoading,
+                bannerUrls = bannerUrls,
+                categoryList = categoryList,
+                itemsState = itemsState,
+                errorMessage = errorMessage
+            )
         }
-
-
+        .distinctUntilChanged() // Only emit if the state actually changes
+            .onEach { combinedState ->
+                _dashboardState.value = combinedState  // Update the main UI state
+            }
+            .catch { e ->
+                _dashboardState.value = _dashboardState.value.copy(
+                    isLoading = false,
+                    errorMessage = "An unexpected error occurred: ${e.localizedMessage}"
+                )
+            }
+            .launchIn(viewModelScope) // Launch this collector in viewModelScope
     }
 
-    private suspend fun getCategory() {
-        try {
-            getCategoryUC()
-                .retryWithExponentialBackoff()
-                .collect { resources ->
-
-                when (resources) {
-                    is Resources.Loading -> {
-                        _categoryState.value = Resources.Loading()
-                    }
-
-                    is Resources.Success -> {
-                        _categoryState.value = Resources.Success(resources.data?.map { category ->
-                            CategoryDetails(
-                                id = category.id,
-                                title = category.title
-                            )
-                        })
-                    }
-
-                    is Resources.Error -> {
-                        _categoryState.value = Resources.Error(resources.message)
-                    }
-                }
-
-            }
-        } catch (e: Exception) {
-            _categoryState.value = Resources.Error("Exception : ${e.localizedMessage}")
+    private fun initDashboard() {
+        // Only fetch if not already initialized OR if there was an error and we need to retry
+        if (_dashboardState.value.isInitialized && _dashboardState.value.errorMessage == null) {
+            return // Already successfully initialized
         }
-    }
 
-    private suspend fun getItems() {
-        try {
-            getItemsUC()
-                .retryWithExponentialBackoff()
-                .collect { resources ->
-                when (resources) {
-                    is Resources.Error -> {
-                        _itemState.value = Resources.Error(resources.message)
-                    }
+        // Reset loading state if initiating a new load
+        _dashboardState.value = _dashboardState.value.copy(isLoading = true, errorMessage = null)
 
-                    is Resources.Loading -> {
-                        _itemState.value = Resources.Loading()
-                    }
-
-                    is Resources.Success -> {
-
-                        _itemState.value = Resources.Success(resources.data?.map { mapped ->
-                            ItemData(
-                                imageUrl = mapped.picUrl,
-                                price = mapped.price,
-                                rating = mapped.rating,
-                                title = mapped.title,
-                                categoryId = mapped.categoryId,
-                                showRecommended = mapped.showRecommended
-                            )
-                        })
-                    }
+        viewModelScope.launch {
+            supervisorScope {
+                // Allows child coroutines to fail independently
+                // Launch each data fetch concurrently
+                launch {
+                    getBannerUC()
+                        .retryWithExponentialBackoff() // Apply retry logic
+                        .onEach { _bannerResources.value = it } // Update internal flow
+                        .catch { e -> _bannerResources.value = Resources.Error("Banner load error: ${e.localizedMessage}") } // Catch network exceptions here
+                        .launchIn(this) // Launch in supervisorScope
+                }
+                launch {
+                    getCategoryUC()
+                        .retryWithExponentialBackoff()
+                        .onEach { _categoryResources.value = it }
+                        .catch { e -> _categoryResources.value = Resources.Error("Category load error: ${e.localizedMessage}") }
+                        .launchIn(this)
+                }
+                launch {
+                    getItemsUC()
+                    .retryWithExponentialBackoff()
+                    .onEach { _itemResources.value = it }
+                    .catch { e -> _itemResources.value = Resources.Error("Items load error: ${e.localizedMessage}") }
+                    .launchIn(this)
                 }
             }
-        } catch (e: Exception) {
-            _itemState.value = Resources.Error("Exception : ${e.localizedMessage}")
         }
     }
 }

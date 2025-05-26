@@ -3,11 +3,16 @@ package com.example.shopapp.features.dashboard.presentation.screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -50,17 +56,50 @@ fun Dashboard(
     state: DashboardUiState
 ) {
 
-    val isInitOnce = rememberSaveable { mutableStateOf(false) }
-
-    LaunchedEffect(key1 = true) {
-        if (!isInitOnce.value) {
+    // Trigger InitDashboard only once when the Composable is first launched.
+    // The ViewModel's `isInitialized` flag will prevent redundant API calls
+    LaunchedEffect(Unit) {  // Use Unit as key to ensure it runs only once
             event(DashboardUiEvent.InitDashboard)
-            isInitOnce.value = true
-        }
-
     }
 
+    // Display loading indicator if data is being fetched
+    if (state.isLoading) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+        return // Don't render content until loading is complete or an error occurs
+    }
 
+    //Display error message if present
+    if(state.errorMessage != null){
+        Column (
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(Dimens.SmallPadding),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            Text(
+                text = "Error: ${state.errorMessage}",
+                color = MaterialTheme.colorScheme.error,
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodyLarge
+            )
+            Spacer(modifier = Modifier.height(Dimens.SmallSpacerHeight))
+            Text(
+                text = "Tap to retry",
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.clickable { event(DashboardUiEvent.InitDashboard) }, // Retry on click
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
+        return // Don't render content if there's an error displayed
+    }
+
+    // Render content only if not loading and no error
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -85,11 +124,19 @@ fun Dashboard(
         item {
             if (state.bannerUrls.isNotEmpty()) {
                 ImagePager(imageUrls = state.bannerUrls)
+            } else if(!state.isLoading && state.isInitialized){
+                Text(
+                    text = stringResource(R.string.no_banners_available), // Define this string resource
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodyLarge
+                )
             }
         }
 
 
-//        Product
+        // Product Category Section
         item {
             Row(
                 modifier = Modifier
@@ -115,9 +162,17 @@ fun Dashboard(
             }
         }
 
+        // Only show Scroller_ProductSlider if categoryList is not empty
         item {
             if (state.categoryList.isNotEmpty()) {
                 Scroller_ProductSlider(productList = state.categoryList, event)
+            }else if (!state.isLoading && state.isInitialized){
+                Text(
+                    text = stringResource(R.string.no_categories_available), // Define this string resource
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodyMedium
+                )
             }
 
         }
@@ -150,8 +205,16 @@ fun Dashboard(
 
         item {
 
-            if (isInitOnce.value == true) {
+            if (state.itemsState.isNotEmpty()) {
                     GridWith_Images_Details(state.itemsState)
+            } else if (!state.isLoading && state.isInitialized) {
+                // Optionally, show a placeholder or a message if items are empty after loading
+                Text(
+                    text = stringResource(R.string.no_popular_products_available), // Define this string resource
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodyMedium
+                )
             }
 
         }
