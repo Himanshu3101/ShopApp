@@ -6,7 +6,7 @@ data class DashboardUiState(
     val bannerUrls: List<String> = emptyList(),
     val isLoading: Boolean = false,
     val categoryList: List<CategoryDetails> = emptyList(),
-    val selectedProductId : String ?= "0",
+//    val selectedProductId : String ?= "0",
     val itemsState : List<ItemData> = emptyList(),
     //For initalizing the dashboard
     val isInitialized : Boolean = false,

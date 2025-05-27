@@ -45,7 +45,7 @@ class GetItemUCTest {
     @Test
     fun `invoke emits loading then success with item when repository call is successful`() = runTest{
         //Arrange
-        val expectedCategories = listOf(
+        val expectedItems = listOf(
             ItemDomain(categoryId = 0, createdAt = "Today", description = "ABC", objectId = "banner_id_1", updatedAt = "TodY",
                 price = 1, rating = 2.0, showRecommended = true, title = "url_1",
                 picUrl = listOf(
@@ -61,12 +61,12 @@ class GetItemUCTest {
                 )
             )
         )
-        whenever(mockItemRepository.getItems()).doReturn(expectedCategories)
+        whenever(mockItemRepository.getItems()).doReturn(expectedItems)
 
         val emissions = geItemUC().toList()
         assert(emissions[0] is Resources.Loading)
         assert(emissions[1] is Resources.Success)
-        assertEquals(expectedCategories, (emissions[1] as Resources.Success).data)
+        assertEquals(expectedItems, (emissions[1] as Resources.Success).data)
 
     }
 
