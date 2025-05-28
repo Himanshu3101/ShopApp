@@ -15,9 +15,6 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -28,15 +25,10 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mock
-import kotlin.test.DefaultAsserter.assertEquals
-import kotlin.test.DefaultAsserter.assertNull
-import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
-import kotlin.time.Duration.Companion.milliseconds
 
 @ExperimentalCoroutinesApi
 class DashboardViewModelTest {
@@ -206,7 +198,7 @@ class DashboardViewModelTest {
 
         assertFalse(finalState.isLoading)
         assertTrue(finalState.isInitialized)
-        kotlin.test.assertNull(finalState.errorMessage)
+        assertNull(finalState.errorMessage)
         assertEquals(2, finalState.bannerUrls.size)
 
         // Arrange: Change mock responses for a *potential* re-fetch (these should NOT be called)
