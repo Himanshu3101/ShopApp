@@ -31,6 +31,7 @@ kotlin-test-junit = "2.1.20"
 core-testing = "2.2.0"
 mockk = "1.13.11"
 turbine = "1.1.0"
+androidxNavigation = "2.9.0"
 
 
 [libraries]
@@ -100,6 +101,10 @@ turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 
 
+# Navigation Testing
+androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "androidxNavigation" }
+
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -120,5 +125,6 @@ test-local-unit = [
     "kotlin-test-junit",
     "core-testing",
     "turbine",
-    "mockk"
+    "mockk",
+    "androidx-navigation-testing"
 ]
