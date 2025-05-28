@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shopapp.core.network.Resources
 import com.example.shopapp.core.util.retryWithExponentialBackoff
+import com.example.shopapp.features.dashboard.di.IoDispatcher
 import com.example.shopapp.features.dashboard.domain.remote.model.BannerDomain
 import com.example.shopapp.features.dashboard.domain.remote.model.CategoryDomain
 import com.example.shopapp.features.dashboard.domain.remote.model.ItemDomain
@@ -15,6 +16,8 @@ import com.example.shopapp.features.dashboard.presentation.screen.state.Category
 import com.example.shopapp.features.dashboard.presentation.screen.state.ItemData
 import com.example.shopapp.features.dashboard.presentation.screen.state.DashboardUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -30,7 +33,8 @@ import kotlinx.coroutines.flow.onEach
 class DashboardViewModel @Inject constructor(
     private val getBannerUC: GetBanner_UC,
     private val getCategoryUC: GetCategory_UC,
-    private val getItemsUC: GetItems_UC
+    private val getItemsUC: GetItems_UC,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
     // Internal flows to hold raw Resources from Use Cases (private because all are combined)
@@ -46,10 +50,7 @@ class DashboardViewModel @Inject constructor(
 
     fun onEvent(event: DashboardUiEvent) {
         when (event) {
-            /*is DashboardUiEvent.SetProductId -> _dashboardState.value =
-                dashboardState.value.copy(selectedProductId = event.categoryId)*/
-
-            DashboardUiEvent.InitDashboard -> initDashboard()
+                 DashboardUiEvent.InitDashboard -> initDashboard()
         }
     }
 
@@ -61,42 +62,7 @@ class DashboardViewModel @Inject constructor(
             _categoryResources,
             _itemResources
         ){ banners, categories, items ->
-
-            // Determine overall loading state
-            val isLoading = listOf(banners, categories, items).any { it is Resources.Loading }
-
-            val errorMessage = (banners as? Resources.Error)?.message
-                ?: (categories as? Resources.Error)?.message
-                ?: (items as? Resources.Error)?.message
-
-            // Map domain models to UI models
-           val bannerUrls = (banners as? Resources.Success)?.data?.map { it.url }.orEmpty()
-            val categoryList = (categories as? Resources.Success)?.data?.map { domainCategory ->
-                CategoryDetails(
-                    id = domainCategory.id,
-                    title = domainCategory.title
-                )
-            }.orEmpty()
-            val itemsState = (items as? Resources.Success)?.data?.map { domainItem ->
-                ItemData(
-                    imageUrl = domainItem.picUrl,
-                    price = domainItem.price,
-                    rating = domainItem.rating,
-                    title = domainItem.title,
-                    categoryId = domainItem.categoryId,
-                    showRecommended = domainItem.showRecommended
-                )
-            }.orEmpty()
-
-
-            DashboardUiState(
-                isInitialized = !isLoading || errorMessage != null, // Once combine starts emitting, it's initialized
-                isLoading = isLoading,
-                bannerUrls = bannerUrls,
-                categoryList = categoryList,
-                itemsState = itemsState,
-                errorMessage = errorMessage
-            )
+            mapResourcesToUiState(banners, categories, items)
         }
         .distinctUntilChanged() // Only emit if the state actually changes
             .onEach { combinedState ->
@@ -120,7 +86,7 @@ class DashboardViewModel @Inject constructor(
         // Reset loading state if initiating a new load
         _dashboardState.value = _dashboardState.value.copy(isLoading = true, errorMessage = null)
 
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             supervisorScope {
                 // Allows child coroutines to fail independently
                 // Launch each data fetch concurrently
@@ -147,6 +113,42 @@ class DashboardViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun mapResourcesToUiState(
+        banners: Resources<List<BannerDomain>>,
+        categories: Resources<List<CategoryDomain>>,
+        items: Resources<List<ItemDomain>>
+    ): DashboardUiState {
+        val isLoading = listOf(banners, categories, items).any { it is Resources.Loading }
+        val errorMessage = (banners as? Resources.Error)?.message
+            ?: (categories as? Resources.Error)?.message
+            ?: (items as? Resources.Error)?.message
+
+        val bannerUrls = (banners as? Resources.Success)?.data?.map { it.url }.orEmpty()
+        val categoryList = (categories as? Resources.Success)?.data?.map {
+            CategoryDetails(id = it.id, title = it.title)
+        }.orEmpty()
+
+        val itemsState = (items as? Resources.Success)?.data?.map {
+            ItemData(
+                imageUrl = it.picUrl,
+                price = it.price,
+                rating = it.rating,
+                title = it.title,
+                categoryId = it.categoryId,
+                showRecommended = it.showRecommended
+            )
+        }.orEmpty()
+
+        return DashboardUiState(
+            isInitialized = !isLoading || errorMessage != null,
+            isLoading = isLoading,
+            bannerUrls = bannerUrls,
+            categoryList = categoryList,
+            itemsState = itemsState,
+            errorMessage = errorMessage
+        )
     }
 }
 
