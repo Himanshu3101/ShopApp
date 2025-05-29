@@ -27,6 +27,10 @@ fun SetNavGraph() {
             val state by viewModel.dashboardState.collectAsState()
             Dashboard(navController,event = viewModel::onEvent, state = state)
         }
+
+        composable ( route = Routes.ProductlistUI.route) {
+            ProductListUI(navController)
+        }
     }
 
 
