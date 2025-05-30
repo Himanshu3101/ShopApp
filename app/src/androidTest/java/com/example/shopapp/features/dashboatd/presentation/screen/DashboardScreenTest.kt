@@ -183,9 +183,18 @@ class DashboardScreenTest {
         composeTestRule.onNodeWithTag("LoadingIndicator").assertDoesNotExist()
         composeTestRule.onNodeWithTag("DashboardLazyColumn")
             .performScrollToNode(hasTestTag("ImagePagerSection"))
-//        composeTestRule.waitUntil(timeoutMillis = 5000) {
-            composeTestRule.onNode(hasTestTag("BannerImage_0")).isDisplayed()
-//        }
+
+        composeTestRule.onNode(hasTestTag("BannerImage_0")).isDisplayed()
+        composeTestRule.onNodeWithText(getString(R.string.product)).assertIsDisplayed()
+
+        composeTestRule.onNodeWithTag(getString(R.string.product)).onChildren()
+            .filterToOne(hasText(getString(R.string.see_all))).assertIsDisplayed()
+
+        composeTestRule.onNodeWithTag("DashboardLazyColumn")
+            .performScrollToNode(hasTestTag(getString(R.string.product_categories_title)))
+
+        composeTestRule
+
 
 
     }
@@ -197,36 +206,36 @@ class DashboardScreenTest {
             .assertIsDisplayed() // Still check display if you wish*/
 
 
-     // Corrected assertion for the ImagePager
-      // Assert that the first image in the pager is displayed
+// Corrected assertion for the ImagePager
+// Assert that the first image in the pager is displayed
 //        composeTestRule.onNodeWithTag("ImagePagerSection").performScrollToNode()
 //        composeTestRule.onNodeWithContentDescription("Image 0").assertIsDisplayed()
 
-      // Assert that the correct number of banner images are present
-      // This implicitly checks that the ImagePager is displaying the correct number of items
-     /* composeTestRule.onAllNodesWithContentDescription(
-          substring = "Image", // Matches "Image 0", "Image 1", etc.
-          ignoreCase = false
-      ).assertCountEquals(Banners.size)*/
+// Assert that the correct number of banner images are present
+// This implicitly checks that the ImagePager is displaying the correct number of items
+/* composeTestRule.onAllNodesWithContentDescription(
+     substring = "Image", // Matches "Image 0", "Image 1", etc.
+     ignoreCase = false
+ ).assertCountEquals(Banners.size)*/
 
-      // --- Verify Product Category Section (Scroller_ProductSlider) ---
-     /* composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.product_categories_title)) // Assuming you have a specific string for this title
-          .assertIsDisplayed()
-      composeTestRule.onNodeWithText(Categories[0].title).assertIsDisplayed()
-      composeTestRule.onNodeWithText(Categories[1].title).assertIsDisplayed()
+// --- Verify Product Category Section (Scroller_ProductSlider) ---
+/* composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.product_categories_title)) // Assuming you have a specific string for this title
+     .assertIsDisplayed()
+ composeTestRule.onNodeWithText(Categories[0].title).assertIsDisplayed()
+ composeTestRule.onNodeWithText(Categories[1].title).assertIsDisplayed()
 */
 
-      // --- Verify Popular Products Section (GridWith_Images_Details) ---
-    /*  composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.popular_products_title)) // Assuming you have a specific string for this title
-          .assertIsDisplayed()
-      composeTestRule.onNodeWithText(Items[0].title).assertIsDisplayed()
-      composeTestRule.onNodeWithText(Items[1].title).assertIsDisplayed()*/
+// --- Verify Popular Products Section (GridWith_Images_Details) ---
+/*  composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.popular_products_title)) // Assuming you have a specific string for this title
+      .assertIsDisplayed()
+  composeTestRule.onNodeWithText(Items[0].title).assertIsDisplayed()
+  composeTestRule.onNodeWithText(Items[1].title).assertIsDisplayed()*/
 
 
-      // Assert that "no data" messages are not displayed
-    /*  composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.no_banners_available))
-          .assertDoesNotExist()
-      composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.no_categories_available))
-          .assertDoesNotExist()
-      composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.no_popular_products_available))
-          .assertDoesNotExist()*/
+// Assert that "no data" messages are not displayed
+/*  composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.no_banners_available))
+      .assertDoesNotExist()
+  composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.no_categories_available))
+      .assertDoesNotExist()
+  composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.no_popular_products_available))
+      .assertDoesNotExist()*/

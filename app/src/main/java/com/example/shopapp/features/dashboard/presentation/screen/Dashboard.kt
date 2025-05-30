@@ -174,6 +174,7 @@ fun Dashboard(
         // Only show Scroller_ProductSlider if categoryList is not empty
         item {
             if (state.categoryList.isNotEmpty()) {
+                Box(modifier = Modifier.testTag(stringResource(R.string.product_categories_title)))
                 Scroller_ProductSlider(productList = state.categoryList, event)
             }else if (!state.isLoading && state.isInitialized){
                 Text(

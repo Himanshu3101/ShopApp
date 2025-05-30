@@ -10,4 +10,5 @@
     <string name="no_categories_available">No Category Available. Please retry.</string>
     <string name="no_popular_products_available">No Popular Product Available. Please Retry.</string>
     <string name="dashboard_lazy_column">DashboardLazyColumn</string>
+    <string name="product_categories_title">ProductCategory\n</string>
 </resources>
