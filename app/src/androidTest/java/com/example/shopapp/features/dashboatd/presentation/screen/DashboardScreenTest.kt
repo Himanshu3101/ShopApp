@@ -1,7 +1,6 @@
 package com.example.shopapp.features.dashboatd.presentation.screen
 
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.filterToOne
@@ -10,21 +9,14 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onChildren
-import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToNode
-import androidx.compose.ui.test.printToLog
-import androidx.core.content.ContextCompat.getString
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.shopapp.R
 import com.example.shopapp.features.dashboard.domain.remote.model.BannerDomain
-import com.example.shopapp.features.dashboard.domain.remote.model.CategoryDomain
-import com.example.shopapp.features.dashboard.domain.remote.model.ItemDomain
 import com.example.shopapp.features.dashboard.presentation.screen.Dashboard
 import com.example.shopapp.features.dashboard.presentation.screen.event.DashboardUiEvent
 import com.example.shopapp.features.dashboard.presentation.screen.state.CategoryDetails
