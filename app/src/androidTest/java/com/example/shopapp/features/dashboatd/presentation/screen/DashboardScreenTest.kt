@@ -178,7 +178,6 @@ class DashboardScreenTest {
     //        Content Displayed (Success State - With Data)
     @Test
     fun dashboard_displaysContent_whenDataIsAvailable() {
-
         setDashboardContent(
             DashboardUiState(
                 isLoading = false,
