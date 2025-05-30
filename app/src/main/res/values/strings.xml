@@ -9,4 +9,5 @@
     <string name="no_banners_available">No Banner Available. Please Retry.</string>
     <string name="no_categories_available">No Category Available. Please retry.</string>
     <string name="no_popular_products_available">No Popular Product Available. Please Retry.</string>
+    <string name="dashboard_lazy_column">DashboardLazyColumn</string>
 </resources>

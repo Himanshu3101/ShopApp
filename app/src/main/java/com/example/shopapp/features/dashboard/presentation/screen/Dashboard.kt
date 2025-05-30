@@ -113,7 +113,8 @@ fun Dashboard(
                 top = Dimens.ExtraLargePadding,
                 start = Dimens.SmallPadding,
                 end = Dimens.SmallPadding
-            ),
+            )
+            .testTag(stringResource(R.string.dashboard_lazy_column)),
         verticalArrangement = Arrangement.spacedBy(Dimens.SmallSpacerHeight)
     ) {
 
