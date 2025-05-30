@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.shopapp.features.dashboard.presentation.screen.Dashboard
 import com.example.shopapp.features.dashboard.presentation.screen.DashboardViewModel
 import com.example.shopapp.features.introScreen.presentation.IntroScreen
+import com.example.shopapp.features.productList.ProductListUI
 
 @Composable
 fun SetNavGraph() {

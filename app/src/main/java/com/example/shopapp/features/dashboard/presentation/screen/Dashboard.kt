@@ -101,6 +101,9 @@ fun Dashboard(
         return // Don't render content if there's an error displayed
     }
 
+
+
+
     // Render content only if not loading and no error
     LazyColumn(
         modifier = Modifier
@@ -125,7 +128,9 @@ fun Dashboard(
 
         item {
             if (state.bannerUrls.isNotEmpty()) {
-                ImagePager(imageUrls = state.bannerUrls)
+                Box(modifier = Modifier.testTag("ImagePagerSection")) {
+                    ImagePager(imageUrls = state.bannerUrls)
+                }
             } else if(!state.isLoading && state.isInitialized){
                 Text(
                     text = stringResource(R.string.no_banners_available), // Define this string resource
@@ -143,6 +148,7 @@ fun Dashboard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .testTag(stringResource(R.string.product))
                     .padding(Dimens.SmallPadding),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
@@ -184,6 +190,7 @@ fun Dashboard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .testTag(stringResource(R.string.popular_product),)
                     .padding(Dimens.SmallPadding),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
@@ -205,6 +212,7 @@ fun Dashboard(
             }
         }
 
+//        Grid Image
         item {
 
             if (state.itemsState.isNotEmpty()) {

@@ -16,9 +16,9 @@ import coil.size.Scale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductListUI(navController: NavHostController) {
-//    Scaffold (
-    TopAppBar(
+    Scaffold (
+   /* TopAppBar(
         title = "Cream",
-    )
-
+    )*/
+    ){}
 }
