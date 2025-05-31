@@ -2,4 +2,5 @@
 <resources>
     <string name="pagerSection">ImagePagerSectionTest</string>
     <string name="gridImageTest">GridImageTest</string>
+    <string name="app_bar">AppBarTest</string>
 </resources>

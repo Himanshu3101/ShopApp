@@ -1,10 +1,17 @@
 package com.example.shopapp.ui.navigation
 
-sealed class Routes(val route:String){
+const val selectedCategory = "selected_category"
+
+
+sealed class Routes(val route: String) {
 
     object IntoScreen : Routes(route = "introScreen")
 
     object Dashboard : Routes(route = "dashboard")
 
-    object ProductlistUI : Routes(route = "listOfProductUi")
+    object ProductlistUI : Routes(route = "listOfProductUi/{$selectedCategory}") {
+        fun passId(categoryId: String) = "listOfProductUi/$categoryId"
+    }
+
+
 }

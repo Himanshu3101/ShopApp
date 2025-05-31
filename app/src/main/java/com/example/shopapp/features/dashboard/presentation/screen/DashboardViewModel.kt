@@ -1,8 +1,10 @@
 package com.example.shopapp.features.dashboard.presentation.screen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shopapp.core.network.Resources
+import com.example.shopapp.core.util.Constants.Slog
 import com.example.shopapp.core.util.retryWithExponentialBackoff
 import com.example.shopapp.features.dashboard.di.IoDispatcher
 import com.example.shopapp.features.dashboard.domain.remote.model.BannerDomain
@@ -28,6 +30,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
@@ -51,6 +54,19 @@ class DashboardViewModel @Inject constructor(
     fun onEvent(event: DashboardUiEvent) {
         when (event) {
                  DashboardUiEvent.InitDashboard -> initDashboard()
+
+                is DashboardUiEvent.SetProductId -> getProductId(event)
+        }
+    }
+
+    private fun getProductId(event: DashboardUiEvent.SetProductId) {
+        val currentProduct = _categoryResources.value
+
+        if(currentProduct is Resources.Success){
+            val selectedProduct = currentProduct.data?.find { category->
+                category.Pid == event.categoryId.toInt()
+            }
+
         }
     }
 
@@ -69,10 +85,9 @@ class DashboardViewModel @Inject constructor(
                 _dashboardState.value = combinedState  // Update the main UI state
             }
             .catch { e ->
-                _dashboardState.value = _dashboardState.value.copy(
-                    isLoading = false,
-                    errorMessage = "An unexpected error occurred: ${e.localizedMessage}"
-                )
+                _dashboardState.update {currentState ->
+                    currentState.copy(isLoading = false, errorMessage = "An unexpected error occurred: ${e.localizedMessage}")
+                }
             }
             .launchIn(viewModelScope) // Launch this collector in viewModelScope
     }
@@ -84,7 +99,9 @@ class DashboardViewModel @Inject constructor(
         }
 
         // Reset loading state if initiating a new load
-        _dashboardState.value = _dashboardState.value.copy(isLoading = true, errorMessage = null)
+        _dashboardState.update { currentState ->
+            currentState.copy(isLoading = true, errorMessage = null)
+        }
 
         viewModelScope.launch(dispatcher) {
             supervisorScope {
@@ -127,7 +144,7 @@ class DashboardViewModel @Inject constructor(
 
         val bannerUrls = (banners as? Resources.Success)?.data?.map { it.url }.orEmpty()
         val categoryList = (categories as? Resources.Success)?.data?.map {
-            CategoryDetails(id = it.id, title = it.title)
+            CategoryDetails(id = it.Pid, title = it.title)
         }.orEmpty()
 
         val itemsState = (items as? Resources.Success)?.data?.map {

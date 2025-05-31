@@ -5,8 +5,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.compose.runtime.getValue
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.shopapp.features.dashboard.presentation.screen.Dashboard
 import com.example.shopapp.features.dashboard.presentation.screen.DashboardViewModel
 import com.example.shopapp.features.introScreen.presentation.IntroScreen
@@ -23,13 +25,17 @@ fun SetNavGraph() {
         }
 
         composable(route = Routes.Dashboard.route) {
-
             val viewModel = hiltViewModel<DashboardViewModel>()
             val state by viewModel.dashboardState.collectAsState()
             Dashboard(navController,event = viewModel::onEvent, state = state)
         }
 
-        composable ( route = Routes.ProductlistUI.route) {
+        composable ( route = Routes.ProductlistUI.route,
+            arguments = listOf(
+                navArgument(selectedCategory){type = NavType.IntType}
+            )
+        ) {
+
             ProductListUI(navController)
         }
     }
