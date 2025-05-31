@@ -21,8 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -67,7 +69,8 @@ fun GridWith_Images_Details(itemData: List<ItemData>) {
 
     FlowRow(
         modifier = Modifier
-            .padding(Dimens.SmallPadding),
+            .padding(Dimens.SmallPadding)
+            .testTag(stringResource(R.string.gridImageTest)),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         maxItemsInEachRow = 2 // Optional
@@ -76,7 +79,7 @@ fun GridWith_Images_Details(itemData: List<ItemData>) {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 rowItems.forEach { item ->
                     Box(modifier = Modifier.weight(1f)) {
-                        if(item.showRecommended){
+                        if (item.showRecommended) {
                             ImageWithDetails(itemDetails = item)
                         }
                     }

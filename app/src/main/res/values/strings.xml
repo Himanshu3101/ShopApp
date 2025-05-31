@@ -11,4 +11,8 @@
     <string name="no_popular_products_available">No Popular Product Available. Please Retry.</string>
     <string name="dashboard_lazy_column">DashboardLazyColumn</string>
     <string name="product_categories_title">ProductCategory\n</string>
+    <string name="slider">Slider</string>
+    <string name="gridTest">GridTest</string>
+    <string name="pagerSection">ImagePagerSectionTest</string>
+    <string name="gridImageTest">GridImageTest</string>
 </resources>

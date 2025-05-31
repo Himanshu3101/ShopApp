@@ -129,7 +129,7 @@ fun Dashboard(
 
         item {
             if (state.bannerUrls.isNotEmpty()) {
-                Box(modifier = Modifier.testTag("ImagePagerSection")) {
+                Box(modifier = Modifier.testTag(stringResource(R.string.pagerSection))) {
                     ImagePager(imageUrls = state.bannerUrls)
                 }
             } else if(!state.isLoading && state.isInitialized){
@@ -218,6 +218,7 @@ fun Dashboard(
         item {
 
             if (state.itemsState.isNotEmpty()) {
+                Box(modifier = Modifier.testTag(stringResource(R.string.gridTest)))
                     GridWith_Images_Details(state.itemsState)
             } else if (!state.isLoading && state.isInitialized) {
                 // Optionally, show a placeholder or a message if items are empty after loading
