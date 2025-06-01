@@ -28,7 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.shopapp.R
-import com.example.shopapp.features.dashboard.presentation.screen.component.GridWith_Images_Details
+import com.example.shopapp.ui.components.GridWith_Images_Details
 import com.example.shopapp.features.dashboard.presentation.screen.component.Header_UserScrn
 import com.example.shopapp.features.dashboard.presentation.screen.component.Scroller_ProductSlider
 import com.example.shopapp.features.dashboard.presentation.screen.component.Search_UserScrn
@@ -38,13 +38,13 @@ import com.example.shopapp.ui.components.ImagePager
 import com.example.shopapp.ui.theme.Dimens
 
 
-@Preview(/*showBackground = true*/)
+@Preview(showBackground = true)
 @Composable
 fun PrevDash() {
     Dashboard(
         navHostController = rememberNavController(),
         event = {},
-        state = DashboardUiState()
+        state = DashboardUiState(),
     )
 }
 
@@ -52,7 +52,7 @@ fun PrevDash() {
 fun Dashboard(
     navHostController: NavHostController,
     event: (DashboardUiEvent) -> Unit,
-    state: DashboardUiState
+    state: DashboardUiState,
 ) {
 
     // Trigger InitDashboard only once when the Composable is first launched.
@@ -175,7 +175,7 @@ fun Dashboard(
         item {
             if (state.categoryList.isNotEmpty()) {
                 Box(modifier = Modifier.testTag(stringResource(R.string.product_categories_title)))
-                Scroller_ProductSlider(productList = state.categoryList, event = event, navController = navHostController)
+                Scroller_ProductSlider(productList = state.categoryList, event = event)
             }else if (!state.isLoading && state.isInitialized){
                 Text(
                     text = stringResource(R.string.no_categories_available), // Define this string resource

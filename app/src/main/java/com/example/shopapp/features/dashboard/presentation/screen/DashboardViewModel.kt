@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shopapp.core.network.Resources
-import com.example.shopapp.core.util.Constants.Slog
 import com.example.shopapp.core.util.retryWithExponentialBackoff
 import com.example.shopapp.features.dashboard.di.IoDispatcher
 import com.example.shopapp.features.dashboard.domain.remote.model.BannerDomain
@@ -20,6 +19,7 @@ import com.example.shopapp.features.dashboard.presentation.screen.state.Dashboar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 
 @HiltViewModel
@@ -46,29 +47,50 @@ class DashboardViewModel @Inject constructor(
     private val _itemResources = MutableStateFlow<Resources<List<ItemDomain>>>(Resources.Loading())
 
 
-
     // Single source of truth for the UI state
     private val _dashboardState = MutableStateFlow(DashboardUiState())
     val dashboardState = _dashboardState.asStateFlow()
+
+    // NEW: Channel for one-time navigation events
+    private val _navigaionEvent = Channel<NavigationEvent>()
+    val navigaionEvent = _navigaionEvent.receiveAsFlow()     // Exposed as SharedFlow for observation
+
+    sealed class NavigationEvent {
+        data class ToProductList(val categoryId: String) : NavigationEvent()
+        // Add other navigation events specific to the dashboard here (e.g., ToSearchScreen)
+    }
 
     fun onEvent(event: DashboardUiEvent) {
         when (event) {
                  DashboardUiEvent.InitDashboard -> initDashboard()
 
-                is DashboardUiEvent.SetProductId -> getProductId(event)
+                is DashboardUiEvent.SetProductId -> {
+
+                    viewModelScope.launch {
+                        _navigaionEvent.send(NavigationEvent.ToProductList(event.categoryId))
+                    }
+                    // Optional: You can still log or do other internal ViewModel logic here
+                  /*  val currentCategoryResource = _categoryResources.value
+                    if (currentCategoryResource is Resources.Success) {
+                        val selectedCategory = currentCategoryResource.data?.find { it.Pid == event.categoryId.toInt() }
+                        Log.d("DashboardViewModel", "Selected Category ID: ${event.categoryId}, Title: ${selectedCategory?.title} - Preparing for navigation.")
+                    }*/
+                }
         }
     }
 
-    private fun getProductId(event: DashboardUiEvent.SetProductId) {
-        val currentProduct = _categoryResources.value
 
-        if(currentProduct is Resources.Success){
-            val selectedProduct = currentProduct.data?.find { category->
-                category.Pid == event.categoryId.toInt()
-            }
 
+    /*private fun getProductId(id: String) {
+        viewModelScope.launch {
+            _navigaionEvent.send(NavigationEvent.ToProductList(id))
         }
-    }
+
+        val currentCategoryResources = _categoryResources.value
+        if(currentCategoryResources is Resources.Success){
+            val selecedCategory = currentCategoryResources.data?.find {it.Pid = id.toInt()}
+        }
+    }*/
 
     init {
         // Collect combined resources into the main UI state
@@ -153,7 +175,7 @@ class DashboardViewModel @Inject constructor(
                 price = it.price,
                 rating = it.rating,
                 title = it.title,
-                categoryId = it.categoryId,
+                categoryId = it.categoryId.toString(),
                 showRecommended = it.showRecommended
             )
         }.orEmpty()

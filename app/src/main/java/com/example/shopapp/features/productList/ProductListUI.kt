@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.shopapp.ui.components.AppBar
+import com.example.shopapp.ui.components.GridWith_Images_Details
 import com.example.shopapp.ui.navigation.Routes
 
 @Preview
@@ -21,7 +22,11 @@ fun Prev_ProductListUI() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductListUI(navController: NavHostController) {
+fun ProductListUI(
+    navController: NavHostController,
+  /*  state : ProductListUiState,
+    event: (ProductListUiEvent) -> Unit*/
+) {
 
     BackHandler {
         navController.navigate(Routes.Dashboard.route) {
@@ -32,11 +37,13 @@ fun ProductListUI(navController: NavHostController) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        AppBar(title = "Cream") {
+        AppBar(title = "title") {
             navController.navigate(Routes.Dashboard.route) {
                 popUpTo(Routes.Dashboard.route) { inclusive = true }
             }
         }
+
+//        GridWith_Images_Details()
     }
 
 

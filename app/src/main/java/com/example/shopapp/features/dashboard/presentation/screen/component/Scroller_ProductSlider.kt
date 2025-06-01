@@ -26,14 +26,13 @@ fun Prev_Scroller_ProductSlider() {
         CategoryDetails(id = 1, "Shampoo"),
         CategoryDetails(id = 2, "Skin")
     )
-    Scroller_ProductSlider(productList, event = {}, rememberNavController())
+    Scroller_ProductSlider(productList, event = {})
 }
 
 @Composable
 fun Scroller_ProductSlider(
     productList: List<CategoryDetails>,
-    event: (DashboardUiEvent) -> Unit,
-    navController: NavHostController
+    event: (DashboardUiEvent) -> Unit
 ) {
     LazyRow(
         modifier = Modifier
@@ -49,8 +48,8 @@ fun Scroller_ProductSlider(
                 textColor = colorResource(id = R.color.black),
                 borderColor = colorResource(id = R.color.white),
             ) {
+//                Emit the event. ViewModel will handle navigation.
                 event(DashboardUiEvent.SetProductId(list.id.toString()))
-                navController.navigate(Routes.ProductlistUI.passId(list.id.toString()))
             }
         }
 

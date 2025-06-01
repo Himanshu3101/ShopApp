@@ -97,7 +97,8 @@ class DashboardScreenTest {
                 Dashboard(
                     navHostController = navHostController,
                     event = event,
-                    state = state
+                    state = state,
+                    viewModel = viewModel
                 )
             }
         }

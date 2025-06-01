@@ -1,4 +1,4 @@
-package com.example.shopapp.features.dashboard.presentation.screen.component
+package com.example.shopapp.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -47,7 +47,7 @@ fun Prev_GridWith_Images_Details() {
             price = 89,
             rating = 4.5,
             title = "Product 1",
-            categoryId = 1,
+            categoryId = "1",
             showRecommended = true
         ),
         ItemData(
@@ -57,7 +57,7 @@ fun Prev_GridWith_Images_Details() {
             price = 120,
             rating = 4.8,
             title = "Product 2",
-            categoryId = 2,
+            categoryId = "2",
             showRecommended = true
         )
     )

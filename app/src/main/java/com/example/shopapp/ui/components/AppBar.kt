@@ -13,8 +13,20 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.shopapp.R
+import com.example.shopapp.ui.theme.Dimens
+
+@Preview
+@Composable
+fun Prev_AppBar() {
+    AppBar(title = "hello", onBackClick = {})
+}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,9 +46,14 @@ fun AppBar(
 
         title = {
             Text(
+                modifier = Modifier.fillMaxWidth(),
                 text = title,
                 color = colorResource(R.color.black),
+                fontWeight = FontWeight.Bold,
+                fontStyle = FontStyle.Normal,
+                fontSize = Dimens.LargeText,
                 maxLines = 1,
+                textAlign = TextAlign.Center,
                 overflow = TextOverflow.Ellipsis
             )
         },

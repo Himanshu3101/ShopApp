@@ -20,7 +20,7 @@ data class ItemData(
     val price: Int,
     val rating: Double,
     val title: String,
-    val categoryId : Int,
+    val categoryId : String,
     val showRecommended : Boolean
 )
 

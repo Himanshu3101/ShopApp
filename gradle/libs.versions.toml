@@ -33,6 +33,7 @@ mockk = "1.13.11"
 turbine = "1.1.0"
 androidxNavigation = "2.9.0"
 navigationTestingAndroid = "2.9.0"
+navigationeventAndroid = "1.0.0-alpha01"
 
 
 [libraries]
@@ -105,6 +106,7 @@ mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 # Navigation Testing
 androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "androidxNavigation" }
 androidx-navigation-testing-android = { group = "androidx.navigation", name = "navigation-testing-android", version.ref = "navigationTestingAndroid" }
+androidx-navigationevent-android = { group = "androidx.navigationevent", name = "navigationevent-android", version.ref = "navigationeventAndroid" }
 
 
 

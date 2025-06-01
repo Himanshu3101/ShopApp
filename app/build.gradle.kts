@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.example.shopapp"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.shopapp"
@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.firebase.database)
     implementation(libs.androidx.navigation.testing.android)
+    implementation(libs.androidx.navigationevent.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
