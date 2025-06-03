@@ -11,13 +11,10 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.shopapp.R
 import com.example.shopapp.features.dashboard.presentation.screen.event.DashboardUiEvent
 import com.example.shopapp.features.dashboard.presentation.screen.state.CategoryDetails
-import com.example.shopapp.ui.components.ButtonBox
-import com.example.shopapp.ui.navigation.Routes
+import com.example.shopapp.ui.common.components.ButtonBox
 
 @Preview
 @Composable

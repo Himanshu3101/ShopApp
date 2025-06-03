@@ -1,4 +1,4 @@
-package com.example.shopapp.ui.components
+package com.example.shopapp.ui.common.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,6 +33,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.shopapp.R
 import com.example.shopapp.features.dashboard.presentation.screen.state.ItemData
+import com.example.shopapp.ui.common.interfaces.DisplayableItem
 import com.example.shopapp.ui.theme.Dimens
 
 @Preview
@@ -65,7 +66,7 @@ fun Prev_GridWith_Images_Details() {
 }
 
 @Composable
-fun GridWith_Images_Details(itemData: List<ItemData>) {
+fun GridWith_Images_Details(itemData: List<DisplayableItem>) {
 
     FlowRow(
         modifier = Modifier
@@ -94,7 +95,7 @@ fun GridWith_Images_Details(itemData: List<ItemData>) {
 }
 
 @Composable
-fun ImageWithDetails(itemDetails: ItemData) {
+fun ImageWithDetails(itemDetails: DisplayableItem) {
     Column(
         modifier = Modifier
             .fillMaxWidth(),
@@ -140,7 +141,7 @@ fun ImageWithDetails(itemDetails: ItemData) {
 }
 
 @Composable
-fun Image_Title(modifier: Modifier, itemData: ItemData) {
+fun Image_Title(modifier: Modifier, itemData: DisplayableItem) {
     Column(
         modifier = modifier
             .padding(Dimens.SmallPadding),
@@ -169,7 +170,7 @@ fun Image_Title(modifier: Modifier, itemData: ItemData) {
 }
 
 @Composable
-fun Downbar(modifier: Modifier, itemDetails: ItemData) {
+fun Downbar(modifier: Modifier, itemDetails: DisplayableItem) {
     Row(
         modifier = modifier
             .fillMaxWidth()

@@ -22,6 +22,7 @@ roomCompiler = "2.7.1"
 coil = "2.5.0"
 googleGmsGoogleServices = "4.4.2"
 firebaseDatabase = "21.0.0"
+androidx-lifecycle = "2.9.0"
 accompanistPager = "0.34.0"
 #Testing dependencies
 mockito = "5.11.0"
@@ -34,6 +35,7 @@ turbine = "1.1.0"
 androidxNavigation = "2.9.0"
 navigationTestingAndroid = "2.9.0"
 navigationeventAndroid = "1.0.0-alpha01"
+
 
 
 [libraries]
@@ -78,6 +80,9 @@ accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pa
 #ComposeFoundation
 androidx-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "foundation" }
 
+#//For SavedStatehandle
+androidx-lifecycle-viewmodel-savedstate = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-savedstate", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
 #//Accompanist
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 

@@ -55,6 +55,7 @@ class DashboardViewModel @Inject constructor(
     private val _navigaionEvent = Channel<NavigationEvent>()
     val navigaionEvent = _navigaionEvent.receiveAsFlow()     // Exposed as SharedFlow for observation
 
+    //sealed class for navigation
     sealed class NavigationEvent {
         data class ToProductList(val categoryId: String) : NavigationEvent()
         // Add other navigation events specific to the dashboard here (e.g., ToSearchScreen)

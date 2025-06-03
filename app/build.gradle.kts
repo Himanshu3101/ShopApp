@@ -6,6 +6,13 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.google.gms.google.services)
+/*    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
+    id("org.jetbrains.kotlin.plugin.parcelize")
+    id("com.google.gms.google-services")*/
 }
 
 android {
@@ -113,4 +120,8 @@ dependencies {
     //Testing Dependencies
     testImplementation(libs.bundles.test.local.unit)
     testImplementation(kotlin("test"))
+
+    // ViewModel and SavedStateHandle
+    implementation(libs.androidx.lifecycle.viewmodel.ktx) // Often needed alongside savedstate
+    implementation(libs.androidx.lifecycle.viewmodel.savedstate) // <--- THIS ONE!
 }

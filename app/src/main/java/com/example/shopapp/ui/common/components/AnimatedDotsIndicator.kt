@@ -1,4 +1,4 @@
-package com.example.shopapp.ui.components
+package com.example.shopapp.ui.common.components
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState

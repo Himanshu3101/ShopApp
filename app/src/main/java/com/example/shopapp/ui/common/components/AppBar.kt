@@ -1,4 +1,4 @@
-package com.example.shopapp.ui.components
+package com.example.shopapp.ui.common.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api

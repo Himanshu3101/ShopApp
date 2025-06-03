@@ -1,5 +1,7 @@
 package com.example.shopapp.features.dashboard.presentation.screen.state
 
+import com.example.shopapp.ui.common.interfaces.DisplayableItem
+
 
 //State
 data class DashboardUiState(
@@ -16,13 +18,13 @@ data class DashboardUiState(
 )
 
 data class ItemData(
-    val imageUrl: List<String> = emptyList(),
-    val price: Int,
-    val rating: Double,
-    val title: String,
-    val categoryId : String,
-    val showRecommended : Boolean
-)
+    override val imageUrl: List<String> = emptyList(),
+    override val price: Int,
+    override val rating: Double,
+    override val title: String,
+    override val categoryId : String,
+    override val showRecommended : Boolean
+) : DisplayableItem
 
 data class CategoryDetails(
     val id: Int,
