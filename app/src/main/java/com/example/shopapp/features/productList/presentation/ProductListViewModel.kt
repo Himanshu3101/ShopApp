@@ -7,7 +7,7 @@ import com.example.shopapp.core.network.Resources
 import com.example.shopapp.features.dashboard.di.IoDispatcher
 import com.example.shopapp.features.productList.presentation.event.ProductListUiEvent
 import com.example.shopapp.features.productList.presentation.state.ProductListState
-import com.example.shopapp.features.productList.useCases.GetItemForCategory_UC
+import com.example.shopapp.features.productList.domain.useCases.GetItemForCategoryUC
 import com.example.shopapp.ui.navigation.CATEGORY_ID_ARG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class ProductListViewModel(
     private val savedStateHandle: SavedStateHandle,
-    private val getItemForCategoryUC: GetItemForCategory_UC,
+    private val getItemForCategoryUC: GetItemForCategoryUC,
     @IoDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel(){
 
@@ -52,7 +52,7 @@ class ProductListViewModel(
     }
 
     private fun fetchProductsByCategoryId(id: String) {
-        viewModelScope.launch (dispatcher){
+       /* viewModelScope.launch (dispatcher){
             _productListState.update { it.copy(isLoading = true, errorMsg = null) }
 //TODO
             getItemsForCategoryUC(id).collect { resources ->
@@ -79,13 +79,13 @@ class ProductListViewModel(
                     }
                 }
             }
-        }
+        }*/
     }
 
     fun onEvent(event : ProductListUiEvent){
         when(event){
             is ProductListUiEvent.InitProductList -> {}
-            is ProductListUiEvent.SetCategoryId -> {}
+//            is ProductListUiEvent.SetCategoryId -> {}
         }
     }
 }

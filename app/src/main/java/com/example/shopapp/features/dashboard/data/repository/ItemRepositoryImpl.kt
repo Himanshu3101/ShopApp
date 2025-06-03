@@ -8,4 +8,8 @@ class ItemRepositoryImpl (private val api: ShopApi) : ItemRepository {
     override suspend fun getItems(): List<ItemDomain> {
         return api.getItems().results
     }
+
+    override suspend fun getItemsByCategoryId(categoryId: String): List<ItemDomain> {
+
+    }
 }
