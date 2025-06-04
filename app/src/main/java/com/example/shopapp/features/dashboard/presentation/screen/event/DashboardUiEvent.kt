@@ -5,6 +5,6 @@ package com.example.shopapp.features.dashboard.presentation.screen.event
 sealed class DashboardUiEvent {
 
     object InitDashboard : DashboardUiEvent()
-    data class SetProductId(val categoryId: String) : DashboardUiEvent()
+    data class SetProductType(val categoryId: String, val title : String) : DashboardUiEvent()
 
 }

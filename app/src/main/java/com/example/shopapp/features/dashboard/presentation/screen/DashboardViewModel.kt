@@ -1,6 +1,5 @@
 package com.example.shopapp.features.dashboard.presentation.screen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shopapp.core.network.Resources
@@ -57,7 +56,7 @@ class DashboardViewModel @Inject constructor(
 
     //sealed class for navigation
     sealed class NavigationEvent {
-        data class ToProductList(val categoryId: String) : NavigationEvent()
+        data class ToProductList(val categoryId: String, val title : String) : NavigationEvent()
         // Add other navigation events specific to the dashboard here (e.g., ToSearchScreen)
     }
 
@@ -65,10 +64,10 @@ class DashboardViewModel @Inject constructor(
         when (event) {
                  DashboardUiEvent.InitDashboard -> initDashboard()
 
-                is DashboardUiEvent.SetProductId -> {
+                is DashboardUiEvent.SetProductType -> {
 
                     viewModelScope.launch {
-                        _navigaionEvent.send(NavigationEvent.ToProductList(event.categoryId))
+                        _navigaionEvent.send(NavigationEvent.ToProductList(event.categoryId, event.title))
                     }
                     // Optional: You can still log or do other internal ViewModel logic here
                   /*  val currentCategoryResource = _categoryResources.value

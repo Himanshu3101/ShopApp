@@ -11,8 +11,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.shopapp.features.dashboard.presentation.screen.Dashboard
 import com.example.shopapp.features.dashboard.presentation.screen.DashboardViewModel
 import com.example.shopapp.features.introScreen.presentation.IntroScreen
-import com.example.shopapp.features.productList.presentation.ProductListUI
-import com.example.shopapp.features.productList.presentation.ProductListViewModel
+import com.example.shopapp.features.productList.presentation.ProductTypeUI
+import com.example.shopapp.features.productList.presentation.ProductTypeViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -35,7 +35,7 @@ fun SetNavGraph() {
                     when(navigationEvent){
                         is DashboardViewModel.NavigationEvent.ToProductList->{
                             // CORRECT CALL: Access createRoute directly from Routes.ProductlistUI
-                            navController.navigate(Routes.ProductlistUI.createRoute(navigationEvent.categoryId))
+                            navController.navigate(Routes.ProductTypeUI.createRoute(navigationEvent.categoryId, navigationEvent.title))
                         }
                     }
                 }
@@ -49,13 +49,13 @@ fun SetNavGraph() {
 
 
         composable(
-            route = Routes.ProductlistUI.route,
-            arguments = Routes.ProductlistUI.navArgument // This automatically picks up the defined navArgument list
+            route = Routes.ProductTypeUI.route,
+            arguments = Routes.ProductTypeUI.navArgument // This automatically picks up the defined navArgument list
         ) {
-            val productListViewModel = hiltViewModel<ProductListViewModel>()
+            val productListViewModel = hiltViewModel<ProductTypeViewModel>()
             val productListState by productListViewModel.productListState.collectAsStateWithLifecycle()
 
-           /* LaunchedEffect (navController, productListViewModel){
+/*            LaunchedEffect (navController, productListViewModel){
                 productListViewModel.navigationEvents.collectLatest { navigationEvent ->
                     when(navigationEvent){
                         is ProductListViewModel.NavigationEvent.ToProductDetail -> {
@@ -65,7 +65,7 @@ fun SetNavGraph() {
                 }
             }*/
 
-            ProductListUI(
+            ProductTypeUI(
                 navController = navController,
                 state = productListState,
                 event = productListViewModel::onEvent,

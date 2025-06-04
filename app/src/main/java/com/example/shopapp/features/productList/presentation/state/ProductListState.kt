@@ -9,6 +9,7 @@ data class ProductListState(
     val errorMsg: String? = null,
     val items: List<ProductListUiModel> = emptyList(),
     val categoryId : String = "",
+    val title:String = ""
 )
 
 data class ProductListUiModel(

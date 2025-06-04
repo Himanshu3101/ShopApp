@@ -1,6 +1,7 @@
 package com.example.shopapp.features.dashboard.presentation.screen.component
 
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
@@ -12,6 +13,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.shopapp.R
+import com.example.shopapp.core.util.Constants.Shoplog
 import com.example.shopapp.features.dashboard.presentation.screen.event.DashboardUiEvent
 import com.example.shopapp.features.dashboard.presentation.screen.state.CategoryDetails
 import com.example.shopapp.ui.common.components.ButtonBox
@@ -46,7 +48,7 @@ fun Scroller_ProductSlider(
                 borderColor = colorResource(id = R.color.white),
             ) {
 //                Emit the event. ViewModel will handle navigation.
-                event(DashboardUiEvent.SetProductId(list.id.toString()))
+                event(DashboardUiEvent.SetProductType(list.id.toString(), list.title))
             }
         }
 

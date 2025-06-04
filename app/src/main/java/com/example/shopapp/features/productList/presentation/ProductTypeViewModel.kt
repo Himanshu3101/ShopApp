@@ -7,9 +7,10 @@ import com.example.shopapp.core.network.Resources
 import com.example.shopapp.features.dashboard.di.IoDispatcher
 import com.example.shopapp.features.productList.presentation.event.ProductListUiEvent
 import com.example.shopapp.features.productList.presentation.state.ProductListState
-import com.example.shopapp.features.productList.domain.useCases.GetItemForCategoryUC
+import com.example.shopapp.features.productList.domain.useCases.GetProductTypeUC
 import com.example.shopapp.features.productList.presentation.state.ProductListUiModel
 import com.example.shopapp.ui.navigation.CATEGORY_ID_ARG
+import com.example.shopapp.ui.navigation.CATEGORY_TITLE_ARG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -22,9 +23,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductListViewModel @Inject constructor(
+class ProductTypeViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val getItemForCategoryUC: GetItemForCategoryUC,
+    private val getItemForCategoryUC: GetProductTypeUC,
     @IoDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel(){
 
@@ -45,12 +46,12 @@ class ProductListViewModel @Inject constructor(
 
     init {
         // Update the initial state with category ID/title if available from args
-       /* _productListState.update {
+        _productListState.update {
             it.copy(
-                categoryTitle = savedStateHandle[CATEGORY_ID_ARG] ?: "Products", //Fallback or retrieve actual title if passed
+                title = savedStateHandle[CATEGORY_TITLE_ARG] ?: "Products", //Fallback or retrieve actual title if passed
                 categoryId = _categoryId
             )
-        }*/
+        }
         fetchProductsByCategoryId(_categoryId)
     }
 
@@ -77,6 +78,7 @@ class ProductListViewModel @Inject constructor(
                                 )
 
                             } ?: emptyList(),
+
                         )
                         is Resources.Error -> currentState.copy(
                             errorMsg = resources.message ?: "An unexpected error occurred",

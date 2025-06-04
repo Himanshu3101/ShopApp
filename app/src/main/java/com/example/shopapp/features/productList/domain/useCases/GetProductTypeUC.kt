@@ -2,14 +2,14 @@ package com.example.shopapp.features.productList.domain.useCases
 
 import com.example.shopapp.core.network.Resources
 import com.example.shopapp.features.dashboard.domain.remote.model.ItemDomain
-import com.example.shopapp.features.dashboard.domain.remote.repositoy.ItemRepository
+import com.example.shopapp.ui.common.interfaces.ItemRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class GetItemForCategoryUC @Inject constructor (
+class GetProductTypeUC @Inject constructor (
     private val itemRepository: ItemRepository
 ){
 

@@ -5,7 +5,7 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 
     const val CATEGORY_ID_ARG = "selected_category"
-
+    const val CATEGORY_TITLE_ARG = "selected_categoryTitle"
 
     sealed class Routes(
         val route: String,
@@ -16,15 +16,16 @@ import androidx.navigation.navArgument
 
         object Dashboard : Routes(route = "dashboard")
 
-        object ProductlistUI : Routes(
-            route = "productListUi/{$CATEGORY_ID_ARG}",
+        object ProductTypeUI : Routes(
+            route = "productTypeUi/{$CATEGORY_ID_ARG}/{$CATEGORY_TITLE_ARG}",
             navArgument = listOf(
-                navArgument(CATEGORY_ID_ARG) {type = NavType.StringType}
+                navArgument(CATEGORY_ID_ARG) {type = NavType.StringType},
+                navArgument(CATEGORY_TITLE_ARG) {type = NavType.StringType}
             )
         ){   // Helper function to create the actual route string with values
             // This function is *only* available via Routes.ProductlistUI.createRoute(...)
-            fun createRoute(categoryId: String): String {
-                return "productListUi/$categoryId"
+            fun createRoute(categoryId: String, title: String): String {
+                return "productTypeUi/$categoryId/$title"
             }
         }
 

@@ -1,6 +1,7 @@
 package com.example.shopapp.ui.common.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -46,7 +47,7 @@ fun AppBar(
 
         title = {
             Text(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(end = Dimens.LargePadding),
                 text = title,
                 color = colorResource(R.color.black),
                 fontWeight = FontWeight.Bold,

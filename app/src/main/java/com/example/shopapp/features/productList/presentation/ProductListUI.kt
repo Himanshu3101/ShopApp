@@ -1,5 +1,6 @@
 package com.example.shopapp.features.productList.presentation
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.shopapp.R
+import com.example.shopapp.core.util.Constants.Shoplog
 import com.example.shopapp.features.productList.presentation.event.ProductListUiEvent
 import com.example.shopapp.features.productList.presentation.state.ProductListState
 import com.example.shopapp.ui.common.components.AppBar
@@ -21,7 +23,7 @@ import com.example.shopapp.ui.navigation.Routes
 @Preview
 @Composable
 fun Prev_ProductListUI() {
-    ProductListUI(
+    ProductTypeUI(
         navController = rememberNavController(),
         state = ProductListState(),
         event = {},
@@ -30,7 +32,7 @@ fun Prev_ProductListUI() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductListUI(
+fun ProductTypeUI(
     navController: NavHostController,
     state: ProductListState,
     event: (ProductListUiEvent) -> Unit
@@ -48,15 +50,15 @@ fun ProductListUI(
 
 
 
+        Log.d(Shoplog, "Recomposing with state: $state")
 
-
-        /*AppBar(title = state.) {
+        AppBar(title = state.title) {
             navController.navigate(Routes.Dashboard.route) {
                 popUpTo(Routes.Dashboard.route) { inclusive = true }
             }
         }
 
-        GridWith_Images_Details(state.items)*/
+        GridWith_Images_Details(state.items)
     }
 
 

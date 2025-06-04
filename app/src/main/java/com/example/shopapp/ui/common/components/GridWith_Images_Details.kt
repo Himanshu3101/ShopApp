@@ -82,9 +82,9 @@ fun GridWith_Images_Details(itemData: List<DisplayableItem>) {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 rowItems.forEach { item ->
                     Box(modifier = Modifier.weight(1f)) {
-                        if (item.showRecommended) {
+//                        if (item.showRecommended) {
                             ImageWithDetails(itemDetails = item)
-                        }
+//                        }
                     }
                 }
             }

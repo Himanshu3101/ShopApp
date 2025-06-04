@@ -2,7 +2,7 @@ package com.example.shopapp.featuresTest.dashboard.UseCasesTest
 
 import com.example.shopapp.core.network.Resources
 import com.example.shopapp.features.dashboard.domain.remote.model.ItemDomain
-import com.example.shopapp.features.dashboard.domain.remote.repositoy.ItemRepository
+import com.example.shopapp.ui.common.interfaces.ItemRepository
 import com.example.shopapp.features.dashboard.domain.useCases.GetItems_UC
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers

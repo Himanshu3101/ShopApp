@@ -1,8 +1,8 @@
-package com.example.shopapp.features.dashboard.data.repository
+package com.example.shopapp.ui.common.interfaces.implementation
 
 import com.example.shopapp.core.network.ShopApi
 import com.example.shopapp.features.dashboard.domain.remote.model.ItemDomain
-import com.example.shopapp.features.dashboard.domain.remote.repositoy.ItemRepository
+import com.example.shopapp.ui.common.interfaces.ItemRepository
 import com.example.shopapp.features.productList.data.cache.InMemoryItemCache
 
 class ItemRepositoryImpl (private val api: ShopApi) : ItemRepository {
