@@ -46,8 +46,8 @@ class GetCategoryDomainUCTest {
     fun `invoke emits loading then success with category when repository call is successful`() = runTest{
         //Arrange
         val expectedCategories = listOf(
-            CategoryDomain(objectId = "banner_id_1", createdAt = "Today", updatedAt = "TodY", title = "url_1", id = 1),
-            CategoryDomain(objectId = "banner_id_2", createdAt = "yESTERday", updatedAt = "yESTerday", title = "url_2", id = 2)
+            CategoryDomain(objectId = "banner_id_1", createdAt = "Today", updatedAt = "TodY", title = "url_1", Pid = 1),
+            CategoryDomain(objectId = "banner_id_2", createdAt = "yESTERday", updatedAt = "yESTerday", title = "url_2", Pid = 2)
         )
         whenever(mockCategoryRepository.getCategory()).doReturn(expectedCategories)
 

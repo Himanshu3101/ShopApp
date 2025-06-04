@@ -29,8 +29,8 @@ class CategoryDomainRepositoryTest {
     fun `getCategory return a list of category on successfull API response`() = runTest{
 
         val expectedCategories = listOf(
-            CategoryDomain(objectId = "banner_id_1", createdAt = "Today", updatedAt = "TodY", title = "url_1", id = 1),
-            CategoryDomain(objectId = "banner_id_2", createdAt = "yESTERday", updatedAt = "yESTerday", title = "url_2", id = 2)
+            CategoryDomain(objectId = "banner_id_1", createdAt = "Today", updatedAt = "TodY", title = "url_1", Pid = 1),
+            CategoryDomain(objectId = "banner_id_2", createdAt = "yESTERday", updatedAt = "yESTerday", title = "url_2", Pid = 2)
         )
 
         val apiResponse = CategoryResponse(expectedCategories)

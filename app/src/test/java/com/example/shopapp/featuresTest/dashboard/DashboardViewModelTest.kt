@@ -94,14 +94,14 @@ class DashboardViewModelTest {
             createdAt = "Today",
             updatedAt = "TodY",
             title = "url_1",
-            id = 1
+            Pid = 1
         ),
         CategoryDomain(
             objectId = "banner_id_2",
             createdAt = "yESTERday",
             updatedAt = "yESTerday",
             title = "url_2",
-            id = 2
+            Pid = 2
         )
     )
     private val mockItems = listOf(
