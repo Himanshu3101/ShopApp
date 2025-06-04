@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.shopapp.R
-import com.example.shopapp.core.util.Constants.Shoplog
 import com.example.shopapp.features.dashboard.presentation.screen.state.ItemData
 import com.example.shopapp.ui.common.interfaces.DisplayableItem
 import com.example.shopapp.ui.theme.Dimens
@@ -69,7 +68,6 @@ fun Prev_GridWith_Images_Details() {
 
 @Composable
 fun GridWith_Images_Details(itemData: List<DisplayableItem>) {
-    Log.e(Shoplog, "itemData Size ${itemData.size}")
     FlowRow(
         modifier = Modifier
             .padding(Dimens.SmallPadding).background(colorResource(R.color.white))

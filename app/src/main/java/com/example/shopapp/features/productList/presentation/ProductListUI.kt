@@ -13,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.shopapp.R
-import com.example.shopapp.core.util.Constants.Shoplog
 import com.example.shopapp.features.productList.presentation.event.ProductListUiEvent
 import com.example.shopapp.features.productList.presentation.state.ProductListState
 import com.example.shopapp.ui.common.components.AppBar
@@ -47,10 +46,6 @@ fun ProductTypeUI(
     Column(
         modifier = Modifier.fillMaxSize().background(colorResource(R.color.white))
     ) {
-
-
-
-        Log.d(Shoplog, "Recomposing with state: $state")
 
         AppBar(title = state.title) {
             navController.navigate(Routes.Dashboard.route) {
