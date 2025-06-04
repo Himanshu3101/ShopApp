@@ -1,4 +1,4 @@
-package com.example.shopapp.ui.common.components
+package com.example.shopapp.features.common.components
 
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -34,7 +34,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.shopapp.R
 import com.example.shopapp.features.dashboard.presentation.screen.state.ItemData
-import com.example.shopapp.ui.common.interfaces.DisplayableItem
+import com.example.shopapp.features.common.interfaces.DisplayableItem
 import com.example.shopapp.ui.theme.Dimens
 
 @Preview

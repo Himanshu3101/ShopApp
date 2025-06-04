@@ -1,4 +1,4 @@
-package com.example.shopapp.ui.common.interfaces
+package com.example.shopapp.features.dashboard.domain.remote.repositoy
 
 import com.example.shopapp.features.dashboard.domain.remote.model.ItemDomain
 

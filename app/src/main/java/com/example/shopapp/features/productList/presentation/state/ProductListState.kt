@@ -1,6 +1,6 @@
 package com.example.shopapp.features.productList.presentation.state
 
-import com.example.shopapp.ui.common.interfaces.DisplayableItem
+import com.example.shopapp.features.common.interfaces.DisplayableItem
 
 
 // UI State for Product List screen (already defined)

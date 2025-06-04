@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.shopapp.R
 import com.example.shopapp.features.dashboard.presentation.screen.event.DashboardUiEvent
 import com.example.shopapp.features.dashboard.presentation.screen.state.CategoryDetails
-import com.example.shopapp.ui.common.components.ButtonBox
+import com.example.shopapp.features.common.components.ButtonBox
 
 @Preview
 @Composable

@@ -28,13 +28,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.shopapp.R
-import com.example.shopapp.ui.common.components.GridWith_Images_Details
+import com.example.shopapp.features.common.components.GridWith_Images_Details
 import com.example.shopapp.features.dashboard.presentation.screen.component.Header_UserScrn
 import com.example.shopapp.features.dashboard.presentation.screen.component.Scroller_ProductSlider
 import com.example.shopapp.features.dashboard.presentation.screen.component.Search_UserScrn
 import com.example.shopapp.features.dashboard.presentation.screen.event.DashboardUiEvent
 import com.example.shopapp.features.dashboard.presentation.screen.state.DashboardUiState
-import com.example.shopapp.ui.common.components.ImagePager
+import com.example.shopapp.features.common.components.ImagePager
 import com.example.shopapp.ui.theme.Dimens
 
 

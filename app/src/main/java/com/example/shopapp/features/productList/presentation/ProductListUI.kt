@@ -15,8 +15,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.shopapp.R
 import com.example.shopapp.features.productList.presentation.event.ProductListUiEvent
 import com.example.shopapp.features.productList.presentation.state.ProductListState
-import com.example.shopapp.ui.common.components.AppBar
-import com.example.shopapp.ui.common.components.GridWith_Images_Details
+import com.example.shopapp.features.common.components.AppBar
+import com.example.shopapp.features.common.components.GridWith_Images_Details
 import com.example.shopapp.ui.navigation.Routes
 
 @Preview

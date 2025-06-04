@@ -1,6 +1,6 @@
 package com.example.shopapp.features.productList.domain.di_useCases
 
-import com.example.shopapp.ui.common.interfaces.ItemRepository
+import com.example.shopapp.features.dashboard.domain.remote.repositoy.ItemRepository
 import com.example.shopapp.features.productList.domain.useCases.GetProductTypeUC
 import dagger.Module
 import dagger.Provides

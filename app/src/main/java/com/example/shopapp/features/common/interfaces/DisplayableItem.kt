@@ -1,4 +1,4 @@
-package com.example.shopapp.ui.common.interfaces
+package com.example.shopapp.features.common.interfaces
 
 interface DisplayableItem{
     val imageUrl: List<String>

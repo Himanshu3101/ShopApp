@@ -1,6 +1,6 @@
 package com.example.shopapp.features.dashboard.presentation.screen.state
 
-import com.example.shopapp.ui.common.interfaces.DisplayableItem
+import com.example.shopapp.features.common.interfaces.DisplayableItem
 
 
 //State
