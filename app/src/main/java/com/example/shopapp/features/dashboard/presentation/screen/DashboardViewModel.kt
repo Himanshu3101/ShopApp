@@ -81,18 +81,6 @@ class DashboardViewModel @Inject constructor(
     }
 
 
-
-    /*private fun getProductId(id: String) {
-        viewModelScope.launch {
-            _navigaionEvent.send(NavigationEvent.ToProductList(id))
-        }
-
-        val currentCategoryResources = _categoryResources.value
-        if(currentCategoryResources is Resources.Success){
-            val selecedCategory = currentCategoryResources.data?.find {it.Pid = id.toInt()}
-        }
-    }*/
-
     init {
         // Collect combined resources into the main UI state
         // This makes sure _dashboardUiState always reflects the latest combination

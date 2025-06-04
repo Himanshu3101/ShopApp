@@ -1,14 +1,17 @@
 package com.example.shopapp.features.productList.presentation
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.shopapp.R
 import com.example.shopapp.features.productList.presentation.event.ProductListUiEvent
 import com.example.shopapp.features.productList.presentation.state.ProductListState
 import com.example.shopapp.ui.common.components.AppBar
@@ -40,15 +43,20 @@ fun ProductListUI(
     }
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().background(colorResource(R.color.white))
     ) {
-        AppBar(title = state.categoryTitle) {
+
+
+
+
+
+        /*AppBar(title = state.) {
             navController.navigate(Routes.Dashboard.route) {
                 popUpTo(Routes.Dashboard.route) { inclusive = true }
             }
         }
 
-        GridWith_Images_Details(state.items)
+        GridWith_Images_Details(state.items)*/
     }
 
 

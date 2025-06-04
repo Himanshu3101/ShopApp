@@ -1,7 +1,7 @@
 package com.example.shopapp.core.util
 
 import android.util.Log
-import com.example.shopapp.core.util.Constants.Slog
+import com.example.shopapp.core.util.Constants.Shoplog
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.retryWhen
@@ -14,7 +14,7 @@ fun <T> Flow<T>.retryWithExponentialBackoff(
     if (attempt < maxRetries) {
         val delayTime = initialDelayMillis * 2.0.pow(attempt.toDouble()).toLong()
         delay(delayTime)
-        Log.e(Slog, delayTime.toString() )
+        Log.e(Shoplog, delayTime.toString() )
         true
     } else {
         false

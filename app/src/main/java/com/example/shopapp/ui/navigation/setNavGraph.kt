@@ -55,15 +55,15 @@ fun SetNavGraph() {
             val productListViewModel = hiltViewModel<ProductListViewModel>()
             val productListState by productListViewModel.productListState.collectAsStateWithLifecycle()
 
-            LaunchedEffect (navController, productListViewModel){
+           /* LaunchedEffect (navController, productListViewModel){
                 productListViewModel.navigationEvents.collectLatest { navigationEvent ->
                     when(navigationEvent){
                         is ProductListViewModel.NavigationEvent.ToProductDetail -> {
-//                            navController.navigate(Routes.ProductDetail.createRoute(navigationEvent.productId))
+                            navController.navigate(Routes.ProductDetail.createRoute(navigationEvent.productId))
                         }
                     }
                 }
-            }
+            }*/
 
             ProductListUI(
                 navController = navController,
