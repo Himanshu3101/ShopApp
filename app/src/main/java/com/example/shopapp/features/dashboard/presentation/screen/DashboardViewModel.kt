@@ -42,8 +42,10 @@ class DashboardViewModel @Inject constructor(
 ) : ViewModel() {
 
     // Internal flows to hold raw Resources from Use Cases (private because all are combined)
-    private val _bannerResources = MutableStateFlow<Resources<List<BannerDomain>>>(Resources.Loading())
-    private val _categoryResources = MutableStateFlow<Resources<List<CategoryDomain>>>(Resources.Loading())
+    private val _bannerResources =
+        MutableStateFlow<Resources<List<BannerDomain>>>(Resources.Loading())
+    private val _categoryResources =
+        MutableStateFlow<Resources<List<CategoryDomain>>>(Resources.Loading())
     private val _itemResources = MutableStateFlow<Resources<List<ItemDomain>>>(Resources.Loading())
 
 
@@ -53,32 +55,39 @@ class DashboardViewModel @Inject constructor(
 
     // NEW: Channel for one-time navigation events
     private val _navigaionEvent = Channel<NavigationEvent>()
-    val navigaionEvent = _navigaionEvent.receiveAsFlow()     // Exposed as SharedFlow for observation
+    val navigaionEvent =
+        _navigaionEvent.receiveAsFlow()     // Exposed as SharedFlow for observation
 
     //sealed class for navigation
     sealed class NavigationEvent {
-        data class ToProductList(val categoryId: String, val title : String) : NavigationEvent()
+        data class ToProductList(val categoryId: String, val title: String) : NavigationEvent()
+        data class ProductDetails(val idItems:String) : NavigationEvent()
         // Add other navigation events specific to the dashboard here (e.g., ToSearchScreen)
     }
 
     fun onEvent(event: DashboardUiEvent) {
         when (event) {
-                 DashboardUiEvent.InitDashboard -> initDashboard()
+            DashboardUiEvent.InitDashboard -> initDashboard()
 
-                is DashboardUiEvent.SetProductType -> {
+            is DashboardUiEvent.SetProductType -> {
 
-                    viewModelScope.launch {
-                        _navigaionEvent.send(ToProductList(event.categoryId, event.title))
-                    }
-                    // Optional: You can still log or do other internal ViewModel logic here
-                  /*  val currentCategoryResource = _categoryResources.value
-                    if (currentCategoryResource is Resources.Success) {
-                        val selectedCategory = currentCategoryResource.data?.find { it.Pid == event.categoryId.toInt() }
-                        Log.d("DashboardViewModel", "Selected Category ID: ${event.categoryId}, Title: ${selectedCategory?.title} - Preparing for navigation.")
-                    }*/
+                viewModelScope.launch {
+                    _navigaionEvent.send(ToProductList(event.categoryId, event.title))
                 }
+                // Optional: You can still log or do other internal ViewModel logic here
+                /*  val currentCategoryResource = _categoryResources.value
+                  if (currentCategoryResource is Resources.Success) {
+                      val selectedCategory = currentCategoryResource.data?.find { it.Pid == event.categoryId.toInt() }
+                      Log.d("DashboardViewModel", "Selected Category ID: ${event.categoryId}, Title: ${selectedCategory?.title} - Preparing for navigation.")
+                  }*/
+            }
 
-            is DashboardUiEvent.ItemClicked -> TODO()
+            is DashboardUiEvent.ItemClicked -> {
+
+                viewModelScope.launch {
+                    _navigaionEvent.send(ProductDetails(event.idItems.toString()))
+                }
+            }
         }
     }
 
@@ -90,16 +99,19 @@ class DashboardViewModel @Inject constructor(
             _bannerResources,
             _categoryResources,
             _itemResources
-        ){ banners, categories, items ->
+        ) { banners, categories, items ->
             mapResourcesToUiState(banners, categories, items)
         }
-        .distinctUntilChanged() // Only emit if the state actually changes
+            .distinctUntilChanged() // Only emit if the state actually changes
             .onEach { combinedState ->
                 _dashboardState.value = combinedState  // Update the main UI state
             }
             .catch { e ->
-                _dashboardState.update {currentState ->
-                    currentState.copy(isLoading = false, errorMessage = "An unexpected error occurred: ${e.localizedMessage}")
+                _dashboardState.update { currentState ->
+                    currentState.copy(
+                        isLoading = false,
+                        errorMessage = "An unexpected error occurred: ${e.localizedMessage}"
+                    )
                 }
             }
             .launchIn(viewModelScope) // Launch this collector in viewModelScope
@@ -124,22 +136,31 @@ class DashboardViewModel @Inject constructor(
                     getBannerUC()
                         .retryWithExponentialBackoff() // Apply retry logic
                         .onEach { _bannerResources.value = it } // Update internal flow
-                        .catch { e -> _bannerResources.value = Resources.Error("Banner load error: ${e.localizedMessage}") } // Catch network exceptions here
+                        .catch { e ->
+                            _bannerResources.value =
+                                Resources.Error("Banner load error: ${e.localizedMessage}")
+                        } // Catch network exceptions here
                         .launchIn(this) // Launch in supervisorScope
                 }
                 launch {
                     getCategoryUC()
                         .retryWithExponentialBackoff()
                         .onEach { _categoryResources.value = it }
-                        .catch { e -> _categoryResources.value = Resources.Error("Category load error: ${e.localizedMessage}") }
+                        .catch { e ->
+                            _categoryResources.value =
+                                Resources.Error("Category load error: ${e.localizedMessage}")
+                        }
                         .launchIn(this)
                 }
                 launch {
                     getItemsUC()
-                    .retryWithExponentialBackoff()
-                    .onEach { _itemResources.value = it }
-                    .catch { e -> _itemResources.value = Resources.Error("Items load error: ${e.localizedMessage}") }
-                    .launchIn(this)
+                        .retryWithExponentialBackoff()
+                        .onEach { _itemResources.value = it }
+                        .catch { e ->
+                            _itemResources.value =
+                                Resources.Error("Items load error: ${e.localizedMessage}")
+                        }
+                        .launchIn(this)
                 }
             }
         }

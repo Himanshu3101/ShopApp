@@ -24,4 +24,9 @@ class ItemRepositoryImpl (private val api: ShopApi) : ItemRepository {
         val allItems = getItems()
         return allItems.filter { it.categoryId.toString() == categoryId }
     }
+
+    override suspend fun getProductDetails(idItems: String): List<ItemDomain> {
+        val itemDetails = getItems()
+        return itemDetails.filter { it.idItems.toString() == idItems }
+    }
 }

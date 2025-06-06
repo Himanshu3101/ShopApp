@@ -58,6 +58,7 @@ class DashboardScreenTest {
     )
     private val Items = listOf(
         ItemData(
+            idItems = 1,
             categoryId = "0",
             price = 1,
             rating = 2.0,
@@ -69,6 +70,7 @@ class DashboardScreenTest {
             )
         ),
         ItemData(
+            idItems = 1,
             categoryId = "1",
             title = "url_2",
             price = 1,

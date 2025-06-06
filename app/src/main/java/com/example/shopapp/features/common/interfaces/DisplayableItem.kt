@@ -6,6 +6,7 @@ interface DisplayableItem{
     val price: Int
     val rating: Double
     val title: String
+    val description: String
     val categoryId : String
     val showRecommended : Boolean
 }

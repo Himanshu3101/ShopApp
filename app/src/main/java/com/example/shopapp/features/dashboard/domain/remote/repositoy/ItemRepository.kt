@@ -6,6 +6,5 @@ interface ItemRepository {
 
     suspend fun getItems() : List<ItemDomain>
     suspend fun getItemsByCategoryId(categoryId : String) : List<ItemDomain>
-
-
+    suspend fun getProductDetails(idItems:String) : List<ItemDomain>
 }

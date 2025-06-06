@@ -1,5 +1,6 @@
 package com.example.shopapp.ui.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -8,9 +9,12 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.shopapp.core.util.Constants.Shoplog
 import com.example.shopapp.features.dashboard.presentation.screen.Dashboard
 import com.example.shopapp.features.dashboard.presentation.screen.DashboardViewModel
 import com.example.shopapp.features.introScreen.presentation.IntroScreen
+import com.example.shopapp.features.productDetail.presentation.ProductDetailViewModel
+import com.example.shopapp.features.productDetail.presentation.ProductDetailUI
 import com.example.shopapp.features.productList.presentation.ProductTypeUI
 import com.example.shopapp.features.productList.presentation.ProductTypeViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -37,6 +41,10 @@ fun SetNavGraph() {
                             // CORRECT CALL: Access createRoute directly from Routes.ProductlistUI
                             navController.navigate(Routes.ProductTypeUI.createRoute(navigationEvent.categoryId, navigationEvent.title))
                         }
+
+                        is DashboardViewModel.NavigationEvent.ProductDetails -> {
+                            navController.navigate(Routes.ProductDetail.createRoute(navigationEvent.idItems))
+                        }
                     }
                 }
             }
@@ -55,7 +63,7 @@ fun SetNavGraph() {
             val productListViewModel = hiltViewModel<ProductTypeViewModel>()
             val productListState by productListViewModel.productListState.collectAsStateWithLifecycle()
 
-/*            LaunchedEffect (navController, productListViewModel){
+            /*            LaunchedEffect (navController, productListViewModel){
                 productListViewModel.navigationEvents.collectLatest { navigationEvent ->
                     when(navigationEvent){
                         is ProductListViewModel.NavigationEvent.ToProductDetail -> {
@@ -73,20 +81,22 @@ fun SetNavGraph() {
         }
 
 
-        /*composable(
+        composable(
             route = Routes.ProductDetail.route,
-            arguments = Routes.ProductDetail.navArguments
+            arguments = Routes.ProductDetail.navArgument
         ) { backStackEntry ->
-            val productId = backStackEntry.arguments?.getString(Routes.ProductDetail.navArguments.first().name)
-            // Here, you would instantiate ProductDetailViewModel and pass its state/event
-            // val productDetailViewModel = hiltViewModel<ProductDetailViewModel>()
-            // val productDetailState by productDetailViewModel.productDetailState.collectAsStateWithLifecycle()
-            // ProductDetailUI(navController, state = productDetailState, event = productDetailViewModel::onEvent)
-            Text("Product Details for ID: $productId") // Placeholder
-        }*/
+            val productId = backStackEntry.arguments?.getString(Routes.ProductDetail.navArgument.first().name)
+
+             val productDetailViewModel = hiltViewModel<ProductDetailViewModel>()
+             val productDetailState by productDetailViewModel.productDetailState.collectAsStateWithLifecycle()
+             ProductDetailUI(navController, state = productDetailState, event = productDetailViewModel::onEvent)
+
+        }
     }
 
 
 }
+
+
 
 

@@ -106,6 +106,7 @@ class DashboardViewModelTest {
     )
     private val mockItems = listOf(
         ItemDomain(
+            idItems = 1,
             categoryId = 0,
             createdAt = "Today",
             description = "ABC",
@@ -121,6 +122,7 @@ class DashboardViewModelTest {
             )
         ),
         ItemDomain(
+            idItems = 2,
             categoryId = 1,
             createdAt = "yESTERday",
             description = "DEF",
