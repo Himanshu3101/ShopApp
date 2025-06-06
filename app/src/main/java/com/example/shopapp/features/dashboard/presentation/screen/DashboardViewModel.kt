@@ -11,6 +11,7 @@ import com.example.shopapp.features.dashboard.domain.remote.model.ItemDomain
 import com.example.shopapp.features.dashboard.domain.useCases.GetBanner_UC
 import com.example.shopapp.features.dashboard.domain.useCases.GetCategory_UC
 import com.example.shopapp.features.dashboard.domain.useCases.GetItems_UC
+import com.example.shopapp.features.dashboard.presentation.screen.DashboardViewModel.NavigationEvent.*
 import com.example.shopapp.features.dashboard.presentation.screen.event.DashboardUiEvent
 import com.example.shopapp.features.dashboard.presentation.screen.state.CategoryDetails
 import com.example.shopapp.features.dashboard.presentation.screen.state.ItemData
@@ -67,7 +68,7 @@ class DashboardViewModel @Inject constructor(
                 is DashboardUiEvent.SetProductType -> {
 
                     viewModelScope.launch {
-                        _navigaionEvent.send(NavigationEvent.ToProductList(event.categoryId, event.title))
+                        _navigaionEvent.send(ToProductList(event.categoryId, event.title))
                     }
                     // Optional: You can still log or do other internal ViewModel logic here
                   /*  val currentCategoryResource = _categoryResources.value
@@ -76,6 +77,8 @@ class DashboardViewModel @Inject constructor(
                         Log.d("DashboardViewModel", "Selected Category ID: ${event.categoryId}, Title: ${selectedCategory?.title} - Preparing for navigation.")
                     }*/
                 }
+
+            is DashboardUiEvent.ItemClicked -> TODO()
         }
     }
 
@@ -159,6 +162,7 @@ class DashboardViewModel @Inject constructor(
 
         val itemsState = (items as? Resources.Success)?.data?.map {
             ItemData(
+                idItems = it.idItems,
                 imageUrl = it.picUrl,
                 price = it.price,
                 rating = it.rating,

@@ -1,7 +1,9 @@
 package com.example.shopapp.features.common.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +18,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,11 +33,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.shopapp.R
+import com.example.shopapp.core.util.Constants.Shoplog
 import com.example.shopapp.features.dashboard.presentation.screen.state.ItemData
 import com.example.shopapp.features.common.interfaces.DisplayableItem
+import com.example.shopapp.features.dashboard.presentation.screen.event.DashboardUiEvent
+import com.example.shopapp.ui.navigation.Routes
 import com.example.shopapp.ui.theme.Dimens
 
 @Preview
@@ -41,6 +51,7 @@ import com.example.shopapp.ui.theme.Dimens
 fun Prev_GridWith_Images_Details() {
     val data = listOf(
         ItemData(
+            idItems = 1,
             imageUrl = listOf(
                 "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
                 "https://images.unsplash.com/photo-1544005313-94ddf0286df2"
@@ -52,6 +63,7 @@ fun Prev_GridWith_Images_Details() {
             showRecommended = true
         ),
         ItemData(
+            idItems = 2,
             imageUrl = listOf(
                 "https://images.unsplash.com/photo-1544005313-94ddf0286df2"
             ),
@@ -62,26 +74,44 @@ fun Prev_GridWith_Images_Details() {
             showRecommended = true
         )
     )
-    GridWith_Images_Details(itemData = data)
+    GridWith_Images_Details(itemData = data, event = {}, navHostController = NavHostController(LocalContext.current) )
 }
 
 @Composable
-fun GridWith_Images_Details(itemData: List<DisplayableItem>) {
+fun GridWith_Images_Details(
+    itemData: List<DisplayableItem>,
+    event: ((DashboardUiEvent) -> Unit)? = null,
+    navHostController: NavHostController
+) {
+    val navBackStackEntry = navHostController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry.value?.destination?.route
+
+    val itemToDisplay = remember (itemData, currentRoute){
+        if(currentRoute?.equals(Routes.Dashboard.route) == true){
+            itemData.filter { it.showRecommended }
+        }else{
+            itemData
+        }
+    }
+
     FlowRow(
         modifier = Modifier
-            .padding(Dimens.SmallPadding).background(colorResource(R.color.white))
+            .padding(Dimens.SmallPadding)
+            .background(colorResource(R.color.white))
             .testTag(stringResource(R.string.gridImageTest)),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         maxItemsInEachRow = 2 // Optional
     ) {
-        itemData.chunked(2).forEach { rowItems ->
+        itemToDisplay.chunked(2).forEach { rowItems ->
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 rowItems.forEach { item ->
-                    Box(modifier = Modifier.weight(1f)) {
-//                        if (item.showRecommended) {
-                            ImageWithDetails(itemDetails = item)
-//                        }
+                    Box(modifier = Modifier
+                        .weight(1f)
+                        .clickable {
+                            event?.invoke(DashboardUiEvent.ItemClicked(item.idItems))
+                        }) {
+                                ImageWithDetails(itemDetails = item)
                     }
                 }
             }
@@ -94,7 +124,9 @@ fun GridWith_Images_Details(itemData: List<DisplayableItem>) {
 }
 
 @Composable
-fun ImageWithDetails(itemDetails: DisplayableItem) {
+fun ImageWithDetails(
+    itemDetails: DisplayableItem,
+){
     Column(
         modifier = Modifier
             .fillMaxWidth(),

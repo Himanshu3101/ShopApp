@@ -3,7 +3,7 @@ package com.example.shopapp.features.dashboard.data.repository
 import com.example.shopapp.core.network.ShopApi
 import com.example.shopapp.features.dashboard.domain.remote.model.ItemDomain
 import com.example.shopapp.features.dashboard.domain.remote.repositoy.ItemRepository
-import com.example.shopapp.features.productList.data.cache.InMemoryItemCache
+import com.example.shopapp.core.network.cache.InMemoryItemCache
 
 class ItemRepositoryImpl (private val api: ShopApi) : ItemRepository {
     override suspend fun getItems(): List<ItemDomain> {

@@ -6,5 +6,7 @@ sealed class DashboardUiEvent {
 
     object InitDashboard : DashboardUiEvent()
     data class SetProductType(val categoryId: String, val title : String) : DashboardUiEvent()
+    data class ItemClicked(val idItems: Int) : DashboardUiEvent()
+
 
 }

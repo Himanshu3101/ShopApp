@@ -219,7 +219,7 @@ fun Dashboard(
 
             if (state.itemsState.isNotEmpty()) {
                 Box(modifier = Modifier.testTag(stringResource(R.string.gridTest)))
-                    GridWith_Images_Details(state.itemsState)
+                    GridWith_Images_Details(state.itemsState, event = event, navHostController = navHostController)
             } else if (!state.isLoading && state.isInitialized) {
                 // Optionally, show a placeholder or a message if items are empty after loading
                 Text(

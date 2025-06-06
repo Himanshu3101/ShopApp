@@ -1,4 +1,4 @@
-package com.example.shopapp.features.productList.data.cache
+package com.example.shopapp.core.network.cache
 
 import com.example.shopapp.features.dashboard.domain.remote.model.ItemDomain
 import kotlinx.coroutines.sync.Mutex

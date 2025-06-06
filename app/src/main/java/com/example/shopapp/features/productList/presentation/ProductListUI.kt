@@ -52,7 +52,7 @@ fun ProductTypeUI(
             }
         }
 
-        GridWith_Images_Details(state.items)
+        GridWith_Images_Details(state.items, navHostController = navController)
     }
 
 

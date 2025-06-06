@@ -18,5 +18,5 @@ data class ProductListUiModel(
     override val rating: Double,
     override val title: String,
     override val categoryId : String,
-    override val showRecommended : Boolean
+    override val showRecommended : Boolean, override val idItems: Int
 ) : DisplayableItem

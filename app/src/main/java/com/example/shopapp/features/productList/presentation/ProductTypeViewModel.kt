@@ -69,6 +69,7 @@ class ProductTypeViewModel @Inject constructor(
                             items = resources.data?.map { itemDomain ->
 
                                 ProductListUiModel(
+                                    idItems = itemDomain.idItems,
                                     imageUrl = itemDomain.picUrl,
                                     price = itemDomain.price,
                                     rating = itemDomain.rating,
