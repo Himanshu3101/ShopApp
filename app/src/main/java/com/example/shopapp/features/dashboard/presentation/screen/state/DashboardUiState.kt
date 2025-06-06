@@ -24,7 +24,8 @@ data class ItemData(
     override val title: String,
     override val categoryId : String,
     override val showRecommended : Boolean,
-    override val idItems: Int
+    override val idItems: Int,
+    override val description: String
 ) : DisplayableItem
 
 data class CategoryDetails(

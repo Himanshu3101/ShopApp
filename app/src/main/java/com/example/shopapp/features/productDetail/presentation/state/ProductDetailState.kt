@@ -1,7 +1,6 @@
 package com.example.shopapp.features.productDetail.presentation.state
 
 import com.example.shopapp.features.common.interfaces.DisplayableItem
-import com.example.shopapp.features.productList.presentation.state.ProductListUiModel
 
 data class ProductDetailState(
     val isLoading : Boolean = false,

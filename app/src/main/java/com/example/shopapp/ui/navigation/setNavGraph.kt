@@ -1,6 +1,5 @@
 package com.example.shopapp.ui.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -9,7 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.shopapp.core.util.Constants.Shoplog
 import com.example.shopapp.features.dashboard.presentation.screen.Dashboard
 import com.example.shopapp.features.dashboard.presentation.screen.DashboardViewModel
 import com.example.shopapp.features.introScreen.presentation.IntroScreen
@@ -85,7 +83,7 @@ fun SetNavGraph() {
             route = Routes.ProductDetail.route,
             arguments = Routes.ProductDetail.navArgument
         ) { backStackEntry ->
-            val productId = backStackEntry.arguments?.getString(Routes.ProductDetail.navArgument.first().name)
+//            val productId = backStackEntry.arguments?.getString(Routes.ProductDetail.navArgument.first().name)
 
              val productDetailViewModel = hiltViewModel<ProductDetailViewModel>()
              val productDetailState by productDetailViewModel.productDetailState.collectAsStateWithLifecycle()
