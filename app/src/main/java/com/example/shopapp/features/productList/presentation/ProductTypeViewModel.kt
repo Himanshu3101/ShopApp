@@ -74,6 +74,7 @@ class ProductTypeViewModel @Inject constructor(
                                     price = itemDomain.price,
                                     rating = itemDomain.rating,
                                     title = itemDomain.title,
+                                    description = itemDomain.description,
                                     categoryId = itemDomain.categoryId.toString(),
                                     showRecommended = itemDomain.showRecommended,
                                 )
