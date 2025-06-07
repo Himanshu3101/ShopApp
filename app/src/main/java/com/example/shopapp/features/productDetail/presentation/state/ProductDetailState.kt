@@ -6,6 +6,7 @@ data class ProductDetailState(
     val isLoading : Boolean = false,
     val errorMsg: String? = null,
     val items: List<ProductDetailUiModel> = emptyList(),
+    val itemId : String = ""
 )
 
 data class ProductDetailUiModel(

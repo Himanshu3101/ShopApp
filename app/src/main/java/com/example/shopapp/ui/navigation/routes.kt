@@ -6,7 +6,7 @@ import androidx.navigation.navArgument
 
 const val CATEGORY_ID_ARG = "selected_category"
 const val CATEGORY_TITLE_ARG = "selected_categoryTitle"
-const val CATEGORY_PRODUCT_DETAIL_ARG = "idItems"
+const val CATEGORY_PRODUCT_DETAIL_ID_ARG = "idItems"
 
 sealed class Routes(
     val route: String,
@@ -32,7 +32,7 @@ sealed class Routes(
 
 
     object ProductDetail : Routes(
-        route = "productDetail/{$CATEGORY_PRODUCT_DETAIL_ARG}", // Example route
+        route = "productDetail/{$CATEGORY_PRODUCT_DETAIL_ID_ARG}", // Example route
         navArgument = listOf(
             navArgument("CATEGORY_PRODUCT_DETAIL_ARG") { type = NavType.StringType }
         )
