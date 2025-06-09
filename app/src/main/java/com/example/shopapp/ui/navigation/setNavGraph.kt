@@ -46,10 +46,7 @@ fun SetNavGraph() {
                     }
                 }
             }
-
             Dashboard(navController, event = viewModel::onEvent, state = state)
-
-
         }
 
 

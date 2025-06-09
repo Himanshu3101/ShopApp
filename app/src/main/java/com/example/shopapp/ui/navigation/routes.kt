@@ -32,9 +32,9 @@ sealed class Routes(
 
 
     object ProductDetail : Routes(
-        route = "productDetail/{$CATEGORY_PRODUCT_DETAIL_ID_ARG}", // Example route
+        route = "productDetail/{$CATEGORY_PRODUCT_DETAIL_ID_ARG}",
         navArgument = listOf(
-            navArgument("CATEGORY_PRODUCT_DETAIL_ARG") { type = NavType.StringType }
+            navArgument(CATEGORY_PRODUCT_DETAIL_ID_ARG) { type = NavType.StringType }
         )
     ) {
         fun createRoute(productId: String): String {

@@ -5,7 +5,7 @@ import com.example.shopapp.features.common.interfaces.DisplayableItem
 data class ProductDetailState(
     val isLoading : Boolean = false,
     val errorMsg: String? = null,
-    val items: List<ProductDetailUiModel> = emptyList(),
+    val items: ProductDetailUiModel? = null,
     val itemId : String = ""
 )
 

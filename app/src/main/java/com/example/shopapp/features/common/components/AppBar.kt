@@ -1,5 +1,6 @@
 package com.example.shopapp.features.common.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -61,7 +62,10 @@ fun AppBar(
 
         navigationIcon ={
             IconButton(onClick = onBackClick){
-                Icon(painterResource(id = R.drawable.back), contentDescription = null)
+                Image(
+                    painterResource(R.drawable.back),
+                    contentDescription = "userPic",
+                )
             }
         }
     )

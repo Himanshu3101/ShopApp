@@ -189,7 +189,8 @@ class DashboardViewModel @Inject constructor(
                 rating = it.rating,
                 title = it.title,
                 categoryId = it.categoryId.toString(),
-                showRecommended = it.showRecommended
+                showRecommended = it.showRecommended,
+                description = it.description
             )
         }.orEmpty()
 

@@ -36,11 +36,11 @@ fun ProductTypeUI(
     event: (ProductListUiEvent) -> Unit
 ) {
 
-    BackHandler {
+    /*BackHandler {
         navController.navigate(Routes.Dashboard.route) {
             popUpTo(Routes.Dashboard.route) { inclusive = true }
         }
-    }
+    }*/
 
     Column(
         modifier = Modifier.fillMaxSize().background(colorResource(R.color.white))

@@ -25,6 +25,7 @@ class ProductDetailViewModel @Inject constructor(
     private val getProductDetailsUC: GetProductDetailsUC,
     @IoDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(){
+
     private val _productDetailState = MutableStateFlow(ProductDetailState())
     val productDetailState = _productDetailState.asStateFlow()
 
@@ -52,9 +53,39 @@ class ProductDetailViewModel @Inject constructor(
                         is Resources.Error -> currentState.copy(
                             errorMsg = resources.message ?: "An unexpected error occurred"
                         )
-                        is Resources.Success -> currentState.copy(
+                        is Resources.Success -> {
+                            val productDomain = resources.data?.firstOrNull{ it.idItems.toString() == itemId }
+
+                            val uiModel = productDomain?.let { itemDomain ->
+                                ProductDetailUiModel(
+                                    idItems = itemDomain.idItems,
+                                    imageUrl = itemDomain.picUrl,
+                                    price = itemDomain.price,
+                                    rating = itemDomain.rating,
+                                    title = itemDomain.title,
+                                    description = itemDomain.description,
+                                    categoryId = itemDomain.categoryId.toString(),
+                                    showRecommended = itemDomain.showRecommended,
+                                )
+                            } ?: ProductDetailUiModel( // Provide a default/empty ProductDetailUiModel if not found
+                                idItems = 0, imageUrl = emptyList(), price = 0, title = "Not Found", description = "Not Found", rating = 0.0, categoryId = "", showRecommended = false
+                            )
+                            currentState.copy(
+                                isLoading = false,
+                                items = uiModel // Now 'uiModel' is a single ProductDetailUiModel
+                            )
+
+                        }
+
+
+
+
+                        /*currentState.copy(
                             isLoading = false,
-                            items = resources.data?.map{ itemDomain->
+                            items = resources.data?.firstOrNull{ it.idItems.toString() == itemId }*/
+
+
+                                /*    itemDomain->
 
                                 ProductDetailUiModel(
                                     idItems = itemDomain.idItems,
@@ -67,8 +98,8 @@ class ProductDetailViewModel @Inject constructor(
                                     showRecommended = itemDomain.showRecommended,
                                 )
 
-                            }?: emptyList()
-                        )
+                            }?: emptyList()*/
+//                        )
                     }
                 }
             }
