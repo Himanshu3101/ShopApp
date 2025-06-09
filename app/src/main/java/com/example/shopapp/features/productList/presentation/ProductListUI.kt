@@ -1,6 +1,5 @@
 package com.example.shopapp.features.productList.presentation
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

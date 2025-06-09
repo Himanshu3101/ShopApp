@@ -61,6 +61,7 @@ object Dimens {
 
     val BannerImageSize = 210.dp
 
+    val sizeVariantProductItem = 50.dp
     val sizeProductItem = 100.dp
 
 

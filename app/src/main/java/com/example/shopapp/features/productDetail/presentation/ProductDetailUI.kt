@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowColumn
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -64,8 +65,10 @@ fun ProductDetailUI(
                 state,
                 modifier = Modifier.align(Alignment.Center)
             )
-
             DetailToolBar(navController)
+
+            OptionImage(state)
+
         }
 
         Box(
@@ -75,6 +78,34 @@ fun ProductDetailUI(
                 .background(colorResource(R.color.blue_light))
         ){
             ProductDetailData(state)
+        }
+    }
+}
+
+@Composable
+fun OptionImage(state: ProductDetailState) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = Dimens.ExtraLargePadding, end = Dimens.SmallPadding),
+        horizontalAlignment = Alignment.End,
+        verticalArrangement = Arrangement.Center
+    ) {
+        FlowColumn {
+            state.items?.imageUrl?.forEach {columnItem ->
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(columnItem)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription ="Image Varient",
+                    modifier = Modifier
+                        .height(Dimens.sizeVariantProductItem)
+                        .padding(Dimens.SmallBorderWidth)
+//                               .clip(RoundedCornerShape(Dimens.SmallPadding))
+
+                )
+            }
         }
     }
 }
@@ -108,6 +139,8 @@ fun ProductDetailData(state: ProductDetailState) {
                 .padding(start = Dimens.MediumPadding, top = Dimens.MediumPadding)
                 .fillMaxSize()
         )
+
+
     }
 }
 
