@@ -76,30 +76,6 @@ class ProductDetailViewModel @Inject constructor(
                             )
 
                         }
-
-
-
-
-                        /*currentState.copy(
-                            isLoading = false,
-                            items = resources.data?.firstOrNull{ it.idItems.toString() == itemId }*/
-
-
-                                /*    itemDomain->
-
-                                ProductDetailUiModel(
-                                    idItems = itemDomain.idItems,
-                                    imageUrl = itemDomain.picUrl,
-                                    price = itemDomain.price,
-                                    rating = itemDomain.rating,
-                                    title = itemDomain.title,
-                                    description = itemDomain.description,
-                                    categoryId = itemDomain.categoryId.toString(),
-                                    showRecommended = itemDomain.showRecommended,
-                                )
-
-                            }?: emptyList()*/
-//                        )
                     }
                 }
             }

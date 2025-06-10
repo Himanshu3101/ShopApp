@@ -45,7 +45,7 @@ object Dimens {
     val ExtraLargeSpacerHeight = 100.dp
 
     //Box Height
-    val MediumBoxHeight = 80.dp
+    val MediumBoxHeight = 60.dp
     val ExtraLargeBoxHeight = 250.dp
     val SM_BoxHeight = 40.dp
     val SmallBoxHeight = 20.dp
@@ -54,7 +54,7 @@ object Dimens {
     val MediumCornerRadius = 30.dp
     val SmallCornerRadius = 12.dp
     val LargeCornerRadius = 50.dp
-    val ExtraLargeCornerRadius = 50.dp
+    val ExtraLargeCornerRadius = 100.dp
 
     val SmallCircleShape = 90.dp
     val SmallSpacerWidth = 8.dp

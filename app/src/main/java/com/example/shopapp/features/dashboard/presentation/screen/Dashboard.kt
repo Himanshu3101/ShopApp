@@ -127,6 +127,7 @@ fun Dashboard(
         }
 
 
+
         item {
             if (state.bannerUrls.isNotEmpty()) {
                 Box(modifier = Modifier.testTag(stringResource(R.string.pagerSection))) {
