@@ -36,6 +36,7 @@ androidxNavigation = "2.9.0"
 navigationTestingAndroid = "2.9.0"
 navigationeventAndroid = "1.0.0-alpha01"
 jetbrainsKotlinJvm = "2.1.20"
+appcompat = "1.7.1"
 
 
 
@@ -113,6 +114,7 @@ mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "androidxNavigation" }
 androidx-navigation-testing-android = { group = "androidx.navigation", name = "navigation-testing-android", version.ref = "navigationTestingAndroid" }
 androidx-navigationevent-android = { group = "androidx.navigationevent", name = "navigationevent-android", version.ref = "navigationeventAndroid" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
 
 

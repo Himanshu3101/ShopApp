@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Icon
@@ -99,20 +100,19 @@ fun ProductDetailUI(
             IconButton(
                 onClick = { /*if (quantity > 1) quantity--*/ },
                 modifier = Modifier
-                    .size(Dimens.QuantityButtonSize)
+                    .size(Dimens.SmallButtonSize)
                     .clip(CircleShape) // Make it circular
                     .background(MaterialTheme.colorScheme.primary), // Example background
-                contentPadding = PaddingValues(0.dp)
             ) {
-                Image(
-                    painter = painterResource(R.drawable.4),
-                    contentDescription = "Subtract Quantity",
+               /* Image(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add Quantity",
                     tint = MaterialTheme.colorScheme.onPrimary
-                )
+                )*/
             }
 
             // Quantity Number
-            Text(
+            /*Text(
                 text = quantity.toString(),
                 fontSize = Dimens.LargeText,
                 fontWeight = FontWeight.Bold,
@@ -134,7 +134,7 @@ fun ProductDetailUI(
                     contentDescription = "Add Quantity",
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
-            }
+            }*/
            /* Button(
                 onClick = {  *//*Handle button click*//*  },
                 modifier = Modifier

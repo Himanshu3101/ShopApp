@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.firebase.database)
     implementation(libs.androidx.navigation.testing.android)
     implementation(libs.androidx.navigationevent.android)
+    implementation(libs.androidx.appcompat)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
