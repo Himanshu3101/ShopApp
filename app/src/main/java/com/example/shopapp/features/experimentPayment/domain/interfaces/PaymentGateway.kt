@@ -4,6 +4,11 @@ import com.example.shopapp.features.experimentPayment.domain.model.PaymentDetail
 import com.example.shopapp.features.experimentPayment.domain.model.PaymentMethodType
 import com.example.shopapp.features.experimentPayment.domain.model.PaymentResult
 
+//PaymentMethod Interface:
+//
+//This is the central abstraction for any payment method.
+//It defines the contract for how a payment method should behave.
+
 interface PaymentGateway {
     fun getType(): PaymentMethodType
     suspend fun processPayment(paymentDetails: PaymentDetails, paymentData: Any?): PaymentResult
