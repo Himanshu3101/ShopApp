@@ -104,15 +104,15 @@ fun ProductDetailUI(
                     .clip(CircleShape) // Make it circular
                     .background(MaterialTheme.colorScheme.primary), // Example background
             ) {
-               /* Image(
+                Image(
                     imageVector = Icons.Default.Add,
                     contentDescription = "Add Quantity",
                     tint = MaterialTheme.colorScheme.onPrimary
-                )*/
+                )
             }
 
             // Quantity Number
-            /*Text(
+            Text(
                 text = quantity.toString(),
                 fontSize = Dimens.LargeText,
                 fontWeight = FontWeight.Bold,
@@ -134,7 +134,7 @@ fun ProductDetailUI(
                     contentDescription = "Add Quantity",
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
-            }*/
+            }
            /* Button(
                 onClick = {  *//*Handle button click*//*  },
                 modifier = Modifier
