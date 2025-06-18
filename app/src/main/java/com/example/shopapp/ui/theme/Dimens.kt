@@ -36,7 +36,8 @@ object Dimens {
     val IconSizeLarge = 32.dp
 
     // Button height
-    val SmallButtonSize = 12.dp
+    val SmallButtonSize = 22.dp
+    val MediumButtonSize = 100.dp
 
 
     val SmallSpacerHeight = 8.dp

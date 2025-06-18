@@ -37,6 +37,7 @@ navigationTestingAndroid = "2.9.0"
 navigationeventAndroid = "1.0.0-alpha01"
 jetbrainsKotlinJvm = "2.1.20"
 appcompat = "1.7.1"
+composeMaterialIconsExtended = "1.7.8"
 
 
 
@@ -57,6 +58,8 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 
+#//materialIcons
+androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "composeMaterialIconsExtended" }
 
 #//Splash Api
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }

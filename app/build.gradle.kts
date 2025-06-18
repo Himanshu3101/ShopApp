@@ -81,6 +81,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+
+    // For Icons.Default.Add, Icons.Default.Remove, etc.
+    implementation(libs.androidx.compose.material.icons.extended)
     //Room
   /*  ksp(libs.androidx.room.compiler){
         exclude(group = "com.intellij", module = "annotations")

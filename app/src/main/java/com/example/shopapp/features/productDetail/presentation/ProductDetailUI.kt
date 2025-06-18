@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -22,8 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -68,101 +66,80 @@ fun ProductDetailUI(
 
     Box(
         modifier = Modifier.fillMaxSize()
-    ){
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-        ){
+        ) {
             ProductDetailLayout(state, navController)
         }
 
-        Row(
-            modifier = Modifier
-                .padding(all = Dimens.SmallPadding)
-                .align(Alignment.Center) // Aligns the center of the button to the center of the parent Box
-                .padding(bottom = Dimens.SmallPadding / 2) // Move it up by half its height to sit on the dividing line
-                .wrapContentWidth()
-                .clip(RoundedCornerShape(Dimens.ExtraLargeCornerRadius))
-//                .background(MaterialTheme.colorScheme.surface) // Use surface color for background
-                .padding(Dimens.SmallPadding)
-                .background(colorResource(R.color.blue)),
-
-                /*.size(Dimens.MediumBoxHeight) // Standard FAB size
-                .border(Dimens.SmallBorderWidth, colorResource(R.color.white), RoundedCornerShape(Dimens.LargeCornerRadius))
-//                .clip(RoundedCornerShape(Dimens.LargeCornerRadius)) // Makes the button circular
-                .background(colorResource(R.color.blue)),*/
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Dimens.SmallPadding),
-        ){
-
-
-            // Subtract Button
-            IconButton(
-                onClick = { /*if (quantity > 1) quantity--*/ },
-                modifier = Modifier
-                    .size(Dimens.SmallButtonSize)
-                    .clip(CircleShape) // Make it circular
-                    .background(MaterialTheme.colorScheme.primary), // Example background
-            ) {
-                Image(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add Quantity",
-                    tint = MaterialTheme.colorScheme.onPrimary
-                )
-            }
-
-            // Quantity Number
-            Text(
-                text = quantity.toString(),
-                fontSize = Dimens.LargeText,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.width(Dimens.QuantityTextWidth), // Give it a fixed width for consistent spacing
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center
-            )
-
-            // Add Button
-            IconButton(
-                onClick = { quantity++ },
-                modifier = Modifier
-                    .size(Dimens.QuantityButtonSize)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primary),
-                contentPadding = PaddingValues(0.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add Quantity",
-                    tint = MaterialTheme.colorScheme.onPrimary
-                )
-            }
-           /* Button(
-                onClick = {  *//*Handle button click*//*  },
-                modifier = Modifier
-                    .wrapContentWidth()
-                    .wrapContentHeight(),
-                shape = CircleShape,
-                colors = ButtonColors(
-                    containerColor = colorResource(R.color.white),
-                    contentColor = colorResource(R.color.black),
-                    disabledContainerColor = colorResource(R.color.white),
-                    disabledContentColor = colorResource(R.color.black),
-                )
-            ) {
-                Text(
-                    text = "+",
-                )
-            }
-
-            Text(
-                text = "0",
-                overflow = TextOverflow.Ellipsis,
-                fontWeight = Bold,
-                fontSize = Dimens.LargeText,
-            )*/
-
-        }
+        AddRemoveItem(modifier = Modifier.align(Alignment.Center)) // Aligns the center of the button to the center of the parent Box
     }
 
+}
+
+@Composable
+fun AddRemoveItem(modifier: Modifier) {
+    Row(
+        modifier = modifier
+            .clip(RoundedCornerShape(Dimens.MediumCornerRadius))
+            .padding(bottom = Dimens.SmallPadding / 9) // Move it up by half its height to sit on the dividing line
+            .background(colorResource(R.color.blue))
+            .border(
+                Dimens.SmallBorderWidth,
+                colorResource(R.color.blue),
+                RoundedCornerShape(Dimens.LargeCornerRadius)
+            ),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Dimens.SmallPadding),
+    ) {
+
+        //Subtract
+        IconButton(
+            onClick = { /*if (quantity > 1) quantity--*/ },
+            modifier = Modifier
+                .padding(Dimens.MediumPadding)
+                .size(Dimens.IconSizeMedium)
+                .clip(CircleShape) // Make it circular
+                .background(
+                    colorResource(R.color.white),
+                    shape = CircleShape
+                ), // Example background
+        ) {
+            Icon(
+                imageVector = Icons.Default.Remove,
+                contentDescription = "Subtract Quantity",
+                tint = MaterialTheme.colorScheme.primary
+            )
+        }
+
+        Text(
+            text = "0",
+            modifier = Modifier
+                .padding(Dimens.MediumPadding)
+        )
+
+        // Add Button
+        IconButton(
+            onClick = { /*if (quantity > 1) quantity--*/ },
+            modifier = Modifier
+                .padding(Dimens.MediumPadding)
+                .size(Dimens.IconSizeMedium)
+                .clip(CircleShape) // Make it circular
+                .background(
+                    colorResource(R.color.white),
+                    shape = CircleShape
+                ), // Example background
+        ) {
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = "Add Quantity",
+                tint = MaterialTheme.colorScheme.primary
+            )
+        }
+
+    }
 }
 
 @Composable
@@ -170,13 +147,13 @@ fun ProductDetailLayout(state: ProductDetailState, navController: NavHostControl
     Column(
         modifier = Modifier
             .fillMaxSize()
-    ){
+    ) {
         Box(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxSize()
                 .background(colorResource(R.color.white))
-        ){
+        ) {
 
             MainImage(
                 state,
@@ -191,9 +168,9 @@ fun ProductDetailLayout(state: ProductDetailState, navController: NavHostControl
         Box(
             modifier = Modifier
                 .weight(1f)
-                .fillMaxSize()
+                .fillMaxSize().padding(bottom = Dimens.SmallPadding)
                 .background(colorResource(R.color.blue_light))
-        ){
+        ) {
             ProductDetailData(state)
         }
     }
@@ -201,7 +178,7 @@ fun ProductDetailLayout(state: ProductDetailState, navController: NavHostControl
 
 @Composable
 fun OptionImage(state: ProductDetailState) {
-    state.items?.imageUrl?.let {imageUrls ->
+    state.items?.imageUrl?.let { imageUrls ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -210,13 +187,13 @@ fun OptionImage(state: ProductDetailState) {
             verticalArrangement = Arrangement.Center
         ) {
             FlowColumn {
-                imageUrls.forEach {columnItem ->
+                imageUrls.forEach { columnItem ->
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
                             .data(columnItem)
                             .crossfade(true)
                             .build(),
-                        contentDescription ="Image Varient",
+                        contentDescription = "Image Varient",
                         modifier = Modifier
                             .height(Dimens.sizeVariantProductItem)
                             .padding(Dimens.SmallBorderWidth)
@@ -230,12 +207,12 @@ fun OptionImage(state: ProductDetailState) {
 
 @Composable
 fun ProductDetailData(state: ProductDetailState) {
-    state.items?.let {item->
+    state.items?.let { item ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(Dimens.MediumPadding)
-        ){
+                .padding(Dimens.LargePadding)
+        ) {
             Text(
                 text = state.items.title.toString(),
                 fontWeight = Bold,
@@ -259,30 +236,36 @@ fun ProductDetailData(state: ProductDetailState) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .verticalScroll(rememberScrollState())
-                    .weight(1f,fill = false)
+                    .weight(1f, fill = false)
             )
         }
-    }?:run {
+    } ?: run {
         // Show loading or error state if items is null
-        Text(text = "Loading Products Details", modifier = Modifier.fillMaxSize().padding(Dimens.MediumPadding))
+        Text(
+            text = "Loading Products Details",
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = Dimens.ExtraLargePadding,start = Dimens.MediumPadding, end = Dimens.MediumPadding)
+        )
     }
 }
 
 @Composable
 fun MainImage(state: ProductDetailState, modifier: Modifier) {
-    state.items?.imageUrl?.getOrNull(0)?.let{mainImageUrl->
+    state.items?.imageUrl?.getOrNull(0)?.let { mainImageUrl ->
         Column(
-            modifier = modifier.fillMaxSize()
+            modifier = modifier
+                .fillMaxSize()
                 .padding(Dimens.MediumPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
-        ){
+        ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(mainImageUrl)
                     .crossfade(true)
                     .build(),
-                contentDescription ="Product Details",
+                contentDescription = "Product Details",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxSize()
@@ -294,15 +277,15 @@ fun MainImage(state: ProductDetailState, modifier: Modifier) {
 
 @Composable
 fun DetailToolBar(navController: NavHostController) {
-    Row (
+    Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(all = Dimens.MediumPadding)
-    ){
+    ) {
         //Back
         IconButton(onClick = {
             navController.navigateUp()
-        }){
+        }) {
             Image(
                 painterResource(R.drawable.back),
                 contentDescription = "back_productDetails"
@@ -319,7 +302,7 @@ fun DetailToolBar(navController: NavHostController) {
             //Save
             IconButton(onClick = {
 //                        navController.navigateUp()
-            }){
+            }) {
                 Image(
                     painterResource(R.drawable.fav),
                     contentDescription = "back_productDetails"
@@ -329,7 +312,7 @@ fun DetailToolBar(navController: NavHostController) {
             //Share
             IconButton(onClick = {
 //                        navController.navigateUp()
-            }){
+            }) {
                 Image(
                     painterResource(R.drawable.share),
                     contentDescription = "back_productDetails"
