@@ -14,13 +14,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddShoppingCart
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -34,7 +34,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
@@ -42,8 +44,10 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.shopapp.R
+import com.example.shopapp.features.common.components.ButtonBox
 import com.example.shopapp.features.productDetail.presentation.event.ProductDetailUiEvent
 import com.example.shopapp.features.productDetail.presentation.state.ProductDetailState
+import com.example.shopapp.features.productDetail.presentation.state.ProductDetailUiModel
 import com.example.shopapp.ui.theme.Dimens
 
 @Preview
@@ -86,6 +90,7 @@ fun AddRemoveItem(modifier: Modifier) {
             .clip(RoundedCornerShape(Dimens.MediumCornerRadius))
             .padding(bottom = Dimens.SmallPadding / 9) // Move it up by half its height to sit on the dividing line
             .background(colorResource(R.color.blue))
+            .height(Dimens.MediumBoxHeight)
             .border(
                 Dimens.SmallBorderWidth,
                 colorResource(R.color.blue),
@@ -168,7 +173,7 @@ fun ProductDetailLayout(state: ProductDetailState, navController: NavHostControl
         Box(
             modifier = Modifier
                 .weight(1f)
-                .fillMaxSize().padding(bottom = Dimens.SmallPadding)
+                .fillMaxSize()
                 .background(colorResource(R.color.blue_light))
         ) {
             ProductDetailData(state)
@@ -211,10 +216,11 @@ fun ProductDetailData(state: ProductDetailState) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(Dimens.LargePadding)
+                .padding(Dimens.SmallPadding)
         ) {
             Text(
-                text = state.items.title.toString(),
+                text = state.items.title,
+                modifier = Modifier.padding(start = Dimens.SmallPadding, top = Dimens.MediumPadding),
                 fontWeight = Bold,
                 fontSize = Dimens.LargeText
             )
@@ -223,6 +229,7 @@ fun ProductDetailData(state: ProductDetailState) {
 
             Text(
                 text = "Product Details",
+                modifier = Modifier.padding(start = Dimens.SmallPadding),
                 fontWeight = Bold,
                 fontSize = Dimens.MediumText
             )
@@ -236,8 +243,13 @@ fun ProductDetailData(state: ProductDetailState) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .verticalScroll(rememberScrollState())
-                    .weight(1f, fill = false)
+                    .padding(start = Dimens.SmallPadding)
+                    .weight(1f/*, fill = false*/)
             )
+
+            Spacer(modifier = Modifier.height(Dimens.MediumPadding))
+
+            PriceAndCart(item)
         }
     } ?: run {
         // Show loading or error state if items is null
@@ -247,6 +259,49 @@ fun ProductDetailData(state: ProductDetailState) {
                 .fillMaxSize()
                 .padding(top = Dimens.ExtraLargePadding,start = Dimens.MediumPadding, end = Dimens.MediumPadding)
         )
+    }
+}
+
+@Composable
+fun PriceAndCart(item: ProductDetailUiModel) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(Dimens.SM_BoxHeight)
+            .padding(horizontal = Dimens.SmallPadding),
+        contentAlignment = Alignment.CenterStart
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    color = colorResource(R.color.blue),
+                    shape = RoundedCornerShape(Dimens.LargeCornerRadius)
+                )
+        ) {
+            Text(
+                text = "$ ${item.price}",
+                fontWeight = FontWeight.Bold,
+                fontSize = Dimens.MediumText,
+                color = colorResource(R.color.black),
+                textAlign = TextAlign.Start,
+                modifier = Modifier
+                    .align(Alignment.CenterStart) // Align text within its parent Box
+                    .padding(start = Dimens.ExtraLargePadding) // Padding for the text itself
+            )
+        }
+
+        Box(
+            modifier = Modifier.align(Alignment.CenterEnd)// <-- KEY: This aligns the button
+        ) {
+            ButtonBox(
+                containerColor = colorResource(R.color.blue2),
+                borderColor = colorResource(R.color.blue2),
+                text = "Add to Cart",
+                icon = Icons.Default.AddShoppingCart,
+                onClick = { /* TODO: Handle click */ }
+            )
+        }
     }
 }
 

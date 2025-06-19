@@ -21,6 +21,7 @@ object Dimens {
 
     // Spacing
     val SmallPadding = 7.dp
+    val SmallMediumPadding = 12.dp
     val MediumPadding = 16.dp
     val LargePadding = 24.dp
     val ExtraLargePadding = 40.dp
@@ -46,7 +47,7 @@ object Dimens {
     val ExtraLargeSpacerHeight = 100.dp
 
     //Box Height
-    val MediumBoxHeight = 60.dp
+    val MediumBoxHeight = 50.dp
     val ExtraLargeBoxHeight = 250.dp
     val SM_BoxHeight = 40.dp
     val SmallBoxHeight = 20.dp
