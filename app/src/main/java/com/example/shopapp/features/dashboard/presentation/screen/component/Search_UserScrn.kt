@@ -5,9 +5,14 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -36,7 +41,8 @@ fun Search_UserScrn() {
 
     Row(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(horizontal = Dimens.SmallPadding), // Add some horizontal padding to the Row itself
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -44,17 +50,19 @@ fun Search_UserScrn() {
         Box(
             modifier = Modifier
                 .weight(4f)
-                .fillMaxWidth()
+//                .fillMaxWidth()
+                .fillMaxHeight()
                 .border(Dimens.VerySmallBorderWidth, colorResource(id = R.color.lightGrey), RoundedCornerShape(Dimens.LargeCornerRadius),)
                 .clip(RoundedCornerShape(Dimens.LargeCornerRadius)),
-            contentAlignment = Alignment.TopStart
+//            contentAlignment = Alignment.TopStart
 
         ) {
 
             Row(
                 modifier = Modifier
-                    .padding(Dimens.SmallPadding)
-                    .fillMaxWidth(),
+//                    .padding(Dimens.SmallPadding)
+//                    .fillMaxWidth(),
+                    .fillMaxSize(),
                 horizontalArrangement =Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -81,7 +89,8 @@ fun Search_UserScrn() {
                     },
                     singleLine = true,
                     modifier = Modifier
-                        .weight(5f),
+                        .weight(5f)
+                        .fillMaxHeight(), // <--- KEY CHANGE: Te
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.Transparent, // Transparent background when focused
                         cursorColor = Color.Black, // Color of the cursor
@@ -89,6 +98,7 @@ fun Search_UserScrn() {
                         focusedIndicatorColor = Color.Transparent, // Remove the indicator line
                         unfocusedContainerColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
+                        disabledContainerColor = Color.Transparent, // Add disabled too for completeness
                     )
                 )
 
@@ -96,14 +106,21 @@ fun Search_UserScrn() {
                     painterResource(R.drawable.microphone),
                     contentDescription = "microphoneIcon",
                     modifier = Modifier.weight(1f)
+                        .fillMaxHeight() // <--- KEY CHANGE: Microphone image fills its height
+                        .padding(horizontal = Dimens.SmallPadding) // Add s
                 )
             }
         }
+
+        Spacer(modifier = Modifier.width(Dimens.SmallPadding))
 
         Image(
             painterResource(R.drawable.settings_icon),
             contentDescription = "settingIcon",
             modifier = Modifier.weight(1f)
+                .fillMaxHeight() // <--- KEY CHANGE: Make the settings icon fill the height of the Row
+                .aspectRatio(1f) // <--- OPTION\
+                .padding(Dimens.SmallPadding)
         )
     }
 }
