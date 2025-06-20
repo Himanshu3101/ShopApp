@@ -24,16 +24,16 @@ class ProductDetailViewModel @Inject constructor(
     private val saveStateHandle: SavedStateHandle,
     private val getProductDetailsUC: GetProductDetailsUC,
     @IoDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO
-): ViewModel(){
+) : ViewModel() {
 
     private val _productDetailState = MutableStateFlow(ProductDetailState())
     val productDetailState = _productDetailState.asStateFlow()
 
-    private val _itemId : String = checkNotNull(saveStateHandle[CATEGORY_PRODUCT_DETAIL_ID_ARG]){
+    private val _itemId: String = checkNotNull(saveStateHandle[CATEGORY_PRODUCT_DETAIL_ID_ARG]) {
         "Detail Id should not be null"
     }
 
-    init{
+    init {
         _productDetailState.update {
             it.copy(
                 itemId = _itemId
@@ -43,18 +43,20 @@ class ProductDetailViewModel @Inject constructor(
     }
 
     private fun fetchProductDetail(itemId: String) {
-        viewModelScope.launch (dispatcher){
+        viewModelScope.launch(dispatcher) {
             _productDetailState.update { it.copy(isLoading = true, errorMsg = null) }
 
-            getProductDetailsUC(itemId).collect{resources->
-                _productDetailState.update {currentState->
-                    when(resources){
+            getProductDetailsUC(itemId).collect { resources ->
+                _productDetailState.update { currentState ->
+                    when (resources) {
                         is Resources.Loading -> currentState.copy(isLoading = true)
                         is Resources.Error -> currentState.copy(
                             errorMsg = resources.message ?: "An unexpected error occurred"
                         )
+
                         is Resources.Success -> {
-                            val productDomain = resources.data?.firstOrNull{ it.idItems.toString() == itemId }
+                            val productDomain =
+                                resources.data?.firstOrNull { it.idItems.toString() == itemId }
 
                             val uiModel = productDomain?.let { itemDomain ->
                                 ProductDetailUiModel(
@@ -67,12 +69,22 @@ class ProductDetailViewModel @Inject constructor(
                                     categoryId = itemDomain.categoryId.toString(),
                                     showRecommended = itemDomain.showRecommended,
                                 )
-                            } ?: ProductDetailUiModel( // Provide a default/empty ProductDetailUiModel if not found
-                                idItems = 0, imageUrl = emptyList(), price = 0, title = "Not Found", description = "Not Found", rating = 0.0, categoryId = "", showRecommended = false
-                            )
+                            }
+                                ?: ProductDetailUiModel( // Provide a default/empty ProductDetailUiModel if not found
+                                    idItems = 0,
+                                    imageUrl = emptyList(),
+                                    price = 0,
+                                    title = "Not Found",
+                                    description = "Not Found",
+                                    rating = 0.0,
+                                    categoryId = "",
+                                    showRecommended = false
+                                )
                             currentState.copy(
                                 isLoading = false,
-                                items = uiModel // Now 'uiModel' is a single ProductDetailUiModel
+                                items = uiModel, // Now 'uiModel' is a single ProductDetailUiModel
+                                selectedMainImageUrl = uiModel.imageUrl.firstOrNull()// Sets the first image URL as default
+
                             )
 
                         }
@@ -83,7 +95,23 @@ class ProductDetailViewModel @Inject constructor(
     }
 
 
-    fun onEvent(event : ProductDetailUiEvent){
+    fun onEvent(event: ProductDetailUiEvent) {
+        when (event) {
+            is ProductDetailUiEvent.setMainImage -> {
+                _productDetailState.update { currentState ->
+                    currentState.copy(
+                        selectedMainImageUrl = event.imageUrl
+                    )
+                }
+            }
 
+            is ProductDetailUiEvent.setQuantity -> {
+                _productDetailState.update { quantity->
+                    quantity.copy(
+                        cartQuantity = event.quantity
+                    )
+                }
+            }
+        }
     }
 }

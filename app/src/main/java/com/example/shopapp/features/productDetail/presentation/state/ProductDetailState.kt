@@ -6,7 +6,9 @@ data class ProductDetailState(
     val isLoading : Boolean = false,
     val errorMsg: String? = null,
     val items: ProductDetailUiModel? = null,
-    val itemId : String = ""
+    val itemId : String = "",
+    val selectedMainImageUrl:String? = null,
+    val cartQuantity:Int = 0
 )
 
 data class ProductDetailUiModel(

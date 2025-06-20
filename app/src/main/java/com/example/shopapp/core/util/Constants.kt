@@ -1,9 +1,12 @@
 package com.example.shopapp.core.util
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.Dp
+
 
 
 object Constants {
@@ -17,4 +20,8 @@ object Constants {
     }
 
     const val Shoplog:String = "Shop_log"
+
+    fun showToast(context: Context, message:String, duration: Int = Toast.LENGTH_SHORT ){
+        Toast.makeText(context, message, duration).show()
+    }
 }

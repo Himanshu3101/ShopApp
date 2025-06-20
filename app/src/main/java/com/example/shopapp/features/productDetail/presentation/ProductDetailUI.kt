@@ -3,6 +3,7 @@ package com.example.shopapp.features.productDetail.presentation
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,6 +45,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.shopapp.R
+import com.example.shopapp.core.util.Constants
 import com.example.shopapp.features.common.components.ButtonBox
 import com.example.shopapp.features.productDetail.presentation.event.ProductDetailUiEvent
 import com.example.shopapp.features.productDetail.presentation.state.ProductDetailState
@@ -75,16 +77,104 @@ fun ProductDetailUI(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            ProductDetailLayout(state, navController)
+            ProductDetailLayout(state, navController, event)
         }
 
-        AddRemoveItem(modifier = Modifier.align(Alignment.Center)) // Aligns the center of the button to the center of the parent Box
+        AddRemoveItem(modifier = Modifier.align(Alignment.Center), state, event) // Aligns the center of the button to the center of the parent Box
     }
 
 }
+@Composable
+fun ProductDetailLayout(
+    state: ProductDetailState,
+    navController: NavHostController,
+    event: (ProductDetailUiEvent) -> Unit,
+    ) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxSize()
+                .background(colorResource(R.color.white))
+        ) {
+
+            MainImage(
+                state,
+                modifier = Modifier.align(Alignment.Center)
+            )
+            DetailToolBar(navController)
+
+            OptionImage(state, event)
+
+        }
+
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxSize()
+                .background(colorResource(R.color.blue_light))
+        ) {
+            ProductDetailData(state)
+        }
+    }
+}
+
 
 @Composable
-fun AddRemoveItem(modifier: Modifier) {
+fun MainImage(state: ProductDetailState, modifier: Modifier) {
+    val imageUrlToDisplay = state.selectedMainImageUrl
+
+    if(imageUrlToDisplay != null){
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(Dimens.MediumPadding),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(imageUrlToDisplay)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = "Product Details",
+                contentScale = ContentScale.Fit,
+                modifier = Modifier
+                    .fillMaxSize()
+            )
+        }
+
+    }/*else{
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(Dimens.MediumPadding),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            if (state.isLoading) {
+                CircularProgressIndicator()
+                Spacer(Modifier.height(Dimens.SmallPadding))
+                Text("Loading image...", fontSize = Dimens.SmallText)
+            } else if (state.errorMsg != null) {
+                Text("Error: ${state.errorMsg}", color = Color.Red, fontSize = Dimens.SmallText)
+            } else {
+                Text("No images available", fontSize = Dimens.SmallText)
+            }
+        }
+    }*/
+}
+
+@Composable
+fun AddRemoveItem(
+    modifier: Modifier,
+    state: ProductDetailState,
+    event: (ProductDetailUiEvent) -> Unit
+) {
+    val context = LocalContext.current
     Row(
         modifier = modifier
             .clip(RoundedCornerShape(Dimens.MediumCornerRadius))
@@ -102,7 +192,13 @@ fun AddRemoveItem(modifier: Modifier) {
 
         //Subtract
         IconButton(
-            onClick = { /*if (quantity > 1) quantity--*/ },
+            onClick = {
+                if(state.cartQuantity==0){
+                    Constants.showToast(context = context, message = "Can't be less 0")
+                }else{
+                    event(ProductDetailUiEvent.setQuantity(state.cartQuantity-1))
+                }
+            },
             modifier = Modifier
                 .padding(Dimens.MediumPadding)
                 .size(Dimens.IconSizeMedium)
@@ -120,14 +216,16 @@ fun AddRemoveItem(modifier: Modifier) {
         }
 
         Text(
-            text = "0",
+            text = state.cartQuantity.toString(),
             modifier = Modifier
                 .padding(Dimens.MediumPadding)
         )
 
         // Add Button
         IconButton(
-            onClick = { /*if (quantity > 1) quantity--*/ },
+            onClick = {
+                event(ProductDetailUiEvent.setQuantity(state.cartQuantity+1))
+            },
             modifier = Modifier
                 .padding(Dimens.MediumPadding)
                 .size(Dimens.IconSizeMedium)
@@ -148,41 +246,7 @@ fun AddRemoveItem(modifier: Modifier) {
 }
 
 @Composable
-fun ProductDetailLayout(state: ProductDetailState, navController: NavHostController) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxSize()
-                .background(colorResource(R.color.white))
-        ) {
-
-            MainImage(
-                state,
-                modifier = Modifier.align(Alignment.Center)
-            )
-            DetailToolBar(navController)
-
-            OptionImage(state)
-
-        }
-
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxSize()
-                .background(colorResource(R.color.blue_light))
-        ) {
-            ProductDetailData(state)
-        }
-    }
-}
-
-@Composable
-fun OptionImage(state: ProductDetailState) {
+fun OptionImage(state: ProductDetailState, event: (ProductDetailUiEvent) -> Unit,) {
     state.items?.imageUrl?.let { imageUrls ->
         Column(
             modifier = Modifier
@@ -202,6 +266,9 @@ fun OptionImage(state: ProductDetailState) {
                         modifier = Modifier
                             .height(Dimens.sizeVariantProductItem)
                             .padding(Dimens.SmallBorderWidth)
+                            .clickable{
+                                event(ProductDetailUiEvent.setMainImage(columnItem))
+                            }
                     )
                 }
             }
@@ -303,31 +370,6 @@ fun PriceAndCart(item: ProductDetailUiModel) {
             )
         }
     }
-}
-
-@Composable
-fun MainImage(state: ProductDetailState, modifier: Modifier) {
-    state.items?.imageUrl?.getOrNull(0)?.let { mainImageUrl ->
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(Dimens.MediumPadding),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(mainImageUrl)
-                    .crossfade(true)
-                    .build(),
-                contentDescription = "Product Details",
-                contentScale = ContentScale.Fit,
-                modifier = Modifier
-                    .fillMaxSize()
-            )
-        }
-    }
-
 }
 
 @Composable
