@@ -84,12 +84,13 @@ dependencies {
 
     // For Icons.Default.Add, Icons.Default.Remove, etc.
     implementation(libs.androidx.compose.material.icons.extended)
+
     //Room
-  /*  ksp(libs.androidx.room.compiler){
+    ksp(libs.androidx.room.compiler){
         exclude(group = "com.intellij", module = "annotations")
     }
     implementation(libs.roomRuntime)
-    implementation(libs.roomKtx)*/
+    implementation(libs.roomKtx)
 
     //Splash Api
     implementation (libs.androidx.core.splashscreen)

@@ -9,4 +9,5 @@ interface DisplayableItem{
     val description: String
     val categoryId : String
     val showRecommended : Boolean
+    val cartQuantity : Int
 }

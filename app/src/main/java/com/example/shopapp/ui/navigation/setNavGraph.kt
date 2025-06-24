@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.shopapp.features.cart.presentation.CartViewModel
 import com.example.shopapp.features.dashboard.presentation.screen.Dashboard
 import com.example.shopapp.features.dashboard.presentation.screen.DashboardViewModel
 import com.example.shopapp.features.introScreen.presentation.IntroScreen
@@ -86,6 +87,13 @@ fun SetNavGraph() {
              val productDetailState by productDetailViewModel.productDetailState.collectAsStateWithLifecycle()
              ProductDetailUI(navController, state = productDetailState, event = productDetailViewModel::onEvent)
 
+        }
+
+        composable (
+            route = Routes.cartUI.route
+        ){
+            val cartViewModel = hiltViewModel<CartViewModel>()
+//            val cartState by cartViewModel
         }
     }
 

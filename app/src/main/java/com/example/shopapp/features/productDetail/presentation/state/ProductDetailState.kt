@@ -7,8 +7,7 @@ data class ProductDetailState(
     val errorMsg: String? = null,
     val items: ProductDetailUiModel? = null,
     val itemId : String = "",
-    val selectedMainImageUrl:String? = null,
-    val cartQuantity:Int = 0
+    val selectedMainImageUrl:String? = null
 )
 
 data class ProductDetailUiModel(
@@ -20,4 +19,6 @@ data class ProductDetailUiModel(
     override val rating: Double,
     override val categoryId: String,
     override val showRecommended: Boolean,
+    override val cartQuantity:Int
 ): DisplayableItem
+

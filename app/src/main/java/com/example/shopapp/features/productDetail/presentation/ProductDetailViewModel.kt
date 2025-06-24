@@ -3,6 +3,8 @@ package com.example.shopapp.features.productDetail.presentation
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.shopapp.core.data.domain.model.CartItemDomain
+import com.example.shopapp.core.data.domain.useCases.AddToCartUseCases
 import com.example.shopapp.core.network.Resources
 import com.example.shopapp.features.dashboard.di.IoDispatcher
 import com.example.shopapp.features.productDetail.domain.useCases.GetProductDetailsUC
@@ -23,7 +25,8 @@ import javax.inject.Inject
 class ProductDetailViewModel @Inject constructor(
     private val saveStateHandle: SavedStateHandle,
     private val getProductDetailsUC: GetProductDetailsUC,
-    @IoDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    @IoDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val addToCartUseCases: AddToCartUseCases
 ) : ViewModel() {
 
     private val _productDetailState = MutableStateFlow(ProductDetailState())
@@ -68,6 +71,7 @@ class ProductDetailViewModel @Inject constructor(
                                     description = itemDomain.description,
                                     categoryId = itemDomain.categoryId.toString(),
                                     showRecommended = itemDomain.showRecommended,
+                                    cartQuantity = 0
                                 )
                             }
                                 ?: ProductDetailUiModel( // Provide a default/empty ProductDetailUiModel if not found
@@ -78,7 +82,8 @@ class ProductDetailViewModel @Inject constructor(
                                     description = "Not Found",
                                     rating = 0.0,
                                     categoryId = "",
-                                    showRecommended = false
+                                    showRecommended = false,
+                                    cartQuantity = 0
                                 )
                             currentState.copy(
                                 isLoading = false,
@@ -108,7 +113,19 @@ class ProductDetailViewModel @Inject constructor(
             is ProductDetailUiEvent.setQuantity -> {
                 _productDetailState.update { quantity->
                     quantity.copy(
-                        cartQuantity = event.quantity
+                        quantity.items.cartQuantity = event.quantity
+                    )
+                }
+            }
+            is ProductDetailUiEvent.onAddToCart->{
+                viewModelScope.launch {
+                    val cartItemDomain = CartItemDomain(
+                        idItems = _productDetailState.value.items!!.idItems.toString(),
+                        imageUrl = _productDetailState.value.items!!.imageUrl[0].toString(),
+                        price = _productDetailState.value.items!!.price.toDouble(),
+                        title = _productDetailState.value.items!!.title,
+                        categoryId = _productDetailState.value.items!!.categoryId,
+                        quantity =  _productDetailState.value.items!!.cartQuantity
                     )
                 }
             }

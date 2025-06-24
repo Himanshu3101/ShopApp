@@ -11,6 +11,8 @@ import androidx.compose.ui.unit.Dp
 
 object Constants {
 
+    const val DATABASE_NAME = "shop_db"
+
     @Composable
     fun deviceSize() : Dp {
         val density = LocalDensity.current

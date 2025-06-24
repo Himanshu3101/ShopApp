@@ -117,7 +117,7 @@ fun ProductDetailLayout(
                 .fillMaxSize()
                 .background(colorResource(R.color.blue_light))
         ) {
-            ProductDetailData(state)
+            ProductDetailData(state, event)
         }
     }
 }
@@ -193,10 +193,10 @@ fun AddRemoveItem(
         //Subtract
         IconButton(
             onClick = {
-                if(state.cartQuantity==0){
+                if(state.items?.cartQuantity==0){
                     Constants.showToast(context = context, message = "Can't be less 0")
                 }else{
-                    event(ProductDetailUiEvent.setQuantity(state.cartQuantity-1))
+                    event(ProductDetailUiEvent.setQuantity(state.items!!.cartQuantity - 1))
                 }
             },
             modifier = Modifier
@@ -216,7 +216,7 @@ fun AddRemoveItem(
         }
 
         Text(
-            text = state.cartQuantity.toString(),
+            text = state.items!!.cartQuantity.toString(),
             modifier = Modifier
                 .padding(Dimens.MediumPadding)
         )
@@ -224,7 +224,7 @@ fun AddRemoveItem(
         // Add Button
         IconButton(
             onClick = {
-                event(ProductDetailUiEvent.setQuantity(state.cartQuantity+1))
+                event(ProductDetailUiEvent.setQuantity(state.items.cartQuantity +1))
             },
             modifier = Modifier
                 .padding(Dimens.MediumPadding)
@@ -278,7 +278,7 @@ fun OptionImage(state: ProductDetailState, event: (ProductDetailUiEvent) -> Unit
 }
 
 @Composable
-fun ProductDetailData(state: ProductDetailState) {
+fun ProductDetailData(state: ProductDetailState, event: (ProductDetailUiEvent) -> Unit) {
     state.items?.let { item ->
         Column(
             modifier = Modifier
@@ -316,7 +316,7 @@ fun ProductDetailData(state: ProductDetailState) {
 
             Spacer(modifier = Modifier.height(Dimens.MediumPadding))
 
-            PriceAndCart(item)
+            PriceAndCart(item, event)
         }
     } ?: run {
         // Show loading or error state if items is null
@@ -330,7 +330,7 @@ fun ProductDetailData(state: ProductDetailState) {
 }
 
 @Composable
-fun PriceAndCart(item: ProductDetailUiModel) {
+fun PriceAndCart(item: ProductDetailUiModel, event: (ProductDetailUiEvent) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -358,6 +358,7 @@ fun PriceAndCart(item: ProductDetailUiModel) {
             )
         }
 
+        //Button Add to Cart
         Box(
             modifier = Modifier.align(Alignment.CenterEnd)// <-- KEY: This aligns the button
         ) {
@@ -366,7 +367,9 @@ fun PriceAndCart(item: ProductDetailUiModel) {
                 borderColor = colorResource(R.color.blue2),
                 text = "Add to Cart",
                 icon = Icons.Default.AddShoppingCart,
-                onClick = { /* TODO: Handle click */ }
+                onClick = {
+                    event(ProductDetailUiEvent.onAddToCart)
+                }
             )
         }
     }

@@ -42,4 +42,8 @@ sealed class Routes(
         }
     }
 
+    object cartUI : Routes(
+        route = "cartScreen"
+    )
+
 }
