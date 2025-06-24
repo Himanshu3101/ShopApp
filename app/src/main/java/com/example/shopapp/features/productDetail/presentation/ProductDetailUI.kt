@@ -193,10 +193,10 @@ fun AddRemoveItem(
         //Subtract
         IconButton(
             onClick = {
-                if(state.items?.cartQuantity==0){
+                if(state.items!!.cartQuantity==0){
                     Constants.showToast(context = context, message = "Can't be less 0")
                 }else{
-                    event(ProductDetailUiEvent.setQuantity(state.items!!.cartQuantity - 1))
+                    event(ProductDetailUiEvent.setQuantity(state.items.cartQuantity - 1))
                 }
             },
             modifier = Modifier
@@ -224,7 +224,7 @@ fun AddRemoveItem(
         // Add Button
         IconButton(
             onClick = {
-                event(ProductDetailUiEvent.setQuantity(state.items.cartQuantity +1))
+                event(ProductDetailUiEvent.setQuantity(state.items.cartQuantity + 1))
             },
             modifier = Modifier
                 .padding(Dimens.MediumPadding)

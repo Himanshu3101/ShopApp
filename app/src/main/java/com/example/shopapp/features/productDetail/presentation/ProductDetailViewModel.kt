@@ -111,7 +111,7 @@ class ProductDetailViewModel @Inject constructor(
             }
 
             is ProductDetailUiEvent.setQuantity -> {
-                _productDetailState.update { quantity->
+                _productDetailState.value.items?.cartQuantity.update { quantity->
                     quantity.copy(
                         quantity.items.cartQuantity = event.quantity
                     )
