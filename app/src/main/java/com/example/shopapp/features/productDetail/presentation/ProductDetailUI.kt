@@ -348,7 +348,7 @@ fun PriceAndCart(item: ProductDetailUiModel, event: (ProductDetailUiEvent) -> Un
         ) {
             Text(
                 text = "$ ${item.price}",
-                fontWeight = FontWeight.Bold,
+                fontWeight = Bold,
                 fontSize = Dimens.MediumText,
                 color = colorResource(R.color.black),
                 textAlign = TextAlign.Start,
