@@ -1,11 +1,13 @@
 package com.example.shopapp.features.productDetail.presentation
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shopapp.core.data.domain.model.CartItemDomain
 import com.example.shopapp.core.data.domain.useCases.AddToCartUseCases
 import com.example.shopapp.core.network.Resources
+import com.example.shopapp.core.util.Constants.Shoplog
 import com.example.shopapp.features.dashboard.di.IoDispatcher
 import com.example.shopapp.features.productDetail.domain.useCases.GetProductDetailsUC
 import com.example.shopapp.features.productDetail.presentation.event.ProductDetailUiEvent
@@ -128,7 +130,7 @@ class ProductDetailViewModel @Inject constructor(
                         categoryId = _productDetailState.value.items!!.categoryId,
                         quantity =  _productDetailState.value.items!!.cartQuantity
                     )
-
+                    addToCartUseCases(cartItemDomain)
                 }
             }
         }

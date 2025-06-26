@@ -1,5 +1,6 @@
 package com.example.shopapp.features.productDetail.presentation
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -35,7 +36,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -69,7 +69,7 @@ fun ProductDetailUI(
     state: ProductDetailState,
     event: (ProductDetailUiEvent) -> Unit
 ) {
-
+    val context = LocalContext.current
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -77,10 +77,10 @@ fun ProductDetailUI(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            ProductDetailLayout(state, navController, event)
+            ProductDetailLayout(state, navController, event,context)
         }
 
-        AddRemoveItem(modifier = Modifier.align(Alignment.Center), state, event) // Aligns the center of the button to the center of the parent Box
+        AddRemoveItem(modifier = Modifier.align(Alignment.Center), state, event, context) // Aligns the center of the button to the center of the parent Box
     }
 
 }
@@ -89,6 +89,7 @@ fun ProductDetailLayout(
     state: ProductDetailState,
     navController: NavHostController,
     event: (ProductDetailUiEvent) -> Unit,
+    context: Context,
     ) {
     Column(
         modifier = Modifier
@@ -117,7 +118,7 @@ fun ProductDetailLayout(
                 .fillMaxSize()
                 .background(colorResource(R.color.blue_light))
         ) {
-            ProductDetailData(state, event)
+            ProductDetailData(state, event, context)
         }
     }
 }
@@ -172,9 +173,10 @@ fun MainImage(state: ProductDetailState, modifier: Modifier) {
 fun AddRemoveItem(
     modifier: Modifier,
     state: ProductDetailState,
-    event: (ProductDetailUiEvent) -> Unit
+    event: (ProductDetailUiEvent) -> Unit,
+    context: Context
 ) {
-    val context = LocalContext.current
+
     Row(
         modifier = modifier
             .clip(RoundedCornerShape(Dimens.MediumCornerRadius))
@@ -241,7 +243,6 @@ fun AddRemoveItem(
                 tint = MaterialTheme.colorScheme.primary
             )
         }
-
     }
 }
 
@@ -278,7 +279,11 @@ fun OptionImage(state: ProductDetailState, event: (ProductDetailUiEvent) -> Unit
 }
 
 @Composable
-fun ProductDetailData(state: ProductDetailState, event: (ProductDetailUiEvent) -> Unit) {
+fun ProductDetailData(
+    state: ProductDetailState,
+    event: (ProductDetailUiEvent) -> Unit,
+    context: Context
+) {
     state.items?.let { item ->
         Column(
             modifier = Modifier
@@ -316,7 +321,7 @@ fun ProductDetailData(state: ProductDetailState, event: (ProductDetailUiEvent) -
 
             Spacer(modifier = Modifier.height(Dimens.MediumPadding))
 
-            PriceAndCart(item, event)
+            PriceAndCart(item, event, state, context)
         }
     } ?: run {
         // Show loading or error state if items is null
@@ -330,7 +335,12 @@ fun ProductDetailData(state: ProductDetailState, event: (ProductDetailUiEvent) -
 }
 
 @Composable
-fun PriceAndCart(item: ProductDetailUiModel, event: (ProductDetailUiEvent) -> Unit) {
+fun PriceAndCart(
+    item: ProductDetailUiModel,
+    event: (ProductDetailUiEvent) -> Unit,
+    state: ProductDetailState,
+    context: Context
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -368,7 +378,11 @@ fun PriceAndCart(item: ProductDetailUiModel, event: (ProductDetailUiEvent) -> Un
                 text = "Add to Cart",
                 icon = Icons.Default.AddShoppingCart,
                 onClick = {
-                    event(ProductDetailUiEvent.onAddToCart)
+                    if(state.items?.cartQuantity != 0){
+                        event(ProductDetailUiEvent.onAddToCart)
+                    }else{
+                        Constants.showToast(context = context, message = "Can't be less 0")
+                    }
                 }
             )
         }
