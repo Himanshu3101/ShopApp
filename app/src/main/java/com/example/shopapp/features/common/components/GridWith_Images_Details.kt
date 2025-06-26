@@ -57,7 +57,8 @@ fun Prev_GridWith_Images_Details() {
             title = "Product 1",
             categoryId = "1",
             showRecommended = true,
-            description = "Desc"
+            description = "Desc",
+            cartQuantity = 0
         ),
         ItemData(
             idItems = 2,
@@ -69,7 +70,8 @@ fun Prev_GridWith_Images_Details() {
             title = "Product 2",
             categoryId = "2",
             showRecommended = true,
-            description = "Desc"
+            description = "Desc",
+            cartQuantity = 0
         )
     )
     GridWith_Images_Details(itemData = data, event = {}, navHostController = NavHostController(LocalContext.current) )

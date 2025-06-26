@@ -111,12 +111,13 @@ class ProductDetailViewModel @Inject constructor(
             }
 
             is ProductDetailUiEvent.setQuantity -> {
-                _productDetailState.value.items?.cartQuantity.update { quantity->
-                    quantity.copy(
-                        quantity.items.cartQuantity = event.quantity
-                    )
-                }
+               _productDetailState.update {currentState->
+                   currentState.copy(
+                       items = currentState.items?.copy(cartQuantity = event.quantity)
+                   )
+               }
             }
+
             is ProductDetailUiEvent.onAddToCart->{
                 viewModelScope.launch {
                     val cartItemDomain = CartItemDomain(
@@ -127,6 +128,7 @@ class ProductDetailViewModel @Inject constructor(
                         categoryId = _productDetailState.value.items!!.categoryId,
                         quantity =  _productDetailState.value.items!!.cartQuantity
                     )
+
                 }
             }
         }

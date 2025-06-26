@@ -119,7 +119,8 @@ class DashboardViewModelTest {
             picUrl = listOf(
                 "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098536/1_1_db56nv.png",
                 "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098532/1_4_vdstgc.jpg"
-            )
+            ),
+            cartQuantity = 0
         ),
         ItemDomain(
             idItems = 2,
@@ -135,7 +136,8 @@ class DashboardViewModelTest {
             picUrl = listOf(
                 "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098536/1_1_db56nv.png",
                 "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098532/1_4_vdstgc.jpg"
-            )
+            ),
+            cartQuantity = 0
         )
     )
 

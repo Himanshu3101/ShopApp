@@ -1,4 +1,7 @@
 package com.example.shopapp.core.data.local.dao
 
-class ItemDao {
+import androidx.room.Dao
+
+@Dao
+interface ItemDao {
 }

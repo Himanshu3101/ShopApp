@@ -33,14 +33,16 @@ class ItemRepositoryTest {
                 picUrl = listOf(
                     "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098536/1_1_db56nv.png",
                     "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098532/1_4_vdstgc.jpg"
-                )
+                ),
+                cartQuantity = 0,
             ),
             ItemDomain(idItems = 1, categoryId = 1, createdAt = "yESTERday", description = "DEF", objectId = "banner_id_2", updatedAt = "yESTerday",
                 title = "url_2", price = 1, rating = 2.0, showRecommended = true,
                 picUrl = listOf(
                     "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098536/1_1_db56nv.png",
                     "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098532/1_4_vdstgc.jpg"
-                )
+                ),
+                cartQuantity = 0,
             )
         )
 

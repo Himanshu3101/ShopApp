@@ -77,6 +77,7 @@ class ProductTypeViewModel @Inject constructor(
                                     description = itemDomain.description,
                                     categoryId = itemDomain.categoryId.toString(),
                                     showRecommended = itemDomain.showRecommended,
+                                    cartQuantity = itemDomain.cartQuantity
                                 )
 
                             } ?: emptyList(),

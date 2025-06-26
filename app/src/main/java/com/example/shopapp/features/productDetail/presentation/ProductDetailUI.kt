@@ -216,7 +216,7 @@ fun AddRemoveItem(
         }
 
         Text(
-            text = state.items!!.cartQuantity.toString(),
+            text = state.items?.cartQuantity.toString(),
             modifier = Modifier
                 .padding(Dimens.MediumPadding)
         )
@@ -224,7 +224,7 @@ fun AddRemoveItem(
         // Add Button
         IconButton(
             onClick = {
-                event(ProductDetailUiEvent.setQuantity(state.items.cartQuantity + 1))
+                event(ProductDetailUiEvent.setQuantity(state.items?.cartQuantity?.plus(1) ?: 0))
             },
             modifier = Modifier
                 .padding(Dimens.MediumPadding)

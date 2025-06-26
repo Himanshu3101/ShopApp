@@ -19,6 +19,6 @@ data class ProductDetailUiModel(
     override val rating: Double,
     override val categoryId: String,
     override val showRecommended: Boolean,
-    override val cartQuantity:Int = 0
+    override val cartQuantity:Int
 ): DisplayableItem
 

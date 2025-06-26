@@ -11,5 +11,6 @@ data class ItemDomain(
     val rating: Double,
     val showRecommended: Boolean,
     val title: String,
-    val updatedAt: String
+    val updatedAt: String,
+    val cartQuantity: Int
 )

@@ -67,7 +67,9 @@ class DashboardScreenTest {
             imageUrl = listOf(
                 "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098536/1_1_db56nv.png",
                 "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098532/1_4_vdstgc.jpg"
-            )
+            ),
+            cartQuantity = 0,
+            description = "Dashboard Screen Test"
         ),
         ItemData(
             idItems = 1,
@@ -79,7 +81,9 @@ class DashboardScreenTest {
             imageUrl = listOf(
                 "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098536/1_1_db56nv.png",
                 "https://res.cloudinary.com/dkikc5ywq/image/upload/v1746098532/1_4_vdstgc.jpg"
-            )
+            ),
+            cartQuantity = 0,
+            description = "Dashboard Screen Test"
         )
     )
 

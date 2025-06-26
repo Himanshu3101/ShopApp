@@ -190,7 +190,8 @@ class DashboardViewModel @Inject constructor(
                 title = it.title,
                 categoryId = it.categoryId.toString(),
                 showRecommended = it.showRecommended,
-                description = it.description
+                description = it.description,
+                cartQuantity = it.cartQuantity
             )
         }.orEmpty()
 
