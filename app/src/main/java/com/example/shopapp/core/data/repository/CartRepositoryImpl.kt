@@ -21,15 +21,11 @@ class CartRepositoryImpl @Inject constructor(
     }
 
     override suspend fun addItemToCart(item: CartItemDomain) {
-        Log.d(Shoplog, "Attempting to add/update item with ID: ${item.idItems}")
         val existingCartItem = cartItemDao.getCartItemByItemId(item.idItems.toString())
         if (existingCartItem != null) {
-            Log.d(Shoplog, "Found existing item: ${existingCartItem.idItems}, current quantity: ${existingCartItem.quantity}")
             val updatedCartItem = existingCartItem.quantity + item.quantity
             cartItemDao.updateCartItems(existingCartItem.copy(quantity = updatedCartItem))
-            Log.d(Shoplog, "Updated quantity to: $updatedCartItem")
         } else {
-            Log.d(Shoplog, "No existing item found. Inserting new item: ${item.idItems}")
             cartItemDao.insertCartItem(item.toEntity())
         }
     }
