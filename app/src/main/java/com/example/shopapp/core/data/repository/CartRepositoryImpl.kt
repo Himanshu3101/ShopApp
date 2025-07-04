@@ -1,10 +1,8 @@
 package com.example.shopapp.core.data.repository
 
-import android.util.Log
 import com.example.shopapp.core.data.local.dao.CartItemDao
 import com.example.shopapp.core.data.local.entities.CartItemEntity
 import com.example.shopapp.core.data.domain.model.CartItemDomain
-import com.example.shopapp.core.util.Constants.Shoplog
 import com.example.shopapp.features.cart.domain.repository.CartRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
