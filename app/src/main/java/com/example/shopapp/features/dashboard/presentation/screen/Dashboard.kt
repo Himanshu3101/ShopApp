@@ -110,7 +110,7 @@ fun Dashboard(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .padding(
-                top = Dimens.SmallMediumPadding,
+                top = Dimens.ExtraLargePadding,
                 start = Dimens.SmallPadding,
                 end = Dimens.SmallPadding
             )

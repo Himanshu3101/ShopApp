@@ -1,7 +1,7 @@
 package com.example.shopapp.core.data.domain.model
 
 data class CartItemDomain(
-    val idItems:String,
+    val idItems:Int,
     val imageUrl: String,
     val price: Double,
     val title: String,

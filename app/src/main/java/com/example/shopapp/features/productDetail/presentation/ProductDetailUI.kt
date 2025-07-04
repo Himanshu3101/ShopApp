@@ -29,6 +29,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -341,6 +343,11 @@ fun PriceAndCart(
     state: ProductDetailState,
     context: Context
 ) {
+
+//    var rememberQuantity = rememberSaveable{mutableIntStateOf(state.items?.cartQuantity?:0)}
+
+
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -379,7 +386,11 @@ fun PriceAndCart(
                 icon = Icons.Default.AddShoppingCart,
                 onClick = {
                     if(state.items?.cartQuantity != 0){
+
+
                         event(ProductDetailUiEvent.onAddToCart)
+
+
                     }else{
                         Constants.showToast(context = context, message = "Can't be less 0")
                     }

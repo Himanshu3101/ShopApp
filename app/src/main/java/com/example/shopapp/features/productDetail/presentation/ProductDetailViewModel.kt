@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shopapp.core.data.domain.model.CartItemDomain
 import com.example.shopapp.core.data.domain.useCases.AddToCartUseCases
+
 import com.example.shopapp.core.network.Resources
 import com.example.shopapp.core.util.Constants.Shoplog
 import com.example.shopapp.features.dashboard.di.IoDispatcher
@@ -123,7 +124,7 @@ class ProductDetailViewModel @Inject constructor(
             is ProductDetailUiEvent.onAddToCart->{
                 viewModelScope.launch {
                     val cartItemDomain = CartItemDomain(
-                        idItems = _productDetailState.value.items!!.idItems.toString(),
+                        idItems = _productDetailState.value.items!!.idItems,
                         imageUrl = _productDetailState.value.items!!.imageUrl[0].toString(),
                         price = _productDetailState.value.items!!.price.toDouble(),
                         title = _productDetailState.value.items!!.title,
