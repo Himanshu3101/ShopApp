@@ -7,3 +7,4 @@ data class CartUiState(
     val isLoading: Boolean = false,
     val errorMessage: String? = null
 )
+

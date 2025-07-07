@@ -47,7 +47,7 @@ fun AppBar(
 
         title = {
             Text(
-                modifier = Modifier.fillMaxWidth().padding(end = Dimens.LargePadding),
+                modifier = Modifier.fillMaxWidth().padding(top = Dimens.SmallPadding, end = Dimens.LargePadding),
                 text = title,
                 color = colorResource(R.color.black),
                 fontWeight = FontWeight.Bold,
