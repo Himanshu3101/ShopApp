@@ -46,4 +46,8 @@ sealed class Routes(
         route = "cartScreen"
     )
 
+    object ProfileUI : Routes(
+        route = "profileScreen"
+    )
+
 }

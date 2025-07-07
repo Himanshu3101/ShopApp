@@ -16,4 +16,7 @@
     <string name="pagerSection">ImagePagerSectionTest</string>
     <string name="gridImageTest">GridImageTest</string>
     <string name="app_bar">AppBarTest</string>
+    <string name="home">Home</string>
+    <string name="cart">Shopping Cart</string>
+    <string name="person">Profile</string>
 </resources>
