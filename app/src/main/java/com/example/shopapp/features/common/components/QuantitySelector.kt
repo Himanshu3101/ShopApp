@@ -1,6 +1,5 @@
 package com.example.shopapp.features.common.components
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -25,8 +24,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import com.example.shopapp.R
 import com.example.shopapp.core.util.Constants
-import com.example.shopapp.features.productDetail.presentation.event.ProductDetailUiEvent
-import com.example.shopapp.features.productDetail.presentation.state.ProductDetailState
 import com.example.shopapp.ui.theme.Dimens
 
 @Composable

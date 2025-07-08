@@ -83,7 +83,6 @@ fun CartScreen(
 @Composable
 fun CartItems(state: CartUiState, event: (CartUiEvent) -> Unit) {
 
-    val context = LocalContext.current
 
     Column(
         modifier = Modifier.padding(Dimens.SmallPadding)
