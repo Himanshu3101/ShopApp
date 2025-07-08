@@ -38,6 +38,8 @@ class CartViewModel @Inject constructor(
         when(event){
 //            CartUiEvent.InitCart -> initCartItem()
             is CartUiEvent.ItemClicked ->  TODO()
+            is CartUiEvent.RemoveItem -> TODO()
+            is CartUiEvent.UpdateQuantity -> TODO()
         }
     }
 

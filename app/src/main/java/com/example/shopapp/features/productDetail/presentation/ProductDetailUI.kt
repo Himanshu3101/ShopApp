@@ -3,7 +3,6 @@ package com.example.shopapp.features.productDetail.presentation
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,23 +14,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddShoppingCart
-import androidx.compose.material.icons.filled.Remove
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -46,6 +38,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.shopapp.R
 import com.example.shopapp.core.util.Constants
+import com.example.shopapp.features.common.components.QuantitySelector
 import com.example.shopapp.features.common.components.ButtonBox
 import com.example.shopapp.features.productDetail.presentation.event.ProductDetailUiEvent
 import com.example.shopapp.features.productDetail.presentation.state.ProductDetailState
@@ -77,20 +70,28 @@ fun ProductDetailUI(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            ProductDetailLayout(state, navController, event,context)
+            ProductDetailLayout(state, navController, event, context)
         }
 
-        AddRemoveItem(modifier = Modifier.align(Alignment.Center), state, event, context) // Aligns the center of the button to the center of the parent Box
+        QuantitySelector(
+            modifier = Modifier.align(Alignment.Center),
+            currentQuantity = state.items?.cartQuantity ?: 0,
+            onQuantityChanged = {newQuantity->
+                event(ProductDetailUiEvent.setQuantity(newQuantity))
+            },
+            minQuantity = 0
+        ) // Aligns the center of the button to the center of the parent Box
     }
 
 }
+
 @Composable
 fun ProductDetailLayout(
     state: ProductDetailState,
     navController: NavHostController,
     event: (ProductDetailUiEvent) -> Unit,
     context: Context,
-    ) {
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -128,7 +129,7 @@ fun ProductDetailLayout(
 fun MainImage(state: ProductDetailState, modifier: Modifier) {
     val imageUrlToDisplay = state.selectedMainImageUrl
 
-    if(imageUrlToDisplay != null){
+    if (imageUrlToDisplay != null) {
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -148,106 +149,11 @@ fun MainImage(state: ProductDetailState, modifier: Modifier) {
             )
         }
 
-    }/*else{
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(Dimens.MediumPadding),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            if (state.isLoading) {
-                CircularProgressIndicator()
-                Spacer(Modifier.height(Dimens.SmallPadding))
-                Text("Loading image...", fontSize = Dimens.SmallText)
-            } else if (state.errorMsg != null) {
-                Text("Error: ${state.errorMsg}", color = Color.Red, fontSize = Dimens.SmallText)
-            } else {
-                Text("No images available", fontSize = Dimens.SmallText)
-            }
-        }
-    }*/
-}
-
-@Composable
-fun AddRemoveItem(
-    modifier: Modifier,
-    state: ProductDetailState,
-    event: (ProductDetailUiEvent) -> Unit,
-    context: Context
-) {
-
-    Row(
-        modifier = modifier
-            .clip(RoundedCornerShape(Dimens.MediumCornerRadius))
-            .padding(bottom = Dimens.SmallPadding / 9) // Move it up by half its height to sit on the dividing line
-            .background(colorResource(R.color.blue))
-            .height(Dimens.MediumBoxHeight)
-            .border(
-                Dimens.SmallBorderWidth,
-                colorResource(R.color.blue),
-                RoundedCornerShape(Dimens.LargeCornerRadius)
-            ),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Dimens.SmallPadding),
-    ) {
-
-        //Subtract
-        IconButton(
-            onClick = {
-                if(state.items!!.cartQuantity==0){
-                    Constants.showToast(context = context, message = "Can't be less 0")
-                }else{
-                    event(ProductDetailUiEvent.setQuantity(state.items.cartQuantity - 1))
-                }
-            },
-            modifier = Modifier
-                .padding(Dimens.MediumPadding)
-                .size(Dimens.IconSizeMedium)
-                .clip(CircleShape) // Make it circular
-                .background(
-                    colorResource(R.color.white),
-                    shape = CircleShape
-                ), // Example background
-        ) {
-            Icon(
-                imageVector = Icons.Default.Remove,
-                contentDescription = "Subtract Quantity",
-                tint = MaterialTheme.colorScheme.primary
-            )
-        }
-
-        Text(
-            text = state.items?.cartQuantity.toString(),
-            modifier = Modifier
-                .padding(Dimens.MediumPadding)
-        )
-
-        // Add Button
-        IconButton(
-            onClick = {
-                event(ProductDetailUiEvent.setQuantity(state.items?.cartQuantity?.plus(1) ?: 0))
-            },
-            modifier = Modifier
-                .padding(Dimens.MediumPadding)
-                .size(Dimens.IconSizeMedium)
-                .clip(CircleShape) // Make it circular
-                .background(
-                    colorResource(R.color.white),
-                    shape = CircleShape
-                ), // Example background
-        ) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = "Add Quantity",
-                tint = MaterialTheme.colorScheme.primary
-            )
-        }
     }
 }
 
 @Composable
-fun OptionImage(state: ProductDetailState, event: (ProductDetailUiEvent) -> Unit,) {
+fun OptionImage(state: ProductDetailState, event: (ProductDetailUiEvent) -> Unit) {
     state.items?.imageUrl?.let { imageUrls ->
         Column(
             modifier = Modifier
@@ -267,7 +173,7 @@ fun OptionImage(state: ProductDetailState, event: (ProductDetailUiEvent) -> Unit
                         modifier = Modifier
                             .height(Dimens.sizeVariantProductItem)
                             .padding(Dimens.SmallBorderWidth)
-                            .clickable{
+                            .clickable {
                                 event(ProductDetailUiEvent.setMainImage(columnItem))
                             }
                     )
@@ -292,7 +198,10 @@ fun ProductDetailData(
         ) {
             Text(
                 text = state.items.title,
-                modifier = Modifier.padding(start = Dimens.SmallPadding, top = Dimens.MediumPadding),
+                modifier = Modifier.padding(
+                    start = Dimens.SmallPadding,
+                    top = Dimens.MediumPadding
+                ),
                 fontWeight = Bold,
                 fontSize = Dimens.LargeText
             )
@@ -329,7 +238,11 @@ fun ProductDetailData(
             text = "Loading Products Details",
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = Dimens.ExtraLargePadding,start = Dimens.MediumPadding, end = Dimens.MediumPadding)
+                .padding(
+                    top = Dimens.ExtraLargePadding,
+                    start = Dimens.MediumPadding,
+                    end = Dimens.MediumPadding
+                )
         )
     }
 }
@@ -341,11 +254,6 @@ fun PriceAndCart(
     state: ProductDetailState,
     context: Context
 ) {
-
-//    var rememberQuantity = rememberSaveable{mutableIntStateOf(state.items?.cartQuantity?:0)}
-
-
-
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -383,13 +291,13 @@ fun PriceAndCart(
                 text = "Add to Cart",
                 icon = Icons.Default.AddShoppingCart,
                 onClick = {
-                    if(state.items?.cartQuantity != 0){
+                    if (state.items?.cartQuantity != 0) {
 
 
                         event(ProductDetailUiEvent.onAddToCart)
 
 
-                    }else{
+                    } else {
                         Constants.showToast(context = context, message = "Can't be less 0")
                     }
                 }

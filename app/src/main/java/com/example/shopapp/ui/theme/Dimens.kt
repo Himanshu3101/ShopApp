@@ -65,6 +65,7 @@ object Dimens {
 
     val sizeVariantProductItem = 50.dp
     val sizeProductItem = 100.dp
+    val cartItemListSize = 150.dp
 
 
 }
